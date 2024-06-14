@@ -5,24 +5,27 @@ using UnityEngine;
 public class PersistenceController : MonoBehaviour
 {
     public GameObject[] objectsToPersist;  // 在Inspector中设置想要持久化的对象数组
+    public GameObject beastInfoUI;
 
-    private static bool isPersisted = false; // 静态变量用于跟踪是否已经执行过持久化
+    private static PersistenceController instance; // 静态变量用于跟踪唯一
+
 
     void Awake()
     {
-        if (!isPersisted)
+        if (instance == null)
         {
+            instance = this; // 设置唯一实例
             DontDestroyOnLoad(this.gameObject); // 使 PersistenceController 本身也持久化
 
             foreach (GameObject obj in objectsToPersist)
             {
                 DontDestroyOnLoad(obj);
             }
-            isPersisted = true; // 设置标志，防止再次持久化
         }
-        else
+        else if (instance != this)
         {
-            Destroy(this.gameObject); // 如果已经持久化过，销毁新的实例
+            Destroy(this.gameObject); // 如果已经有一个持久化实例，销毁新的实例
+            beastInfoUI.SetActive(false);
         }
     }
 }

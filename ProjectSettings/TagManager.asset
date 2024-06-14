@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wild
   - Town
+  - Fusion
   layers:
   - Default
   - TransparentFX

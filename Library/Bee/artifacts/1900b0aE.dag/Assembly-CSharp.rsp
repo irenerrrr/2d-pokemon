@@ -385,6 +385,7 @@
 "Assets/MyGame/Script/DynamicSortingOrder.cs"
 "Assets/MyGame/Script/Generators/BeastGenerator.cs"
 "Assets/MyGame/Script/Managers/BeastManager.cs"
+"Assets/MyGame/Script/Managers/FusionManager.cs"
 "Assets/MyGame/Script/Managers/PersistenceController.cs"
 "Assets/MyGame/Script/Managers/SpiritBagManager.cs"
 "Assets/MyGame/Script/Managers/UIManager.cs"
