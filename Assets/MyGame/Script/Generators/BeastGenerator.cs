@@ -13,23 +13,25 @@ public class BeastGenerator : MonoBehaviour
 
     public SpiritualBeast GenerateBeast()
     {
-        string name = "Beast_" + k.ToString();
+        string name = "";
         k += 1;
         
         int level = Random.Range(1, 10);
         string gender = Random.Range(0, 2) == 0 ? "Male" : "Female";
-        // string type = "SpiritualBeast";
+      
         string type = Random.Range(0, 2) == 0 ? "SpiritualBeast" : "NormalBeast";
         Sprite image = possibleImages[Random.Range(0, possibleImages.Length)];
         if (type == "NormalBeast")
         {
             // 只生成名字、性别、图片和等级
+            name = image.name;
             SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 0, 0, 0, 0, 0, 0);
             DebugBeast(beast); // 输出生成的beast的数据
             return beast;
         }
         else
         {
+            name = "Spiritual " + image.name;
             // 生成所有属性
             int hp = GenerateStat();
             int attack = GenerateStat();

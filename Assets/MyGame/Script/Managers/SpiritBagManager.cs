@@ -10,7 +10,7 @@ public class SpiritBagManager : MonoBehaviour
 
     public GameObject slotPrefab; // Slot 模板的 Prefab
     public Transform slotContainer; // Scroll View 的 Content 容器
-
+    public FusionManager fusionManager; // 引用 FusionManager
     
     public TextMeshProUGUI detailName;
     public TextMeshProUGUI detailLevel;
@@ -26,6 +26,7 @@ public class SpiritBagManager : MonoBehaviour
 
     public GameObject detailPanel; // 左半边详细信息面板
     public GameObject spiritBagPanel; // Bag Detail 面板
+    public GameObject fusionPanel; 
 
     private List<SpiritualBeast> beasts = new List<SpiritualBeast>();
     private List<GameObject> slots = new List<GameObject>();
@@ -38,6 +39,11 @@ public class SpiritBagManager : MonoBehaviour
         // 初始化面板状态
         detailPanel.SetActive(false);
         spiritBagPanel.SetActive(false);
+
+        if (fusionManager == null)
+        {
+            Debug.LogError("FusionManager reference is missing in SpiritBagManager.");
+        }
 
     }
 
@@ -71,21 +77,27 @@ public class SpiritBagManager : MonoBehaviour
         selectedBeastIndex = index; // 记录当前选中的宠物索引
         SpiritualBeast beast = beasts[index];
 
-        // 更新详细信息面板
-        detailPanel.SetActive(true);
-        
-        detailName.text = beast.name;
-        detailLevel.text = "Level: " + beast.level;
-        detailGender.text = beast.gender;
-   
-        detailImage.sprite = beast.image;
+        if (fusionPanel.activeSelf)
+        {
+            fusionManager.UpdateFusionPanel(beast);
+        }
+        else
+        {
+            // 更新详细信息面板
+            detailPanel.SetActive(true);
+            
+            detailName.text = beast.name;
+            detailLevel.text = "Level: " + beast.level;
+            detailGender.text = beast.gender;
+            detailImage.sprite = beast.image;
 
-        detailHP.text = "HP: " + beast.hp;
-        detailAttack.text = "Attack: " + beast.attack;
-        detailArmor.text = "Armor: " + beast.armor;
-        detailAP.text = "AP: " + beast.ap;
-        detailMR.text = "MR: " + beast.mr;
-        detailSpeed.text = "Speed: " + beast.speed;
+            detailHP.text = "HP: " + beast.hp;
+            detailAttack.text = "Attack: " + beast.attack;
+            detailArmor.text = "Armor: " + beast.armor;
+            detailAP.text = "AP: " + beast.ap;
+            detailMR.text = "MR: " + beast.mr;
+            detailSpeed.text = "Speed: " + beast.speed;
+        }
     }
 
     public void RemoveSelectedBeast()
