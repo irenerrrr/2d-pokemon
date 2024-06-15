@@ -51697,7 +51697,7 @@ GameObject:
   - component: {fileID: 7865820490170373373}
   - component: {fileID: 3956920270664768697}
   - component: {fileID: 3322824783836800421}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SpiritBagButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52367,7 +52367,7 @@ GameObject:
   - component: {fileID: 7409298907765124677}
   - component: {fileID: 7860756479048458835}
   - component: {fileID: 7768709461302167119}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

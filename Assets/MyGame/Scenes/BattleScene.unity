@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 154074188}
   - component: {fileID: 154074190}
   - component: {fileID: 154074189}
-  m_Layer: 20
+  m_Layer: 5
   m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,7 +643,7 @@ GameObject:
   - component: {fileID: 368913128}
   - component: {fileID: 368913127}
   - component: {fileID: 368913126}
-  m_Layer: 21
+  m_Layer: 5
   m_Name: MyBeast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1997,7 +1997,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_TargetDisplay: 0
 --- !u!224 &794507056
 RectTransform:
@@ -3053,7 +3053,7 @@ GameObject:
   - component: {fileID: 1394221556}
   - component: {fileID: 1394221555}
   - component: {fileID: 1394221554}
-  m_Layer: 21
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3707,7 +3707,7 @@ GameObject:
   - component: {fileID: 1605104200}
   - component: {fileID: 1605104199}
   - component: {fileID: 1605104198}
-  m_Layer: 21
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3947,7 +3947,7 @@ GameObject:
   - component: {fileID: 1829856464}
   - component: {fileID: 1829856463}
   - component: {fileID: 1829856462}
-  m_Layer: 21
+  m_Layer: 5
   m_Name: WildBeast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4312,7 +4312,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &2142918678
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4357,7 +4357,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -4391,6 +4391,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1033312948}
   - {fileID: 2142918680}
+  - {fileID: 1033312948}
   - {fileID: 794507056}
