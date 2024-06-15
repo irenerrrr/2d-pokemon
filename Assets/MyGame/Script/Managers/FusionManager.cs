@@ -9,23 +9,22 @@ public class FusionManager : MonoBehaviour
     public GameObject fusionPanel; // 拖动你的Fusion Panel到此字段
     public GameObject spiritPanel;
 
-    public Image beastImage_1; // 宠物图片
-    public TextMeshProUGUI beastName_1; // 宠物名字
-    public TextMeshProUGUI beastHP_1; // 宠物HP
-    public TextMeshProUGUI beastAttack_1; // 宠物攻击力
-    public TextMeshProUGUI beastArmor_1; // 宠物护甲
-    public TextMeshProUGUI beastAP_1; // 宠物AP
-    public TextMeshProUGUI beastMR_1; // 宠物MR
-    public TextMeshProUGUI beastSpeed_1; // 宠物速度
 
-    public Image beastImage_2; // 第二个宠物槽的宠物图片
-    public TextMeshProUGUI beastName_2; // 第二个宠物槽的宠物名字
-    public TextMeshProUGUI beastHP_2; // 第二个宠物槽的宠物HP
-    public TextMeshProUGUI beastAttack_2; // 第二个宠物槽的宠物攻击力
-    public TextMeshProUGUI beastArmor_2; // 第二个宠物槽的宠物护甲
-    public TextMeshProUGUI beastAP_2; // 第二个宠物槽的宠物AP
-    public TextMeshProUGUI beastMR_2; // 第二个宠物槽的宠物MR
-    public TextMeshProUGUI beastSpeed_2; // 第二个宠物槽的宠物速度
+    [System.Serializable]
+    public struct BeastUI
+    {
+        public Image beastImage;
+        public TextMeshProUGUI beastName;
+        public TextMeshProUGUI beastHP;
+        public TextMeshProUGUI beastAttack;
+        public TextMeshProUGUI beastArmor;
+        public TextMeshProUGUI beastAP;
+        public TextMeshProUGUI beastMR;
+        public TextMeshProUGUI beastSpeed;
+    }
+
+    public BeastUI beastUI_1;
+    public BeastUI beastUI_2;
 
     public Button selectButton1; // 第一个确认按钮
     public Button selectButton2; // 第二个确认按钮
@@ -49,23 +48,30 @@ public class FusionManager : MonoBehaviour
 
     private bool firstSlotSelected = false;
 
+    private Dictionary<Button, bool> buttonStates = new Dictionary<Button, bool>();
+
+
     void Start()
     {
         fusionPanel.SetActive(false); // 确保Fusion Panel一开始是隐藏的
-        selectButton1.onClick.AddListener(SelectSelection1); // 绑定第一个确认按钮的点击事件
-        selectButton2.onClick.AddListener(SelectSelection2); // 绑定第二个确认按钮的点击事件
 
         selectButton1.interactable = false; // 禁用第一个选择按钮
         selectButton2.interactable = false; // 禁用第二个选择按钮
-            
+        BindButtonListeners();
+        HideAttributeButtons();
+
+    }
+
+    private void BindButtonListeners()
+    {
+        selectButton1.onClick.AddListener(SelectSelection1);
+        selectButton2.onClick.AddListener(SelectSelection2);
         hpButton.onClick.AddListener(OnHPButtonClick); // 绑定HP按钮的点击事件
         attackButton.onClick.AddListener(OnArmorButtonClick); // 绑定Armor按钮的点击事件
         armorButton.onClick.AddListener(OnArmorButtonClick); // 绑定Armor按钮的点击事件
         apButton.onClick.AddListener(OnAPButtonClick); // 绑定AP按钮的点击事件
         mrButton.onClick.AddListener(OnMRButtonClick); // 绑定MR按钮的点击事件
         speedButton.onClick.AddListener(OnSpeedButtonClick); // 绑定Speed按钮
-        HideAttributeButtons();
-        
     }
 
     public void ShowFusionPanel()
@@ -84,52 +90,44 @@ public class FusionManager : MonoBehaviour
     {
         if (beast == null)
         {
-            Debug.LogError("UpdateFusionPanel received a null beast.");
             return;
         }
         if (!firstSlotSelected)
         {
             currentBeast_1 = beast;
-            beastImage_1.sprite = beast.image;
-            beastName_1.text = beast.name;
-            beastHP_1.text = beast.hp.ToString();
-            beastAttack_1.text = beast.attack.ToString();
-            beastArmor_1.text = beast.armor.ToString();
-            beastAP_1.text = beast.ap.ToString();
-            beastMR_1.text = beast.mr.ToString();
-            beastSpeed_1.text = beast.speed.ToString();
+            SetBeastUI(beastUI_1, beast);
             selectButton1.interactable = true;
         }
         else
         {
-            if (beast == currentBeast_1)
-            {
-                return;
-            }
-            if (beast.name != currentBeast_1.name) 
+            if (beast == currentBeast_1 || beast.name != currentBeast_1.name)
             {
                 return;
             }
             currentBeast_2 = beast;
-            beastImage_2.sprite = beast.image;
-            beastName_2.text = beast.name;
-            beastHP_2.text = beast.hp.ToString();
-            beastAttack_2.text = beast.attack.ToString();
-            beastArmor_2.text = beast.armor.ToString();
-            beastAP_2.text = beast.ap.ToString();
-            beastMR_2.text = beast.mr.ToString();
-            beastSpeed_2.text = beast.speed.ToString();
+            SetBeastUI(beastUI_2, beast);
             selectButton2.interactable = true;
             CalculateDifferences();
-          
         }
 
         ShowFusionPanel();
     }
 
+    private void SetBeastUI(BeastUI ui, SpiritualBeast beast)
+    {
+        ui.beastImage.gameObject.SetActive(true);
+        ui.beastImage.sprite = beast.image;
+        ui.beastName.text = beast.name;
+        ui.beastHP.text = beast.hp.ToString();
+        ui.beastAttack.text = beast.attack.ToString();
+        ui.beastArmor.text = beast.armor.ToString();
+        ui.beastAP.text = beast.ap.ToString();
+        ui.beastMR.text = beast.mr.ToString();
+        ui.beastSpeed.text = beast.speed.ToString();
+    }
+
     public void SelectSelection1()
     {
-
         if (currentBeast_1 == null)
         {
             Debug.LogError("No beast selected for the first slot.");
@@ -138,8 +136,6 @@ public class FusionManager : MonoBehaviour
         Debug.Log("Selected first slot beast: " + currentBeast_1.name);
         firstSlotSelected = true;
         selectButton1.interactable = false; // 禁用选择按钮
-
-
     }
 
     public void SelectSelection2()
@@ -180,12 +176,14 @@ public class FusionManager : MonoBehaviour
 
     private void UpdateButtonState(Button button, int difference)
     {
-        SetButtonState(button, difference > 0, false);
+        bool wasActiveAndNotInteractable = buttonStates.ContainsKey(button) && buttonStates[button];
+        SetButtonState(button, difference > 0, wasActiveAndNotInteractable);
+        buttonStates[button] = button.gameObject.activeSelf && !button.interactable;
     }
 
     private string FormatDifference(int difference)
     {
-        return difference <= 0 ? "(+0)" : $"(+0~{difference})";
+        return difference <= 0 ? "(+0)" : $"(+1~{difference})";
     }
 
     private void HideAttributeButtons()
@@ -202,12 +200,15 @@ public class FusionManager : MonoBehaviour
 
     private void EnableAttributeButtons()
     {
-        UpdateButtonState(hpButton, currentBeast_2.hp - currentBeast_1.hp);
-        UpdateButtonState(attackButton, currentBeast_2.attack - currentBeast_1.attack);
-        UpdateButtonState(armorButton, currentBeast_2.armor - currentBeast_1.armor);
-        UpdateButtonState(apButton, currentBeast_2.ap - currentBeast_1.ap);
-        UpdateButtonState(mrButton, currentBeast_2.mr - currentBeast_1.mr);
-        UpdateButtonState(speedButton, currentBeast_2.speed - currentBeast_1.speed);
+        foreach (var buttonState in buttonStates)
+        {
+            Button button = buttonState.Key;
+            bool wasActiveAndNotInteractable = buttonState.Value;
+            if (wasActiveAndNotInteractable)
+            {
+                SetButtonState(button, true, true);
+            }
+        }
     }
 
 
@@ -232,6 +233,39 @@ public class FusionManager : MonoBehaviour
     private void SetButtonActive(Button button, bool active)
     {
         button.gameObject.SetActive(active);
+    }
+
+    public void ResetFusionPanel()
+    {
+        // 清空第一个宠物槽的信息
+        ResetBeastUI(beastUI_1);
+        currentBeast_1 = null;
+
+        // 清空第二个宠物槽的信息
+        ResetBeastUI(beastUI_2);
+        currentBeast_2 = null;
+
+        // 禁用选择按钮
+        selectButton1.interactable = false;
+        selectButton2.interactable = false;
+
+        // 隐藏属性按钮
+        HideAttributeButtons();
+
+        // 重置选择状态
+        firstSlotSelected = false;
+    }
+
+    private void ResetBeastUI(BeastUI ui)
+    {
+        ui.beastImage.gameObject.SetActive(false); 
+        ui.beastName.text = "-";
+        ui.beastHP.text = "-";
+        ui.beastAttack.text = "-";
+        ui.beastArmor.text = "-";
+        ui.beastAP.text = "-";
+        ui.beastMR.text = "-";
+        ui.beastSpeed.text = "-";
     }
 
 

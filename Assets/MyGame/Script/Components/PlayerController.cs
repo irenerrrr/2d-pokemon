@@ -57,12 +57,12 @@ public class PlayerController : MonoBehaviour
             {
                 // 获取兽的属性并更新 UI 面板
             SpiritualBeast beast = beastComponent.beast;
-            beastInfoUI.UpdateBeastInfo(beast);
+            //beastInfoUI.UpdateBeastInfo(beast);
             }
         }
         else
         {
-            beastInfoUI.HideBeastInfo();
+            //beastInfoUI.HideBeastInfo();
         }
 
         //check fusion
@@ -124,6 +124,7 @@ public class PlayerController : MonoBehaviour
             playerInTrigger = false;
             stayTime = 0f; // 重置计时器
             fusionManager.HideFusionPanel();
+            fusionManager.ResetFusionPanel();
         }
     }
     //     if (collision.CompareTag("Beast"))  // 同样使用 CompareTag 方法
