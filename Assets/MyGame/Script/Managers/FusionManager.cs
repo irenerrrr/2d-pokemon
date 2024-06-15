@@ -104,6 +104,10 @@ public class FusionManager : MonoBehaviour
             {
                 return;
             }
+            if (currentBeast_2 != null && beast == currentBeast_2) {
+                return;
+            }
+            ResetPanelAndButtonStates();
             currentBeast_2 = beast;
             SetBeastUI(beastUI_2, beast);
             selectButton2.interactable = true;
@@ -186,17 +190,6 @@ public class FusionManager : MonoBehaviour
         return difference <= 0 ? "(+0)" : $"(+1~{difference})";
     }
 
-    private void HideAttributeButtons()
-    {
-        SetButtonActive(hpButton, false);
-        SetButtonActive(attackButton, false);
-        SetButtonActive(armorButton, false);
-        SetButtonActive(apButton, false);
-        SetButtonActive(mrButton, false);
-        SetButtonActive(speedButton, false);
-    }
-
-
 
     private void EnableAttributeButtons()
     {
@@ -235,6 +228,17 @@ public class FusionManager : MonoBehaviour
         button.gameObject.SetActive(active);
     }
 
+    private void HideAttributeButtons()
+    {
+        SetButtonActive(hpButton, false);
+        SetButtonActive(attackButton, false);
+        SetButtonActive(armorButton, false);
+        SetButtonActive(apButton, false);
+        SetButtonActive(mrButton, false);
+        SetButtonActive(speedButton, false);
+    }
+
+
     public void ResetFusionPanel()
     {
         // 清空第一个宠物槽的信息
@@ -266,6 +270,17 @@ public class FusionManager : MonoBehaviour
         ui.beastAP.text = "-";
         ui.beastMR.text = "-";
         ui.beastSpeed.text = "-";
+    }
+
+    private void ResetPanelAndButtonStates()
+    {
+        // 重置按钮状态
+        HideAttributeButtons();
+        buttonStates.Clear();
+
+        // 重置UI信息
+        ResetBeastUI(beastUI_2);
+      
     }
 
 
