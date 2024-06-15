@@ -53,7 +53,9 @@ public class FusionManager : MonoBehaviour
 
     void Start()
     {
+        
         fusionPanel.SetActive(false); // 确保Fusion Panel一开始是隐藏的
+        ResetFusionPanel();
 
         selectButton1.interactable = false; // 禁用第一个选择按钮
         selectButton2.interactable = false; // 禁用第二个选择按钮
@@ -258,6 +260,13 @@ public class FusionManager : MonoBehaviour
 
         // 重置选择状态
         firstSlotSelected = false;
+
+        UpdateDifferenceUI(differenceInfoHP, 0);
+        UpdateDifferenceUI(differenceInfoAttack, 0);
+        UpdateDifferenceUI(differenceInfoArmor, 0);
+        UpdateDifferenceUI(differenceInfoAP, 0);
+        UpdateDifferenceUI(differenceInfoMR, 0);
+        UpdateDifferenceUI(differenceInfoSpeed, 0);
     }
 
     private void ResetBeastUI(BeastUI ui)

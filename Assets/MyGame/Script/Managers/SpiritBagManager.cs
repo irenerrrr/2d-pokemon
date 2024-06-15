@@ -6,24 +6,11 @@ using TMPro;
 
 public class SpiritBagManager : MonoBehaviour
 {
-
+    private BeastPanel beastPanel;
+    public FusionManager fusionManager; // 引用 FusionManager
 
     public GameObject slotPrefab; // Slot 模板的 Prefab
     public Transform slotContainer; // Scroll View 的 Content 容器
-    public FusionManager fusionManager; // 引用 FusionManager
-    
-    public TextMeshProUGUI detailName;
-    public TextMeshProUGUI detailLevel;
-    public TextMeshProUGUI detailGender;
-    public Image detailImage;
-
-    public TextMeshProUGUI detailIntimacy;
-    public TextMeshProUGUI detailHP;
-    public TextMeshProUGUI detailAttack;
-    public TextMeshProUGUI detailArmor;
-    public TextMeshProUGUI detailAP;
-    public TextMeshProUGUI detailMR;
-    public TextMeshProUGUI detailSpeed;
 
     public GameObject detailPanel; // 左半边详细信息面板
     public GameObject spiritBagPanel; // Bag Detail 面板
@@ -41,10 +28,8 @@ public class SpiritBagManager : MonoBehaviour
         detailPanel.SetActive(false);
         spiritBagPanel.SetActive(false);
 
-        if (fusionManager == null)
-        {
-            Debug.LogError("FusionManager reference is missing in SpiritBagManager.");
-        }
+        GameObject detail1Panel = GameObject.Find("Canvas/SpiritBagCanvas/SpiritDetailPanel/Detail1Panel");
+        beastPanel = detail1Panel.GetComponent<BeastPanel>();
 
     }
 
@@ -86,19 +71,8 @@ public class SpiritBagManager : MonoBehaviour
         {
             // 更新详细信息面板
             detailPanel.SetActive(true);
+            beastPanel.UpdateBeastInfo(beast); 
             
-            detailName.text = beast.name;
-            detailLevel.text = "Level: " + beast.level;
-            detailGender.text = beast.gender;
-            detailImage.sprite = beast.image;
-
-            detailIntimacy.text = "Intimacy: " + beast.intimacy;
-            detailHP.text = "HP: " + beast.hp;
-            detailAttack.text = "Attack: " + beast.attack;
-            detailArmor.text = "Armor: " + beast.armor;
-            detailAP.text = "AP: " + beast.ap;
-            detailMR.text = "MR: " + beast.mr;
-            detailSpeed.text = "Speed: " + beast.speed;
         }
     }
 
