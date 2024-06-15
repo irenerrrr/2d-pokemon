@@ -10,6 +10,7 @@ public class SpiritualBeast
     public string type;
     public Sprite image;
 
+    public int intimacy;
     public int hp;
     public int attack;
     public int armor;
@@ -18,7 +19,7 @@ public class SpiritualBeast
     public int speed;
 
 
-    public SpiritualBeast(string name, int level, string gender, string type, Sprite image, 
+    public SpiritualBeast(string name, int level, string gender, string type, Sprite image, int intimacy,
     int hp, int attack, int armor, int ap, int mr, int speed)
     {
         this.name = name;
@@ -27,6 +28,7 @@ public class SpiritualBeast
         this.type = type;
         this.image = image;
 
+        this.intimacy = intimacy;
         this.hp = hp;
         this.attack = attack;
         this.armor = armor;

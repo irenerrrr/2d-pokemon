@@ -49,21 +49,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //check beast
-        Collider2D hit = Physics2D.OverlapCircle(transform.position, detectionRadius, beastLayer);
-        if (hit != null)
-        {
-            BeastComponent beastComponent = hit.GetComponent<BeastComponent>();
-            if (beastComponent != null)
-            {
-                // 获取兽的属性并更新 UI 面板
-            SpiritualBeast beast = beastComponent.beast;
-            //beastInfoUI.UpdateBeastInfo(beast);
-            }
-        }
-        else
-        {
-            //beastInfoUI.HideBeastInfo();
-        }
+        // Collider2D hit = Physics2D.OverlapCircle(transform.position, detectionRadius, beastLayer);
+        // if (hit != null)
+        // {
+        //     BeastComponent beastComponent = hit.GetComponent<BeastComponent>();
+        //     if (beastComponent != null)
+        //     {
+        //         // 获取兽的属性并更新 UI 面板
+        //     SpiritualBeast beast = beastComponent.beast;
+        //     // beastInfoUI.UpdateBeastInfo(beast);
+        //     }
+        // }
+        // else
+        // {
+        //     //beastInfoUI.HideBeastInfo();
+        // }
 
         //check fusion
         if (playerInTrigger)
@@ -104,6 +104,13 @@ public class PlayerController : MonoBehaviour
             // 切换到城镇场景
             SceneManager.LoadScene(1);
             respawnPoint = transform.position;
+        }
+        else if (collision.CompareTag("Beast"))
+        {
+            // 切换战斗场景
+            SceneManager.LoadScene(2);
+            Debug.Log("didnt find the scene");
+           
         }
         //check beast
         // if (collision.CompareTag("Beast"))  // 这里使用 CompareTag 方法检查标签是否为 "Beast"

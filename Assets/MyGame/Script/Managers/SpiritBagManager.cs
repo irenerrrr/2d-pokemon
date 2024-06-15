@@ -17,6 +17,7 @@ public class SpiritBagManager : MonoBehaviour
     public TextMeshProUGUI detailGender;
     public Image detailImage;
 
+    public TextMeshProUGUI detailIntimacy;
     public TextMeshProUGUI detailHP;
     public TextMeshProUGUI detailAttack;
     public TextMeshProUGUI detailArmor;
@@ -91,6 +92,7 @@ public class SpiritBagManager : MonoBehaviour
             detailGender.text = beast.gender;
             detailImage.sprite = beast.image;
 
+            detailIntimacy.text = "Intimacy: " + beast.intimacy;
             detailHP.text = "HP: " + beast.hp;
             detailAttack.text = "Attack: " + beast.attack;
             detailArmor.text = "Armor: " + beast.armor;

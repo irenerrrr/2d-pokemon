@@ -21659,7 +21659,7 @@ RectTransform:
   m_AnchorMin: {x: 0.3, y: 0.45}
   m_AnchorMax: {x: 0.3, y: 0.45}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 110, y: 26}
+  m_SizeDelta: {x: 130, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &991516474
 MonoBehaviour:
@@ -21681,7 +21681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Intimacy
+  m_text: 'Intimacy: 100
 
 '
   m_isRightToLeft: 0
@@ -47675,6 +47675,7 @@ MonoBehaviour:
   detailLevel: {fileID: 986576271469556257}
   detailGender: {fileID: 8548568132602595784}
   detailImage: {fileID: 7153021812869936062}
+  detailIntimacy: {fileID: 991516474}
   detailHP: {fileID: 2214353370058824619}
   detailAttack: {fileID: 5431794450830983683}
   detailArmor: {fileID: 5956869031154811904}
@@ -47700,7 +47701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &162120728224489874
@@ -54226,7 +54227,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6886992948206837160}
   m_HandleRect: {fileID: 3360559329252826043}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

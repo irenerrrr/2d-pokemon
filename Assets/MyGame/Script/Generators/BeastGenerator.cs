@@ -25,7 +25,7 @@ public class BeastGenerator : MonoBehaviour
         {
             // 只生成名字、性别、图片和等级
             name = image.name;
-            SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 0, 0, 0, 0, 0, 0);
+            SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 0, 0, 0, 0, 0, 0, 0);
             DebugBeast(beast); // 输出生成的beast的数据
             return beast;
         }
@@ -40,7 +40,7 @@ public class BeastGenerator : MonoBehaviour
             int mr = GenerateStat();
             int speed = GenerateStat();
 
-            SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, hp, attack, armor, ap, mr, speed);
+            SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 100, hp, attack, armor, ap, mr, speed);
             DebugBeast(beast); // 输出生成的beast的数据
             return beast;
         }
