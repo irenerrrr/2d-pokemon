@@ -16,6 +16,12 @@ public class BattleSceneUI : MonoBehaviour
 
     public Slider hpSlider;
     public Slider apSlider;
+    public TextMeshProUGUI hpSliderText;  // 新增，用于显示最大血量/当前血量
+    public TextMeshProUGUI apSliderText;  // 新增，用于显示最大AP/当前AP
+
+    public Image hpFillImage; // Fill Image for HP slider
+    public Image apFillImage; // Fill Image for AP slider
+
 
     public void UpdateBeastInfo(SpiritualBeast beast, bool isEnemy)
     {
@@ -27,8 +33,15 @@ public class BattleSceneUI : MonoBehaviour
 
         hpSlider.maxValue = beast.maxHp;
         hpSlider.value = beast.currentHp;
+        hpSliderText.text = $"{beast.maxHp} / {beast.currentHp}";
+
         apSlider.maxValue = beast.maxAp;
         apSlider.value = beast.currentAp;
+        apSliderText.text = $"{beast.maxAp} / {beast.currentAp}";
+
+        hpFillImage.color = Color.red; // 将 Fill Image 的颜色设置为红色
+        apFillImage.color = Color.blue; // 可选：将 AP Fill Image 的颜色设置为蓝色
+
 
         beastImage.sprite = beast.image;
 
