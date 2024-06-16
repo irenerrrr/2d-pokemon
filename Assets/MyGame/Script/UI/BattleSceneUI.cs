@@ -19,8 +19,12 @@ public class BattleSceneUI : MonoBehaviour
     public TextMeshProUGUI hpSliderText;  // 新增，用于显示最大血量/当前血量
     public TextMeshProUGUI apSliderText;  // 新增，用于显示最大AP/当前AP
 
+    public TextMeshProUGUI nameText;
+
     public Image hpFillImage; // Fill Image for HP slider
     public Image apFillImage; // Fill Image for AP slider
+
+    public GameObject enemyInfoPanel;
 
 
     public void UpdateBeastInfo(SpiritualBeast beast, bool isEnemy)
@@ -31,62 +35,43 @@ public class BattleSceneUI : MonoBehaviour
             return;
         }
 
-        hpSlider.maxValue = beast.maxHp;
-        hpSlider.value = beast.currentHp;
-        hpSliderText.text = $"{beast.maxHp} / {beast.currentHp}";
 
-        apSlider.maxValue = beast.maxAp;
-        apSlider.value = beast.currentAp;
-        apSliderText.text = $"{beast.maxAp} / {beast.currentAp}";
-
-        hpFillImage.color = Color.red; // 将 Fill Image 的颜色设置为红色
-        apFillImage.color = Color.blue; // 可选：将 AP Fill Image 的颜色设置为蓝色
-
+        UpdateSlider(hpSlider, hpSliderText, beast.maxHp, beast.currentHp, hpFillImage, Color.red);
+        UpdateSlider(apSlider, apSliderText, beast.maxAp, beast.currentAp, apFillImage, Color.blue);
 
         beastImage.sprite = beast.image;
+        UpdateText(nameText, beast.name);
 
- 
-        if (isEnemy)
+        if (isEnemy && beast.type == "SpiritualBeast")
         {
-            if (beast.type == "SpiritualBeast")
-            {
-                hpText.text = $"HP: {beast.maxHp}";
-                apText.text = $"Mana: {beast.maxAp}";
-                attackText.text = $"Attack: {beast.maxAttack}";
-                armorText.text = $"Armor: {beast.maxArmor}";
-                mrText.text = $"MR: {beast.maxMr}";
-                speedText.text = $"Speed: {beast.maxSpeed}";
-
-                hpText.gameObject.SetActive(true);
-                apText.gameObject.SetActive(true);   
-                attackText.gameObject.SetActive(true);
-                armorText.gameObject.SetActive(true);
-                mrText.gameObject.SetActive(true);
-                speedText.gameObject.SetActive(true);
-            }
-            else
-            {
-                hpText.gameObject.SetActive(false);
-                apText.gameObject.SetActive(false);  
-                attackText.gameObject.SetActive(false);
-                armorText.gameObject.SetActive(false);
-                mrText.gameObject.SetActive(false);
-                speedText.gameObject.SetActive(false);
-            }
+            enemyInfoPanel.SetActive(true);
+            UpdateText(hpText, $"HP {beast.maxHp}");
+            UpdateText(apText, $"AP {beast.maxAp}");
+            UpdateText(attackText, $"Attack {beast.maxAttack}");
+            UpdateText(armorText, $"Armor {beast.maxArmor}");
+            UpdateText(mrText, $"MR {beast.maxMr}");
+            UpdateText(speedText, $"Speed {beast.maxSpeed}");
         }
         else
         {
-            UpdateText(hpText, $"HP: {beast.maxHp}");
-            UpdateText(apText, $"Mana: {beast.maxAp}");
-            UpdateText(attackText, $"Attack: {beast.maxAttack}");
-            UpdateText(armorText, $"Armor: {beast.maxArmor}");
-            UpdateText(mrText, $"MR: {beast.maxMr}");
-            UpdateText(speedText, $"Speed: {beast.maxSpeed}");
+            if (enemyInfoPanel != null)
+            {
+                enemyInfoPanel.SetActive(false);
+            }
+
         }
-   
-        
-    
     }
+
+    private void UpdateSlider(Slider slider, TextMeshProUGUI sliderText, float maxValue, float currentValue, Image fillImage, Color fillColor)
+    {
+        slider.maxValue = maxValue;
+        slider.value = currentValue;
+        sliderText.text = $"{maxValue} / {currentValue}";
+        fillImage.color = fillColor;
+    }
+
+    
+    
     private void UpdateText(TextMeshProUGUI textComponent, string content)
     {
         if (textComponent != null)

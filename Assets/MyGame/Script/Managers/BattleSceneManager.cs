@@ -9,33 +9,18 @@ public class BattleSceneManager : MonoBehaviour
     public BattleSceneUI playerBeast;
     public BattleSceneUI enemyBeast;
 
+ 
+
     private void Start()
     {
-        if (playerBeast == null)
-        {
-            Debug.LogError("playerBeastPanel is not assigned in the Inspector.");
-        }
-        if (enemyBeast == null)
-        {
-            Debug.LogError("enemyBeastPanel is not assigned in the Inspector.");
-        }
-
         UpdateBattlePanels();
         StartCoroutine(TestBattle());
     }
 
     private void UpdateBattlePanels()
     {
-        Debug.Log("updatepanel");
-        if (BeastComponent.encounteredBeast != null)
-        {
-            enemyBeast.UpdateBeastInfo(BeastComponent.encounteredBeast, true);
-        }
-
-        if (BeastComponent.playerFirstBeast != null)
-        {
-            playerBeast.UpdateBeastInfo(BeastComponent.playerFirstBeast, false);
-        }
+        enemyBeast.UpdateBeastInfo(BeastComponent.encounteredBeast, true);
+        playerBeast.UpdateBeastInfo(BeastComponent.playerFirstBeast, false);
     }
 
     private IEnumerator TestBattle()
@@ -98,6 +83,7 @@ public class BattleSceneManager : MonoBehaviour
                 }
                 else
                 {
+                    yield return new WaitForSeconds(3); // 等待 1 秒
                     // 敌人先攻击玩家宠物
                     if (enemyBeast.currentAp >= 10)
                     {
@@ -135,7 +121,39 @@ public class BattleSceneManager : MonoBehaviour
                     }
                 }
             }
+            
+        }
+        yield return null;
+    }
+
+    private void Update()
+    {
+        CheckBattleStatus();
+    }
+
+    private void CheckBattleStatus()
+    {
+        if (BeastComponent.playerFirstBeast.currentHp <= 0 || BeastComponent.encounteredBeast.currentHp <= 0)
+        {
+            EndBattle();
         }
     }
+
+    private void EndBattle()
+    {
+        if (BeastComponent.playerFirstBeast.currentHp <= 0)
+        {
+            // Player lost the battle, handle player loss
+            Debug.Log("Player lost the battle.");
+        }
+        else if (BeastComponent.encounteredBeast.currentHp <= 0)
+        {
+            // Enemy lost the battle, handle enemy loss
+            Debug.Log("Enemy lost the battle.");
+        }
+        PlayerController.Instance.EndBattle();
+    }
+
+
 
 }

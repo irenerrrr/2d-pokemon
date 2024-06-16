@@ -389,6 +389,7 @@
 "Assets/MyGame/Script/Managers/BeastManager.cs"
 "Assets/MyGame/Script/Managers/FusionManager.cs"
 "Assets/MyGame/Script/Managers/PersistenceController.cs"
+"Assets/MyGame/Script/Managers/SceneController.cs"
 "Assets/MyGame/Script/Managers/SpiritBagManager.cs"
 "Assets/MyGame/Script/Managers/UIManager.cs"
 "Assets/MyGame/Script/UI/BattleSceneUI.cs"

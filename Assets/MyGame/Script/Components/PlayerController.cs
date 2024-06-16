@@ -10,10 +10,6 @@ public class PlayerController : MonoBehaviour
     public LayerMask beastLayer; // 兽所在的层
     private BeastInfoUI beastInfoUI;
     private Animator playerAnimation;
-    private Rigidbody2D player;
-    private Vector2 respawnPoint;
-
-    public static PlayerController Instance; 
 
     private SpiritualBeast beast; // 引用当前的 Beast 对象
     public SpiritBagManager spiritBagManager;
@@ -22,9 +18,16 @@ public class PlayerController : MonoBehaviour
     private float stayTime = 0f;
     private bool playerInTrigger = false;
 
+    private Rigidbody2D player;
+    private Vector2 respawnPoint;
+    private static string previousSceneName;
+    private static Vector3 playerPosition;
+    public static PlayerController Instance; 
+
  
     private void Awake()
     {
+        Instance = this; // 初始化静态实例
         InitializeComponents(); // 初始化组件
       
     }
@@ -33,13 +36,10 @@ public class PlayerController : MonoBehaviour
     {
         player = GetComponent<Rigidbody2D>();
         playerAnimation = GetComponent<Animator>();
-        Debug.Log("Components initialized once.");
     }
     void Start()
     {
-        beastInfoUI = FindObjectOfType<BeastInfoUI>();  // 确保找到 BeastInfoUI 组件
         fusionManager = FindObjectOfType<FusionManager>(); 
-
 
     }
 
@@ -60,6 +60,28 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+
+    // 处理场景切换和保存信息
+    private void SaveCurrentSceneInfo()
+    {
+        previousSceneName = SceneManager.GetActiveScene().name;
+        playerPosition = transform.position;
+    }
+
+    private void LoadPreviousScene()
+    {
+        SceneManager.LoadScene(previousSceneName);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == previousSceneName)
+        {
+            transform.position = playerPosition;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
     }
 
     //handle teleport scene
@@ -105,7 +127,8 @@ public class PlayerController : MonoBehaviour
                 {
                     Debug.Log("spiritBagManager或GetFirstBeast()返回空");
                 }
-                
+
+                SaveCurrentSceneInfo();
                 SceneManager.LoadScene("BattleScene");
                 Debug.Log("切换到BattleScene");
             }
@@ -115,17 +138,6 @@ public class PlayerController : MonoBehaviour
             }
         }
            
-        
-        //check beast
-        // if (collision.CompareTag("Beast"))  // 这里使用 CompareTag 方法检查标签是否为 "Beast"
-        // {
-        //     BeastComponent beastComponent = collision.GetComponent<BeastComponent>();
-        //     if (beastComponent != null)
-        //     {
-        //         SpiritualBeast beast = beastComponent.beast;
-        //         beastInfoUI.UpdateBeastInfo(beast);
-        //     }
-        // }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -138,10 +150,11 @@ public class PlayerController : MonoBehaviour
             fusionManager.ResetFusionPanel();
         }
     }
-    //     if (collision.CompareTag("Beast"))  // 同样使用 CompareTag 方法
-    //     {
-    //         beastInfoUI.HideBeastInfo();
-    //     }
-    // }
+
+    public void EndBattle()
+    {
+        LoadPreviousScene();
+    }
+
 
 }

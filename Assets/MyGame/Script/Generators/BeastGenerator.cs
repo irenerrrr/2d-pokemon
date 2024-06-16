@@ -14,12 +14,20 @@ public class BeastGenerator : MonoBehaviour
     public SpiritualBeast GenerateBeast()
     {
         string name = "";
-        k += 1;
-        
         int level = Random.Range(1, 10);
         string gender = Random.Range(0, 2) == 0 ? "Male" : "Female";
-      
-        string type = Random.Range(0, 2) == 0 ? "SpiritualBeast" : "NormalBeast";
+
+        // 生成所有属性
+        int maxHp = GenerateStat();
+        int maxAttack = GenerateStat();
+        int maxArmor = GenerateStat();
+        int maxAp = GenerateStat();
+        int maxMr = GenerateStat();
+        int maxSpeed = GenerateStat();
+
+        // 检查是否有任何属性值在 300-350 之间
+        bool isSpiritual = maxHp > 299 || maxAttack > 299 || maxArmor > 299 || maxAp > 299 || maxMr > 299 || maxSpeed > 299;
+        string type = isSpiritual ? "SpiritualBeast" : "NormalBeast";
         Sprite image = possibleImages[Random.Range(0, possibleImages.Length)];
         if (type == "NormalBeast")
         {
@@ -30,19 +38,11 @@ public class BeastGenerator : MonoBehaviour
             name = "Spiritual " + image.name;
         }
 
-        // 生成所有属性
-        int maxHp = GenerateStat();
-        int maxAttack = GenerateStat();
-        int maxArmor = GenerateStat();
-        int maxAp = GenerateStat();
-        int maxMr = GenerateStat();
-        int maxSpeed = GenerateStat();
-
         SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 100, maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed);
         DebugBeast(beast); // 输出生成的beast的数据
         return beast;
-        
     }
+
 
     private int GenerateStat()
     {
@@ -69,16 +69,14 @@ public class BeastGenerator : MonoBehaviour
     private void DebugBeast(SpiritualBeast beast)
     {
         Debug.Log("Generated Beast: " +
-                "\nName: " + beast.name +
-                "\nLevel: " + beast.level +
-                "\nGender: " + beast.gender +
-                "\nType: " + beast.type +
-                "\nMax HP: " + beast.maxHp +
-                "\nMax Attack: " + beast.maxAttack +
-                "\nMax Armor: " + beast.maxArmor +
-                "\nMax AP: " + beast.maxAp +
-                "\nMax MR: " + beast.maxMr +
-                "\nMax Speed: " + beast.maxSpeed);
+                "\nType: " + beast.type 
+                // "\nMax HP: " + beast.maxHp +
+                // "\nMax Attack: " + beast.maxAttack +
+                // "\nMax Armor: " + beast.maxArmor +
+                // "\nMax AP: " + beast.maxAp +
+                // "\nMax MR: " + beast.maxMr +
+                // "\nMax Speed: " + beast.maxSpeed
+                );
     }
 }
 

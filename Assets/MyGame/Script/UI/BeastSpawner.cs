@@ -13,6 +13,8 @@ public class BeastSpawner : MonoBehaviour
     private SpiritBagManager spiritbagManager; // 添加 SlotManager 的引用
    
     private int k = 0;
+    private static Dictionary<string, SpiritualBeast> spawnedBeasts = new Dictionary<string, SpiritualBeast>();
+
     void Start()
     {
         beastGenerator = GetComponent<BeastGenerator>();
@@ -24,29 +26,42 @@ public class BeastSpawner : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            // 随机选择生成类型
-            GameObject beastPrefab = BeastPrefab;
+            string beastId = "Beast_" + i;
 
-            // 随机位置生成
-            Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea);
-            GameObject beastInstance = Instantiate(beastPrefab, randomPosition, Quaternion.identity);
-
-            // 设置生成的兽的属性
-            SpiritualBeast beast = beastGenerator.GenerateBeast();
-
-            BeastComponent beastComponent = beastInstance.GetComponent<BeastComponent>();
-            beastComponent.beast = beast;
-
-            SpriteRenderer spriteRenderer = beastInstance.GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = beast.image;
-
-            // 如果生成的是 SpiritualBeast，将其添加到背包
-            if (beast.type == "SpiritualBeast" && k <=2)
+            if (!spawnedBeasts.ContainsKey(beastId))
             {
-                Debug.Log($"Generated Beast: Name={beast.name}, Level={beast.level}, Gender={beast.gender}, MaxHP={beast.maxHp}, MaxAttack={beast.maxAttack}, MaxArmor={beast.maxArmor}, MaxAP={beast.maxAp}, MaxMR={beast.maxMr}, MaxSpeed={beast.maxSpeed}");
-                spiritbagManager.AddBeast(beast);
+                Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea);
+                GameObject beastInstance = Instantiate(BeastPrefab, randomPosition, Quaternion.identity);
+
+                SpiritualBeast beast = beastGenerator.GenerateBeast();
+                BeastComponent beastComponent = beastInstance.GetComponent<BeastComponent>();
+                beastComponent.beast = beast;
+
+                SpriteRenderer spriteRenderer = beastInstance.GetComponent<SpriteRenderer>();
+                spriteRenderer.sprite = beast.image;
+
+                spawnedBeasts[beastId] = beast;
+
+                if (beast.type == "SpiritualBeast" && k <= 2)
+                {
+                    Debug.Log($"Generated Beast: Name={beast.name}, Level={beast.level}, Gender={beast.gender}, MaxHP={beast.maxHp}, MaxAttack={beast.maxAttack}, MaxArmor={beast.maxArmor}, MaxAP={beast.maxAp}, MaxMR={beast.maxMr}, MaxSpeed={beast.maxSpeed}");
+                    spiritbagManager.AddBeast(beast);
+                }
+                k += 1;
             }
-            k+=1;
+            else
+            {
+                // 从已保存的状态中恢复敌人
+                SpiritualBeast beast = spawnedBeasts[beastId];
+                Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea);
+                GameObject beastInstance = Instantiate(BeastPrefab, randomPosition, Quaternion.identity);
+
+                BeastComponent beastComponent = beastInstance.GetComponent<BeastComponent>();
+                beastComponent.beast = beast;
+
+                SpriteRenderer spriteRenderer = beastInstance.GetComponent<SpriteRenderer>();
+                spriteRenderer.sprite = beast.image;
+            }
         }
     }
 
