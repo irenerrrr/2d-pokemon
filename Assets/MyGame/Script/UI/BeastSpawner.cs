@@ -43,8 +43,8 @@ public class BeastSpawner : MonoBehaviour
             // 如果生成的是 SpiritualBeast，将其添加到背包
             if (beast.type == "SpiritualBeast")
             {
-                Debug.Log($"Generated Beast: Name={beast.name}, Level={beast.level}, Gender={beast.gender}, HP={beast.hp}, Attack={beast.attack}, Armor={beast.armor}, AP={beast.ap}, MR={beast.mr}, Speed={beast.speed}");
-                spiritbagManager.AddBeast(beast); 
+                Debug.Log($"Generated Beast: Name={beast.name}, Level={beast.level}, Gender={beast.gender}, MaxHP={beast.maxHp}, MaxAttack={beast.maxAttack}, MaxArmor={beast.maxArmor}, MaxAP={beast.maxAp}, MaxMR={beast.maxMr}, MaxSpeed={beast.maxSpeed}");
+                spiritbagManager.AddBeast(beast);
             }
         }
     }

@@ -23,10 +23,10 @@ public class BeastManager : MonoBehaviour
 
 
     public void CaptureBeast(string name, int level, string gender, string type, Sprite image, int intimacy,
-    int hp, int attack, int armor, int ap, int mr, int speed)
+    int maxHp, int maxAttack, int maxArmor, int maxAp, int maxMr, int maxSpeed)
     {
         SpiritualBeast newBeast = new SpiritualBeast(name, level, gender, type, 
-        image, intimacy, hp, attack, armor, ap, mr, speed);
+        image, intimacy, maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed);
         spiritbagManager.AddBeast(newBeast);
         Debug.Log("Captured new beast: " + newBeast.name);
     }

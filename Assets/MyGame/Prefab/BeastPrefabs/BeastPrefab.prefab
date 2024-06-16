@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 187249945798017218}
   - component: {fileID: 12588056940405242}
-  - component: {fileID: 4760005665712586033}
   - component: {fileID: 341732228018577303}
   - component: {fileID: 4836589238642461989}
   - component: {fileID: 3859397501659964029}
   - component: {fileID: 4295860559910810884}
   - component: {fileID: 5393710895517180516}
+  - component: {fileID: 8178687461531271913}
   m_Layer: 0
   m_Name: BeastPrefab
   m_TagString: Beast
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: a3de035f39003d84392707b479932381, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -91,18 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &4760005665712586033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6824993616537670497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e999ca05355f7ae46840ec582ed2d5fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &341732228018577303
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -227,6 +215,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &8178687461531271913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6824993616537670497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e999ca05355f7ae46840ec582ed2d5fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8340910910014370207
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +299,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 897c542affa1c624da03b90c105313d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.36078432}

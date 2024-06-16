@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance; 
 
     private SpiritualBeast beast; // 引用当前的 Beast 对象
+    public SpiritBagManager spiritBagManager;
 
     public FusionManager fusionManager;
     private float stayTime = 0f;
@@ -38,34 +39,12 @@ public class PlayerController : MonoBehaviour
     {
         beastInfoUI = FindObjectOfType<BeastInfoUI>();  // 确保找到 BeastInfoUI 组件
         fusionManager = FindObjectOfType<FusionManager>(); 
-        // if (beastInfoUI == null)
-        // {
-        //     Debug.LogError("BeastInfoUI component not found in the scene.");
-        // }
-        //HideFusionPanel();
+
 
     }
 
     void Update()
     {
-        //check beast
-        // Collider2D hit = Physics2D.OverlapCircle(transform.position, detectionRadius, beastLayer);
-        // if (hit != null)
-        // {
-        //     BeastComponent beastComponent = hit.GetComponent<BeastComponent>();
-        //     if (beastComponent != null)
-        //     {
-        //         // 获取兽的属性并更新 UI 面板
-        //     SpiritualBeast beast = beastComponent.beast;
-        //     // beastInfoUI.UpdateBeastInfo(beast);
-        //     }
-        // }
-        // else
-        // {
-        //     //beastInfoUI.HideBeastInfo();
-        // }
-
-        //check fusion
         if (playerInTrigger)
         {
             stayTime += Time.deltaTime;
@@ -107,9 +86,36 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.CompareTag("Beast"))
         {
-            // 切换战斗场景
-            SceneManager.LoadScene(2);
-            Debug.Log("didnt find the scene");
+        if (collision.CompareTag("Beast"))
+        {
+            Debug.Log("碰到Beast");
+            
+            BeastComponent beastComponent = collision.GetComponentInParent<BeastComponent>();
+            if (beastComponent != null)
+            {
+                Debug.Log("找到BeastComponent");
+                
+                BeastComponent.encounteredBeast = beastComponent.beast;
+                Debug.Log("encounteredBeast: " + BeastComponent.encounteredBeast.name);
+                
+                if (spiritBagManager != null && spiritBagManager.GetFirstBeast() != null)
+                {
+                    BeastComponent.playerFirstBeast = spiritBagManager.GetFirstBeast();
+                    Debug.Log("playerFirstBeast: " + BeastComponent.playerFirstBeast.name);
+                }
+                else
+                {
+                    Debug.Log("spiritBagManager或GetFirstBeast()返回空");
+                }
+                
+                SceneManager.LoadScene("BattleScene");
+                Debug.Log("切换到BattleScene");
+            }
+            else
+            {
+                Debug.Log("未找到BeastComponent");
+            }
+        }
            
         }
         //check beast

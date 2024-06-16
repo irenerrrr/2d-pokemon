@@ -68,6 +68,7 @@ public class FusionManager : MonoBehaviour
     {
         selectButton1.onClick.AddListener(SelectSelection1);
         selectButton2.onClick.AddListener(SelectSelection2);
+        
         hpButton.onClick.AddListener(OnHPButtonClick); // 绑定HP按钮的点击事件
         attackButton.onClick.AddListener(OnArmorButtonClick); // 绑定Armor按钮的点击事件
         armorButton.onClick.AddListener(OnArmorButtonClick); // 绑定Armor按钮的点击事件
@@ -124,12 +125,12 @@ public class FusionManager : MonoBehaviour
         ui.beastImage.gameObject.SetActive(true);
         ui.beastImage.sprite = beast.image;
         ui.beastName.text = beast.name;
-        ui.beastHP.text = beast.hp.ToString();
-        ui.beastAttack.text = beast.attack.ToString();
-        ui.beastArmor.text = beast.armor.ToString();
-        ui.beastAP.text = beast.ap.ToString();
-        ui.beastMR.text = beast.mr.ToString();
-        ui.beastSpeed.text = beast.speed.ToString();
+        ui.beastHP.text = beast.maxHp.ToString();
+        ui.beastAttack.text = beast.maxAttack.ToString();
+        ui.beastArmor.text = beast.maxArmor.ToString();
+        ui.beastAP.text = beast.maxAp.ToString();
+        ui.beastMR.text = beast.maxMr.ToString();
+        ui.beastSpeed.text = beast.maxSpeed.ToString();
     }
 
     public void SelectSelection1()
@@ -153,12 +154,12 @@ public class FusionManager : MonoBehaviour
 
     private void CalculateDifferences()
     {
-        int hpDifference = currentBeast_2.hp - currentBeast_1.hp;
-        int attackDifference = currentBeast_2.attack - currentBeast_1.attack;
-        int armorDifference = currentBeast_2.armor - currentBeast_1.armor;
-        int apDifference = currentBeast_2.ap - currentBeast_1.ap;
-        int mrDifference = currentBeast_2.mr - currentBeast_1.mr;
-        int speedDifference = currentBeast_2.speed - currentBeast_1.speed;
+        int hpDifference = currentBeast_2.maxHp - currentBeast_1.maxHp;
+        int attackDifference = currentBeast_2.maxAttack - currentBeast_1.maxAttack;
+        int armorDifference = currentBeast_2.maxArmor - currentBeast_1.maxArmor;
+        int apDifference = currentBeast_2.maxAp - currentBeast_1.maxAp;
+        int mrDifference = currentBeast_2.maxMr - currentBeast_1.maxMr;
+        int speedDifference = currentBeast_2.maxSpeed - currentBeast_1.maxSpeed;
 
         UpdateDifferenceUI(differenceInfoHP, hpDifference);
         UpdateDifferenceUI(differenceInfoAttack, attackDifference);

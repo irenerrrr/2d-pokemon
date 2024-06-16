@@ -11,16 +11,23 @@ public class SpiritualBeast
     public Sprite image;
 
     public int intimacy;
-    public int hp;
-    public int attack;
-    public int armor;
-    public int ap;
-    public int mr;
-    public int speed;
+    public int maxHp;
+    public int maxAttack;
+    public int maxArmor;
+    public int maxAp;
+    public int maxMr;
+    public int maxSpeed;
+
+    public int currentHp;
+    public int currentAttack;
+    public int currentArmor;
+    public int currentAp;
+    public int currentMr;
+    public int currentSpeed;
 
 
     public SpiritualBeast(string name, int level, string gender, string type, Sprite image, int intimacy,
-    int hp, int attack, int armor, int ap, int mr, int speed)
+    int maxHp, int maxAttack, int maxArmor, int maxAp, int maxMr, int maxSpeed)
     {
         this.name = name;
         this.level = level;
@@ -29,12 +36,28 @@ public class SpiritualBeast
         this.image = image;
 
         this.intimacy = intimacy;
-        this.hp = hp;
-        this.attack = attack;
-        this.armor = armor;
-        this.ap = ap;
-        this.mr = mr;
-        this.speed = speed;
+        this.maxHp = maxHp;
+        this.maxAttack = maxAttack;
+        this.maxArmor = maxArmor;
+        this.maxAp = maxAp;
+        this.maxMr = maxMr;
+        this.maxSpeed = maxSpeed;
+
+        this.currentHp = maxHp;
+        this.currentAttack = maxAttack;
+        this.currentArmor = maxArmor;
+        this.currentAp = maxAp;
+        this.currentMr = maxMr;
+        this.currentSpeed = maxSpeed;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHp -= damage;
+        if (currentHp < 0)
+        {
+            currentHp = 0;
+        }
     }
 
 }

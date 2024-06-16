@@ -133,7 +133,6 @@ GameObject:
   - component: {fileID: 6892897}
   - component: {fileID: 6892899}
   - component: {fileID: 6892898}
-  - component: {fileID: 6892900}
   m_Layer: 5
   m_Name: Detail1Panel
   m_TagString: Untagged
@@ -212,29 +211,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6892896}
   m_CullTransparentMesh: 1
---- !u!114 &6892900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6892896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f1c4436ee5aed641b921125d78a4ffb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  beastName: {fileID: 7369322922528302274}
-  beastLevel: {fileID: 1764794373}
-  beastGender: {fileID: 8548568132602595784}
-  beastImage: {fileID: 7153021812869936062}
-  beastIntimacy: {fileID: 991516474}
-  beastHP: {fileID: 2214353370058824619}
-  beastAttack: {fileID: 5431794450830983683}
-  beastArmor: {fileID: 5956869031154811904}
-  beastAP: {fileID: 1490684382857112263}
-  beastMR: {fileID: 3944087725530129971}
-  beastSpeed: {fileID: 195305640961417618}
 --- !u!1001 &15898338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12815,24 +12791,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d74fa960f2fd4418fdd029d51b57a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spiritualPanel: {fileID: 336422587552628176}
-  normalPanel: {fileID: 515661244}
-  spiritualNameText: {fileID: 1351109031404008571}
-  spiritualLevelText: {fileID: 7628219692060853423}
-  spiritualGenderText: {fileID: 3428992877108815256}
-  spiritualTypeText: {fileID: 7452850445018464113}
-  hpText: {fileID: 5399620243665320635}
-  attackText: {fileID: 9210876897975207358}
-  armorText: {fileID: 1775321308031522160}
-  apText: {fileID: 1434815660250678530}
-  mrText: {fileID: 842981427058226188}
-  speedText: {fileID: 162120728224489874}
-  spiritualBeastImage: {fileID: 5204481389004411009}
-  normalNameText: {fileID: 1208395592}
-  normalLevelText: {fileID: 1778434892}
-  normalGenderText: {fileID: 1086028707}
-  normalTypeText: {fileID: 1686685059}
-  normalBeastImage: {fileID: 1867982711}
 --- !u!1001 &423381098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47564,6 +47522,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a180b7b8d3dd1b34ba22dc0db6e49bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beastName: {fileID: 7369322922528302274}
+  beastLevel: {fileID: 1764794373}
+  beastGender: {fileID: 8548568132602595784}
+  beastImage: {fileID: 7153021812869936062}
+  beastIntimacy: {fileID: 991516474}
+  beastMaxHP: {fileID: 2214353370058824619}
+  beastMaxAttack: {fileID: 5431794450830983683}
+  beastMaxArmor: {fileID: 5956869031154811904}
+  beastMaxAP: {fileID: 1490684382857112263}
+  beastMaxMR: {fileID: 3944087725530129971}
+  beastMaxSpeed: {fileID: 195305640961417618}
   fusionManager: {fileID: 1057354412}
   slotPrefab: {fileID: 1406525716686400062, guid: ebff15b41bba6164caab471e767bb53a,
     type: 3}

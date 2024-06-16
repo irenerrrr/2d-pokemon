@@ -6,7 +6,18 @@ using TMPro;
 
 public class SpiritBagManager : MonoBehaviour
 {
-    private BeastPanel beastPanel;
+    public TextMeshProUGUI beastName;
+    public TextMeshProUGUI beastLevel;
+    public TextMeshProUGUI beastGender;
+    public Image beastImage;
+    public TextMeshProUGUI beastIntimacy;
+    public TextMeshProUGUI beastMaxHP;
+    public TextMeshProUGUI beastMaxAttack;
+    public TextMeshProUGUI beastMaxArmor;
+    public TextMeshProUGUI beastMaxAP;
+    public TextMeshProUGUI beastMaxMR;
+    public TextMeshProUGUI beastMaxSpeed;
+
     public FusionManager fusionManager; // 引用 FusionManager
 
     public GameObject slotPrefab; // Slot 模板的 Prefab
@@ -28,10 +39,18 @@ public class SpiritBagManager : MonoBehaviour
         detailPanel.SetActive(false);
         spiritBagPanel.SetActive(false);
 
-        GameObject detail1Panel = GameObject.Find("Canvas/SpiritBagCanvas/SpiritDetailPanel/Detail1Panel");
-        beastPanel = detail1Panel.GetComponent<BeastPanel>();
 
     }
+
+    public SpiritualBeast GetFirstBeast()
+    {
+        if (beasts.Count > 0)
+        {
+            return beasts[0];
+        }
+        return null;
+    }
+
 
     public void AddBeast(SpiritualBeast beast)
     {
@@ -71,9 +90,25 @@ public class SpiritBagManager : MonoBehaviour
         {
             // 更新详细信息面板
             detailPanel.SetActive(true);
-            beastPanel.UpdateBeastInfo(beast); 
+            UpdateBeastInfo(beast); 
             
         }
+    }
+    
+    public void UpdateBeastInfo(SpiritualBeast beast)
+    {
+        beastImage.sprite = beast.image;
+        beastName.text = beast.name;
+        beastLevel.text = "Level: " + beast.level;
+        beastGender.text = beast.gender;
+        
+        beastIntimacy.text = "Intimacy: " + beast.intimacy.ToString();
+        beastMaxHP.text = "Max HP: " + beast.maxHp.ToString();
+        beastMaxAttack.text = "Max Attack: " + beast.maxAttack.ToString();
+        beastMaxArmor.text = "Max Armor: " + beast.maxArmor.ToString();
+        beastMaxAP.text = "Max AP: " + beast.maxAp.ToString();
+        beastMaxMR.text = "Max MR: " + beast.maxMr.ToString();
+        beastMaxSpeed.text = "Max Speed: " + beast.maxSpeed.ToString();
     }
 
     public void RemoveSelectedBeast()
