@@ -86,8 +86,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.CompareTag("Beast"))
         {
-        if (collision.CompareTag("Beast"))
-        {
             Debug.Log("碰到Beast");
             
             BeastComponent beastComponent = collision.GetComponentInParent<BeastComponent>();
@@ -117,7 +115,7 @@ public class PlayerController : MonoBehaviour
             }
         }
            
-        }
+        
         //check beast
         // if (collision.CompareTag("Beast"))  // 这里使用 CompareTag 方法检查标签是否为 "Beast"
         // {

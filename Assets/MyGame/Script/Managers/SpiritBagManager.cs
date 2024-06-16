@@ -104,11 +104,11 @@ public class SpiritBagManager : MonoBehaviour
         
         beastIntimacy.text = "Intimacy: " + beast.intimacy.ToString();
         beastMaxHP.text = "Max HP: " + beast.maxHp.ToString();
-        beastMaxAttack.text = "Max Attack: " + beast.maxAttack.ToString();
-        beastMaxArmor.text = "Max Armor: " + beast.maxArmor.ToString();
-        beastMaxAP.text = "Max AP: " + beast.maxAp.ToString();
-        beastMaxMR.text = "Max MR: " + beast.maxMr.ToString();
-        beastMaxSpeed.text = "Max Speed: " + beast.maxSpeed.ToString();
+        beastMaxAttack.text = "Attack: " + beast.maxAttack.ToString();
+        beastMaxArmor.text = "Armor: " + beast.maxArmor.ToString();
+        beastMaxAP.text = "Max Mana/AP: " + beast.maxAp.ToString();
+        beastMaxMR.text = "MR: " + beast.maxMr.ToString();
+        beastMaxSpeed.text = "Speed: " + beast.maxSpeed.ToString();
     }
 
     public void RemoveSelectedBeast()

@@ -23,27 +23,25 @@ public class BeastGenerator : MonoBehaviour
         Sprite image = possibleImages[Random.Range(0, possibleImages.Length)];
         if (type == "NormalBeast")
         {
-            // 只生成名字、性别、图片和等级
             name = image.name;
-            SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 0, 0, 0, 0, 0, 0, 0);
-            DebugBeast(beast); // 输出生成的beast的数据
-            return beast;
         }
         else
         {
             name = "Spiritual " + image.name;
-            // 生成所有属性
-            int maxHp = GenerateStat();
-            int maxAttack = GenerateStat();
-            int maxArmor = GenerateStat();
-            int maxAp = GenerateStat();
-            int maxMr = GenerateStat();
-            int maxSpeed = GenerateStat();
-
-            SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 100, maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed);
-            DebugBeast(beast); // 输出生成的beast的数据
-            return beast;
         }
+
+        // 生成所有属性
+        int maxHp = GenerateStat();
+        int maxAttack = GenerateStat();
+        int maxArmor = GenerateStat();
+        int maxAp = GenerateStat();
+        int maxMr = GenerateStat();
+        int maxSpeed = GenerateStat();
+
+        SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 100, maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed);
+        DebugBeast(beast); // 输出生成的beast的数据
+        return beast;
+        
     }
 
     private int GenerateStat()

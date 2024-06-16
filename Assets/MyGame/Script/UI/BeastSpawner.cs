@@ -12,7 +12,7 @@ public class BeastSpawner : MonoBehaviour
     private BeastGenerator beastGenerator;
     private SpiritBagManager spiritbagManager; // 添加 SlotManager 的引用
    
-
+    private int k = 0;
     void Start()
     {
         beastGenerator = GetComponent<BeastGenerator>();
@@ -41,11 +41,12 @@ public class BeastSpawner : MonoBehaviour
             spriteRenderer.sprite = beast.image;
 
             // 如果生成的是 SpiritualBeast，将其添加到背包
-            if (beast.type == "SpiritualBeast")
+            if (beast.type == "SpiritualBeast" && k <=2)
             {
                 Debug.Log($"Generated Beast: Name={beast.name}, Level={beast.level}, Gender={beast.gender}, MaxHP={beast.maxHp}, MaxAttack={beast.maxAttack}, MaxArmor={beast.maxArmor}, MaxAP={beast.maxAp}, MaxMR={beast.maxMr}, MaxSpeed={beast.maxSpeed}");
                 spiritbagManager.AddBeast(beast);
             }
+            k+=1;
         }
     }
 

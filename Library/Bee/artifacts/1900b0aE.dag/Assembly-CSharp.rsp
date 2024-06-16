@@ -391,6 +391,7 @@
 "Assets/MyGame/Script/Managers/PersistenceController.cs"
 "Assets/MyGame/Script/Managers/SpiritBagManager.cs"
 "Assets/MyGame/Script/Managers/UIManager.cs"
+"Assets/MyGame/Script/UI/BattleSceneUI.cs"
 "Assets/MyGame/Script/UI/BeastInfoUI.cs"
 "Assets/MyGame/Script/UI/BeastSpawner.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
