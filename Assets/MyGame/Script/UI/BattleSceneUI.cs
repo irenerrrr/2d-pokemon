@@ -21,9 +21,6 @@ public class BattleSceneUI : MonoBehaviour
 
     public TextMeshProUGUI nameText;
 
-    public Image hpFillImage; // Fill Image for HP slider
-    public Image apFillImage; // Fill Image for AP slider
-
     public GameObject enemyInfoPanel;
 
 
@@ -36,8 +33,8 @@ public class BattleSceneUI : MonoBehaviour
         }
 
 
-        UpdateSlider(hpSlider, hpSliderText, beast.maxHp, beast.currentHp, hpFillImage, Color.red);
-        UpdateSlider(apSlider, apSliderText, beast.maxAp, beast.currentAp, apFillImage, Color.blue);
+        UpdateSlider(hpSlider, hpSliderText, beast.maxHp, beast.currentHp);
+        UpdateSlider(apSlider, apSliderText, beast.maxAp, beast.currentAp);
 
         beastImage.sprite = beast.image;
         UpdateText(nameText, beast.name);
@@ -62,12 +59,12 @@ public class BattleSceneUI : MonoBehaviour
         }
     }
 
-    private void UpdateSlider(Slider slider, TextMeshProUGUI sliderText, float maxValue, float currentValue, Image fillImage, Color fillColor)
+    private void UpdateSlider(Slider slider, TextMeshProUGUI sliderText, float maxValue, float currentValue)
     {
         slider.maxValue = maxValue;
         slider.value = currentValue;
         sliderText.text = $"{maxValue} / {currentValue}";
-        fillImage.color = fillColor;
+    
     }
 
     

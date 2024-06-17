@@ -18,6 +18,10 @@ public class SpiritBagManager : MonoBehaviour
     public TextMeshProUGUI beastMaxMR;
     public TextMeshProUGUI beastMaxSpeed;
 
+    public Slider hpSlider; 
+    public Slider manaSlider; 
+    public Slider intimacySlider; 
+
     public FusionManager fusionManager; // 引用 FusionManager
 
     public GameObject slotPrefab; // Slot 模板的 Prefab
@@ -109,6 +113,15 @@ public class SpiritBagManager : MonoBehaviour
         beastMaxAP.text = "Max Mana/AP: " + beast.maxAp.ToString();
         beastMaxMR.text = "MR: " + beast.maxMr.ToString();
         beastMaxSpeed.text = "Speed: " + beast.maxSpeed.ToString();
+
+        hpSlider.maxValue = beast.maxHp;
+        hpSlider.value = beast.currentHp;
+
+        manaSlider.maxValue = beast.maxAp;
+        manaSlider.value = beast.currentAp;
+
+        intimacySlider.maxValue = 100;
+        intimacySlider.value = beast.intimacy;
     }
 
     public void RemoveSelectedBeast()

@@ -89,7 +89,7 @@ public class FusionManager : MonoBehaviour
         selectButton2.onClick.AddListener(SelectSelection2);
         
         hpButton.onClick.AddListener(OnHPButtonClick); // 绑定HP按钮的点击事件
-        attackButton.onClick.AddListener(OnArmorButtonClick); // 绑定Armor按钮的点击事件
+        attackButton.onClick.AddListener(OnAttackButtonClick); // 绑定Armor按钮的点击事件
         armorButton.onClick.AddListener(OnArmorButtonClick); // 绑定Armor按钮的点击事件
         apButton.onClick.AddListener(OnAPButtonClick); // 绑定AP按钮的点击事件
         mrButton.onClick.AddListener(OnMRButtonClick); // 绑定MR按钮的点击事件
@@ -310,30 +310,22 @@ public class FusionManager : MonoBehaviour
         // 重置按钮状态
         HideAttributeButtons();
         buttonStates.Clear();
-
         // 重置UI信息
         ResetBeastUI(beastUI_2);
       
     }
 
- 
-
         
     void OnHPButtonClick()
     {
         Debug.Log("HP Button Clicked");
-  
         int hpDifference = currentBeast_2.maxHp - currentBeast_1.maxHp;
-
         int maxN = CalculateMaxN(hpDifference, currentBeast_1.maxHp);
-  
         int randomHPDifference = Random.Range(1, maxN + 1);
-
         Debug.Log(randomHPDifference);
         UpdateFusionSuccessPanel();
         beastHPText.text = "HP " + currentBeast_1.maxHp.ToString() + " -> " + (currentBeast_1.maxHp + randomHPDifference).ToString();
         currentBeast_1.maxHp += randomHPDifference;
-     
         ShowFusionSuccessPanel();
     }
 
@@ -341,13 +333,14 @@ public class FusionManager : MonoBehaviour
     {
         Debug.Log("Attack Button Clicked");
         int attackDifference = currentBeast_2.maxAttack - currentBeast_1.maxAttack;
+        Debug.Log("1: " + currentBeast_1.maxAttack + " 2: " + currentBeast_2.maxAttack);
         int maxN = CalculateMaxN(attackDifference, currentBeast_1.maxAttack);
         int randomAttackDifference = Random.Range(1, maxN + 1);
+        
         Debug.Log(randomAttackDifference);
         UpdateFusionSuccessPanel();
         beastAttackText.text = "Attack " + currentBeast_1.maxAttack.ToString() + " -> " + (currentBeast_1.maxAttack + randomAttackDifference).ToString();
         currentBeast_1.maxAttack += randomAttackDifference;
-      
         ShowFusionSuccessPanel();
     }
 
@@ -356,13 +349,13 @@ public class FusionManager : MonoBehaviour
     {
         Debug.Log("Armor Button Clicked");
         int armorDifference = currentBeast_2.maxArmor - currentBeast_1.maxArmor;
+        Debug.Log("1: " + currentBeast_1.maxArmor + " 2: "  + currentBeast_2.maxArmor);
         int maxN = CalculateMaxN(armorDifference, currentBeast_1.maxArmor);
         int randomArmorDifference = Random.Range(1, maxN + 1);
         Debug.Log(randomArmorDifference);
         UpdateFusionSuccessPanel();
         beastArmorText.text = "Armor " + currentBeast_1.maxArmor.ToString() + " -> " + (currentBeast_1.maxArmor + randomArmorDifference).ToString();
         currentBeast_1.maxArmor += randomArmorDifference;
-       
         ShowFusionSuccessPanel();
     }
 
@@ -376,7 +369,6 @@ public class FusionManager : MonoBehaviour
         UpdateFusionSuccessPanel();
         beastAPText.text = "AP " + currentBeast_1.maxAp.ToString() + " -> " + (currentBeast_1.maxAp + randomApDifference).ToString();
         currentBeast_1.maxAp += randomApDifference;
-   
         ShowFusionSuccessPanel();
     }
 
@@ -390,7 +382,6 @@ public class FusionManager : MonoBehaviour
         UpdateFusionSuccessPanel();
         beastMRText.text = "MR " + currentBeast_1.maxMr.ToString() + " -> " + (currentBeast_1.maxMr + randomMrDifference).ToString();
         currentBeast_1.maxMr += randomMrDifference;
-   
         ShowFusionSuccessPanel();
     }
 
@@ -404,7 +395,6 @@ public class FusionManager : MonoBehaviour
         UpdateFusionSuccessPanel();
         beastSpeedText.text = "Speed " + currentBeast_1.maxSpeed.ToString() + " -> " + (currentBeast_1.maxSpeed + randomSpeedDifference).ToString();
         currentBeast_1.maxSpeed += randomSpeedDifference;
-   
         ShowFusionSuccessPanel();
     }
 

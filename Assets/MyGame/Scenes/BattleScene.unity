@@ -490,8 +490,6 @@ MonoBehaviour:
   hpSliderText: {fileID: 476845283}
   apSliderText: {fileID: 1051619993}
   nameText: {fileID: 492124243}
-  hpFillImage: {fileID: 589751714}
-  apFillImage: {fileID: 2124918583}
   enemyInfoPanel: {fileID: 0}
 --- !u!1 &264166823
 GameObject:
@@ -917,7 +915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.49803922, g: 0.5254902, b: 0.7490196, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1419,7 +1417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.87058824, g: 0.40784314, b: 0.40784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4020,8 +4018,6 @@ MonoBehaviour:
   hpSliderText: {fileID: 2065422541}
   apSliderText: {fileID: 1090959321}
   nameText: {fileID: 1316971427}
-  hpFillImage: {fileID: 1748831985}
-  apFillImage: {fileID: 427508361}
   enemyInfoPanel: {fileID: 518326734}
 --- !u!1 &1591073835
 GameObject:
@@ -4352,7 +4348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.87058824, g: 0.40784314, b: 0.40784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5351,7 +5347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.49803922, g: 0.5254902, b: 0.7490196, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

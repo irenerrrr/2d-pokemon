@@ -384,6 +384,7 @@
 "Assets/MyGame/Script/Components/BeastController.cs"
 "Assets/MyGame/Script/Components/PlayerController.cs"
 "Assets/MyGame/Script/Generators/BeastGenerator.cs"
+"Assets/MyGame/Script/Managers/Battle Sequence Manager.cs"
 "Assets/MyGame/Script/Managers/BattleSceneManager.cs"
 "Assets/MyGame/Script/Managers/BeastManager.cs"
 "Assets/MyGame/Script/Managers/FusionManager.cs"
