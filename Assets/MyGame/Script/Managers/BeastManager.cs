@@ -27,9 +27,16 @@ public class BeastManager : MonoBehaviour
         SpiritualBeast initialBeast = beastGenerator.GenerateBeast();
         if (initialBeast != null)
         {
-            initialBeast.name = "special";
-            spiritbagManager.AddBeast(initialBeast);
-            Debug.Log("Added initial beast: " + initialBeast.name);
+            for (int i = 0; i < 5; i++)
+            {
+                SpiritualBeast newBeast = beastGenerator.GenerateBeast();
+                if (newBeast != null)
+                {
+                    newBeast.name = "special";
+                    spiritbagManager.AddBeast(newBeast);
+                    Debug.Log("Added beast " + i + ": " + newBeast.name);
+                }
+            }
         }
         else
         {

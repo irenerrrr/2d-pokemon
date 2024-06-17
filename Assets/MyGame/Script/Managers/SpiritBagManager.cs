@@ -131,6 +131,25 @@ public class SpiritBagManager : MonoBehaviour
         }
     }
 
+    public void RemoveBeastAt(int index)
+    {
+        if (index >= 0 && index < beasts.Count)
+        {
+            SpiritualBeast beast = beasts[index];
+            beasts.RemoveAt(index);
+            Destroy(slots[index]);
+            slots.RemoveAt(index);
+
+            selectedBeastIndex = -1;
+
+            detailPanel.SetActive(false);
+            RefreshUI();
+        }
+        else
+        {
+            Debug.LogError("Index is out of range, cannot remove beast");
+        }
+    }
 
     public void RefreshUI()
     {
@@ -152,5 +171,21 @@ public class SpiritBagManager : MonoBehaviour
             button.onClick.AddListener(() => OnSlotClick(index));
         }
     }
-    
+
+    public int GetBeastIndex(SpiritualBeast beast)
+    {
+        return beasts.IndexOf(beast);
+    }
+    // 获取最新的 currentBeast_1 引用
+    public SpiritualBeast GetBeastAt(int index)
+    {
+        if (index >= 0 && index < beasts.Count)
+        {
+            return beasts[index];
+        }
+        return null;
+    }
+
+
+        
 }

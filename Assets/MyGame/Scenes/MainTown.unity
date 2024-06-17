@@ -16731,19 +16731,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 666337552}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &666337552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16864,19 +16852,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 675880640}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &675880640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23335,8 +23311,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11df50142991504ba4252e445183a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spiritBagManager: {fileID: 18307037642212000}
   fusionPanel: {fileID: 1042460235}
   spiritPanel: {fileID: 9156198143909419849}
+  fusionSuccessPanel: {fileID: 1592643406}
+  confirmButton: {fileID: 1189476435}
+  beastNameText: {fileID: 1418856363}
+  beastImage: {fileID: 2068723105}
+  beastHPText: {fileID: 1502875342}
+  beastAttackText: {fileID: 1942955844}
+  beastArmorText: {fileID: 365381267}
+  beastAPText: {fileID: 1861849147}
+  beastMRText: {fileID: 201641651}
+  beastSpeedText: {fileID: 1795276264}
   beastUI_1:
     beastImage: {fileID: 1005240921}
     beastName: {fileID: 1082207279}
@@ -25012,19 +24999,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1161786659}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1161786659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37203,19 +37178,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1513666094}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1513666094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38699,7 +38662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1592643407
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41335,19 +41298,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1770195837}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1770195837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42482,19 +42433,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1797968366}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1797968366
 MonoBehaviour:
   m_ObjectHideFlags: 0
