@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 341732228018577303}
   - component: {fileID: 4836589238642461989}
   - component: {fileID: 3859397501659964029}
-  - component: {fileID: 4295860559910810884}
   - component: {fileID: 5393710895517180516}
   - component: {fileID: 8178687461531271913}
   m_Layer: 0
@@ -176,18 +175,6 @@ MonoBehaviour:
   maxIdleTime: 3
   spawnArea: {fileID: 8063236312526824450, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
     type: 3}
---- !u!114 &4295860559910810884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6824993616537670497}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70ef6623cb91ffd47a90fe53e1754e06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &5393710895517180516
 Rigidbody2D:
   serializedVersion: 4

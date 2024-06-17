@@ -17,9 +17,21 @@ public class BeastSpawner : MonoBehaviour
 
     void Start()
     {
-        beastGenerator = GetComponent<BeastGenerator>();
-        spiritbagManager = FindObjectOfType<SpiritBagManager>();
-        GenerateBeastsInArea(spawnCount);
+    beastGenerator = GetComponent<BeastGenerator>();
+    if (beastGenerator == null)
+    {
+        Debug.LogError("BeastGenerator component not found on this GameObject.");
+        return;
+    }
+
+    spiritbagManager = FindObjectOfType<SpiritBagManager>();
+    if (spiritbagManager == null)
+    {
+        Debug.LogError("SpiritBagManager not found in the scene.");
+        return;
+    }
+
+    GenerateBeastsInArea(spawnCount);
     }
 
     void GenerateBeastsInArea(int count)

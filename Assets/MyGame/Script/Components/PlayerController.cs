@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
 {
     public float detectionRadius = 5f; // 检测半径
     public LayerMask beastLayer; // 兽所在的层
-    private BeastInfoUI beastInfoUI;
     private Animator playerAnimation;
 
     private SpiritualBeast beast; // 引用当前的 Beast 对象
@@ -39,7 +38,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        fusionManager = FindObjectOfType<FusionManager>(); 
+        //fusionManager = FindObjectOfType<FusionManager>(); 
 
     }
 

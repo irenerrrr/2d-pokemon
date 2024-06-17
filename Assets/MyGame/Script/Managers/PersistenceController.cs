@@ -5,8 +5,6 @@ using UnityEngine;
 public class PersistenceController : MonoBehaviour
 {
     public GameObject[] objectsToPersist;  // 在Inspector中设置想要持久化的对象数组
-    public GameObject beastInfoUI;
-
     private static PersistenceController instance; // 静态变量用于跟踪唯一
 
 
@@ -20,12 +18,14 @@ public class PersistenceController : MonoBehaviour
             foreach (GameObject obj in objectsToPersist)
             {
                 DontDestroyOnLoad(obj);
+                Debug.Log("DontDestroyOnLoad: " + obj.name);
             }
         }
         else if (instance != this)
         {
             Destroy(this.gameObject); // 如果已经有一个持久化实例，销毁新的实例
-            beastInfoUI.SetActive(false);
+            Debug.Log("Destroying duplicate PersistenceController instance");
         }
+        
     }
 }

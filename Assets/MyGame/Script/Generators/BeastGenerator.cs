@@ -9,8 +9,22 @@ public class BeastGenerator : MonoBehaviour
 
     public Sprite[] possibleImages; 
     public GameObject beastPrefab; // 新增Prefab引用
+    private BeastManager beastManager;
     public int k = 0;
 
+    void Start()
+    {
+        // 尝试找到 BeastManager
+        beastManager = FindObjectOfType<BeastManager>();
+        if (beastManager == null)
+        {
+            Debug.LogError("BeastManager not found in the scene.");
+        }
+        else
+        {
+            Debug.Log("BeastManager found.");
+        }
+    }
     public SpiritualBeast GenerateBeast()
     {
         string name = "";

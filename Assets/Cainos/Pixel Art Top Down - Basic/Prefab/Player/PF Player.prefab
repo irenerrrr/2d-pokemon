@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300006, guid: ec47f75fe8aff1644ac73998f4ad31b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -100,7 +100,6 @@ GameObject:
   - component: {fileID: 4616719885696106401}
   - component: {fileID: 2282097541696336127}
   - component: {fileID: 7488503174486195713}
-  - component: {fileID: 6653946476900143020}
   m_Layer: 20
   m_Name: PF Player
   m_TagString: Player
@@ -176,7 +175,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ec47f75fe8aff1644ac73998f4ad31b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -298,6 +297,8 @@ MonoBehaviour:
   beastLayer:
     serializedVersion: 2
     m_Bits: 128
+  spiritBagManager: {fileID: 0}
+  fusionManager: {fileID: 0}
 --- !u!114 &7488503174486195713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,15 +315,3 @@ MonoBehaviour:
   - {fileID: 5628018141983903104}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &6653946476900143020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5628018141983903104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70ef6623cb91ffd47a90fe53e1754e06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

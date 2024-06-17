@@ -6,19 +6,36 @@ public class BeastManager : MonoBehaviour
 {
     public SpiritBagManager spiritbagManager;
     public BeastGenerator beastGenerator;
+
     void Start()
     {
-        // 检查是否是第一次启动游戏
-        if (PlayerPrefs.GetInt("IsFirstTime", 1) == 1)
+        // 确保 spiritbagManager 和 beastGenerator 已初始化
+        spiritbagManager = FindObjectOfType<SpiritBagManager>();
+        if (spiritbagManager == null)
         {
-            // 第一次启动游戏，添加初始宠物
-            SpiritualBeast initialBeast = beastGenerator.GenerateBeast();
+            Debug.LogError("SpiritBagManager is not assigned in the Inspector.");
+            return;
+        }
+
+        if (beastGenerator == null)
+        {
+            Debug.LogError("BeastGenerator is not assigned in the Inspector.");
+            return;
+        }
+
+        // 检查是否是第一次启动游戏
+        SpiritualBeast initialBeast = beastGenerator.GenerateBeast();
+        if (initialBeast != null)
+        {
             initialBeast.name = "special";
             spiritbagManager.AddBeast(initialBeast);
-            
-            // 设置 IsFirstTime 为 0，表示不再是第一次启动
-            PlayerPrefs.SetInt("IsFirstTime", 0);
+            Debug.Log("Added initial beast: " + initialBeast.name);
         }
+        else
+        {
+            Debug.LogError("Failed to generate initial beast.");
+        }
+     
     }
 
 
