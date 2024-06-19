@@ -9,6 +9,7 @@ public class BattleSceneManager : MonoBehaviour
     public BattleSceneUI playerBeast;
     public BattleSceneUI enemyBeast;
 
+    public BeastManager beastManager;
  
 
     private void Start()
@@ -47,7 +48,7 @@ public class BattleSceneManager : MonoBehaviour
                     // 玩家宠物先攻击敌人
                     if (playerBeast.currentAp >= 10)
                     {
-                        enemyBeast.currentHp -=100;
+                        enemyBeast.currentHp -=200;
                         playerBeast.currentAp -= 10;
                         Debug.Log("enemyBeast.currHP" + enemyBeast.currentHp);
                         Debug.Log("playerBeast.currentAp" + playerBeast.currentAp);
@@ -87,7 +88,7 @@ public class BattleSceneManager : MonoBehaviour
                     // 敌人先攻击玩家宠物
                     if (enemyBeast.currentAp >= 10)
                     {
-                        playerBeast.currentHp -=50;
+                        playerBeast.currentHp -=10;
                         enemyBeast.currentAp -= 10;
                         Debug.Log("enemyBeast.currentAp" + enemyBeast.currentAp);
                         Debug.Log("playerBeast.currentHp" + playerBeast.currentHp);
@@ -105,7 +106,7 @@ public class BattleSceneManager : MonoBehaviour
                     // 玩家宠物攻击敌人
                     if (playerBeast.currentAp >= 10)
                     {
-                        enemyBeast.currentHp -=100;
+                        enemyBeast.currentHp -=200;
                         playerBeast.currentAp -= 10;
                         Debug.Log("enemyBeast.currHP" + enemyBeast.currentHp);
                         Debug.Log("playerBeast.currentAp" + playerBeast.currentAp);
@@ -139,6 +140,7 @@ public class BattleSceneManager : MonoBehaviour
         }
     }
 
+
     private void EndBattle()
     {
         if (BeastComponent.playerFirstBeast.currentHp <= 0)
@@ -150,7 +152,9 @@ public class BattleSceneManager : MonoBehaviour
         {
             // Enemy lost the battle, handle enemy loss
             Debug.Log("Enemy lost the battle.");
+
         }
+        Debug.Log("调用 PlayerController 的 EndBattle 方法.");
         PlayerController.Instance.EndBattle();
     }
 

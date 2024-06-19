@@ -7,6 +7,13 @@ public class BeastManager : MonoBehaviour
     public SpiritBagManager spiritbagManager;
     public BeastGenerator beastGenerator;
 
+    public static BeastManager Instance { get; private set; }
+
+    private List<GameObject> beasts = new List<GameObject>();
+
+
+
+
     void Start()
     {
         // 确保 spiritbagManager 和 beastGenerator 已初始化
@@ -27,16 +34,16 @@ public class BeastManager : MonoBehaviour
         SpiritualBeast initialBeast = beastGenerator.GenerateBeast();
         if (initialBeast != null)
         {
-            for (int i = 0; i < 5; i++)
-            {
-                SpiritualBeast newBeast = beastGenerator.GenerateBeast();
-                if (newBeast != null)
-                {
-                    newBeast.name = "special";
-                    spiritbagManager.AddBeast(newBeast);
-                    Debug.Log("Added beast " + i + ": " + newBeast.name);
-                }
-            }
+        
+            SpiritualBeast newBeast = beastGenerator.GenerateBeast();
+      
+            newBeast.name = "special";
+            newBeast.currentHp = 500;
+            newBeast.currentAp = 500;
+            newBeast.tag = "CapturedBeast"; 
+            spiritbagManager.AddBeast(newBeast);
+              
+       
         }
         else
         {
@@ -51,6 +58,7 @@ public class BeastManager : MonoBehaviour
     {
         SpiritualBeast newBeast = new SpiritualBeast(name, level, gender, type, 
         image, intimacy, maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed);
+        newBeast.tag = "CapturedBeast";
         spiritbagManager.AddBeast(newBeast);
         Debug.Log("Captured new beast: " + newBeast.name);
     }
@@ -60,4 +68,6 @@ public class BeastManager : MonoBehaviour
         spiritbagManager.RemoveSelectedBeast();
         Debug.Log("Released selected beast");
     }
+
+
 }

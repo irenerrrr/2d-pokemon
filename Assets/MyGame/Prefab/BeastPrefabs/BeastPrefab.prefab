@@ -214,6 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e999ca05355f7ae46840ec582ed2d5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  participatedInBattle: 0
+  isWildBeast: 1
 --- !u!1 &8340910910014370207
 GameObject:
   m_ObjectHideFlags: 0

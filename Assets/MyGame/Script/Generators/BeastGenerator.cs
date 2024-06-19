@@ -53,7 +53,7 @@ public class BeastGenerator : MonoBehaviour
         }
 
         SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 100, maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed);
-        DebugBeast(beast); // 输出生成的beast的数据
+        // DebugBeast(beast); // 输出生成的beast的数据
         return beast;
     }
 
@@ -80,18 +80,18 @@ public class BeastGenerator : MonoBehaviour
         }
     }
 
-    private void DebugBeast(SpiritualBeast beast)
-    {
-        Debug.Log("Generated Beast: " +
-                "\nType: " + beast.type 
-                // "\nMax HP: " + beast.maxHp +
-                // "\nMax Attack: " + beast.maxAttack +
-                // "\nMax Armor: " + beast.maxArmor +
-                // "\nMax AP: " + beast.maxAp +
-                // "\nMax MR: " + beast.maxMr +
-                // "\nMax Speed: " + beast.maxSpeed
-                );
-    }
+//     private void DebugBeast(SpiritualBeast beast)
+//     {
+//         Debug.Log("Generated Beast: " +
+//                 "\nType: " + beast.type 
+//                 // "\nMax HP: " + beast.maxHp +
+//                 // "\nMax Attack: " + beast.maxAttack +
+//                 // "\nMax Armor: " + beast.maxArmor +
+//                 // "\nMax AP: " + beast.maxAp +
+//                 // "\nMax MR: " + beast.maxMr +
+//                 // "\nMax Speed: " + beast.maxSpeed
+//                 );
+//     }
 }
 
 

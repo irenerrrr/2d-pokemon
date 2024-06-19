@@ -24,7 +24,15 @@ public class SpiritualBeast
     public int currentAp;
     public int currentMr;
     public int currentSpeed;
+    public string tag; // 添加tag属性
+    
+    [System.NonSerialized]
+    public GameObject beastGameObject; // 存储 GameObject 引用
 
+    // 无参数构造函数
+    public SpiritualBeast()
+    {
+    }
 
     public SpiritualBeast(string name, int level, string gender, string type, Sprite image, int intimacy,
     int maxHp, int maxAttack, int maxArmor, int maxAp, int maxMr, int maxSpeed)
@@ -58,6 +66,13 @@ public class SpiritualBeast
         {
             currentHp = 0;
         }
+    }
+
+    public void DecreaseIntimacy(int amount)
+    {
+        intimacy -= amount;
+        Debug.Log(name + "的亲密度减少了 " + amount);
+        // 可以在这里添加其他的逻辑，比如亲密度下降到一定程度可以触发其他效果
     }
 
 }

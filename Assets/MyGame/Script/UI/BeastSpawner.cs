@@ -1,78 +1,97 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class BeastSpawner : MonoBehaviour
 {
+
     public PolygonCollider2D spawnArea; // 使用 PolygonCollider2D
     public GameObject BeastPrefab;
 
     public int spawnCount = 10; // 每次生成的Beast数量
     private BeastGenerator beastGenerator;
     private SpiritBagManager spiritbagManager; // 添加 SlotManager 的引用
-   
-    private int k = 0;
-    private static Dictionary<string, SpiritualBeast> spawnedBeasts = new Dictionary<string, SpiritualBeast>();
+    private bool enableSpawning = true; 
 
+
+    
+    // void Awake()
+    // {
+    //     Debug.Log("BeastSpawner Awake");
+    //     beastGenerator = GetComponent<BeastGenerator>();
+        
+    // }
     void Start()
     {
-    beastGenerator = GetComponent<BeastGenerator>();
-    if (beastGenerator == null)
+        beastGenerator = GetComponent<BeastGenerator>();
+        CheckAndGenerateBeasts();
+    }
+
+    public void EnableSpawning(bool enable)
     {
-        Debug.LogError("BeastGenerator component not found on this GameObject.");
-        return;
+        enableSpawning = enable;
+        if (enableSpawning)
+        {
+            CheckAndGenerateBeasts();
+        }
     }
 
-    spiritbagManager = FindObjectOfType<SpiritBagManager>();
-    if (spiritbagManager == null)
+
+    public void CheckAndGenerateBeasts()
     {
-        Debug.LogError("SpiritBagManager not found in the scene.");
-        return;
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        Debug.Log("当前场景: " + currentSceneName);
+        if (PlayerController.isInBattle)
+        {
+            Debug.Log("当前在BattleScene中,不执行Beast生成逻辑");
+            return;
+        }
+        if (SceneManager.GetActiveScene().name != "Countryside")
+        {
+            Debug.Log("当前不在Countryside Scene中, 不执行Beast生成逻辑");
+            return;
+        } 
+        Debug.Log("当前在Countryside Scene中, 执行Beast生成逻辑");
+      
+
+        // 检查场景中现有的Beast数量
+        int currentBeastCount = FindObjectsOfType<BeastComponent>().Length;
+        Debug.Log("当前场景中的Beast数量: " + currentBeastCount);
+
+        // 如果场景中的 Beast 数量少于 5，则生成新的 Beast
+        if (currentBeastCount <= 6)
+        {
+            Debug.Log("生成新的Beast, 需要生成的数量: " + (spawnCount - currentBeastCount));
+            GenerateBeastsInArea(spawnCount - currentBeastCount);
+        }
     }
 
-    GenerateBeastsInArea(spawnCount);
-    }
 
-    void GenerateBeastsInArea(int count)
+    public void GenerateBeastsInArea(int count)
     {
         for (int i = 0; i < count; i++)
         {
-            string beastId = "Beast_" + i;
-
-            if (!spawnedBeasts.ContainsKey(beastId))
+            // Debug.Log("生成beast_" + i);
+            Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea);
+            GameObject beastInstance = Instantiate(BeastPrefab, randomPosition, Quaternion.identity);
+            if (beastInstance != null)
             {
-                Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea);
-                GameObject beastInstance = Instantiate(BeastPrefab, randomPosition, Quaternion.identity);
-
                 SpiritualBeast beast = beastGenerator.GenerateBeast();
                 BeastComponent beastComponent = beastInstance.GetComponent<BeastComponent>();
                 beastComponent.beast = beast;
+                beast.beastGameObject = beastInstance;
 
                 SpriteRenderer spriteRenderer = beastInstance.GetComponent<SpriteRenderer>();
                 spriteRenderer.sprite = beast.image;
 
-                spawnedBeasts[beastId] = beast;
-
-                if (beast.type == "SpiritualBeast" && k <= 2)
-                {
-                    Debug.Log($"Generated Beast: Name={beast.name}, Level={beast.level}, Gender={beast.gender}, MaxHP={beast.maxHp}, MaxAttack={beast.maxAttack}, MaxArmor={beast.maxArmor}, MaxAP={beast.maxAp}, MaxMR={beast.maxMr}, MaxSpeed={beast.maxSpeed}");
-                    spiritbagManager.AddBeast(beast);
-                }
-                k += 1;
+                // Debug.Log("Beast成功生成并初始化 at position " + beastInstance.transform.position);
             }
             else
             {
-                // 从已保存的状态中恢复敌人
-                SpiritualBeast beast = spawnedBeasts[beastId];
-                Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea);
-                GameObject beastInstance = Instantiate(BeastPrefab, randomPosition, Quaternion.identity);
-
-                BeastComponent beastComponent = beastInstance.GetComponent<BeastComponent>();
-                beastComponent.beast = beast;
-
-                SpriteRenderer spriteRenderer = beastInstance.GetComponent<SpriteRenderer>();
-                spriteRenderer.sprite = beast.image;
+                Debug.LogError("生成Beast失败");
             }
         }
     }
@@ -86,8 +105,8 @@ public class BeastSpawner : MonoBehaviour
         // 生成随机点直到找到一个在 PolygonCollider2D 内的点
         do
         {
-            float randomX = Random.Range(bounds.min.x, bounds.max.x);
-            float randomY = Random.Range(bounds.min.y, bounds.max.y);
+            float randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
+            float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
             randomPoint = new Vector2(randomX, randomY);
         } while (!PointInPolygon(collider, randomPoint));
 
@@ -111,4 +130,6 @@ public class BeastSpawner : MonoBehaviour
         }
         return inside;
     }
+
+
 }
