@@ -173,7 +173,7 @@ MonoBehaviour:
   maxWalkTime: 5
   minIdleTime: 1
   maxIdleTime: 3
-  spawnArea: {fileID: 8063236312526824450, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
+  spawnArea: {fileID: 913083817400622182, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
     type: 3}
 --- !u!50 &5393710895517180516
 Rigidbody2D:
@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   participatedInBattle: 0
-  isWildBeast: 1
 --- !u!1 &8340910910014370207
 GameObject:
   m_ObjectHideFlags: 0

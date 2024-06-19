@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8423399290510959654}
   - component: {fileID: 6087550805696893713}
   - component: {fileID: 460080181886473026}
-  - component: {fileID: 8063236312526824450}
+  - component: {fileID: 913083817400622182}
   m_Layer: 7
   m_Name: Area1
   m_TagString: Untagged
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463338081394329748}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.97, y: -7.73, z: -0.29191786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.67, y: 2, z: -0.29191786}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -167,7 +167,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10.433495, y: 8.140631}
   m_EdgeRadius: 0
---- !u!60 &8063236312526824450
+--- !u!60 &913083817400622182
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,14 +211,17 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 5.0459723, y: 4.6873856}
-      - {x: -5.3621016, y: 4.711198}
-      - {x: -5.4650335, y: 2.825686}
-      - {x: -13.022965, y: 2.8815715}
-      - {x: -12.880813, y: -0.48606062}
-      - {x: -9.424335, y: -0.5507922}
-      - {x: -8.988173, y: -6.582674}
-      - {x: 2.102641, y: -6.6618733}
-      - {x: 2.0096374, y: -3.614856}
-      - {x: 4.9797616, y: -3.6627638}
+    - - {x: -17.44289, y: -10.066755}
+      - {x: 10.345897, y: -10.262139}
+      - {x: 10.316597, y: 7.61536}
+      - {x: -9.349939, y: 7.7534823}
+      - {x: -9.55932, y: -8.215305}
+      - {x: -18.024622, y: -8.094894}
+      - {x: -17.937935, y: -3.2469292}
+      - {x: -23.541737, y: -3.721942}
+      - {x: -31.715721, y: -8.247557}
+      - {x: -31.480682, y: -14.132701}
+      - {x: -20.838284, y: -14.091065}
+      - {x: -20.723309, y: -11.232281}
+      - {x: -18.137316, y: -11.22036}
   m_UseDelaunayMesh: 0

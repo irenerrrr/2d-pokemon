@@ -15,15 +15,8 @@ public class BeastSpawner : MonoBehaviour
     private BeastGenerator beastGenerator;
     private SpiritBagManager spiritbagManager; // 添加 SlotManager 的引用
     private bool enableSpawning = true; 
+    public float minSpawnDistance = 1.0f; 
 
-
-    
-    // void Awake()
-    // {
-    //     Debug.Log("BeastSpawner Awake");
-    //     beastGenerator = GetComponent<BeastGenerator>();
-        
-    // }
     void Start()
     {
         beastGenerator = GetComponent<BeastGenerator>();
@@ -38,7 +31,6 @@ public class BeastSpawner : MonoBehaviour
             CheckAndGenerateBeasts();
         }
     }
-
 
     public void CheckAndGenerateBeasts()
     {
@@ -72,10 +64,11 @@ public class BeastSpawner : MonoBehaviour
 
     public void GenerateBeastsInArea(int count)
     {
+        List<Vector2> spawnedPositions = new List<Vector2>();
         for (int i = 0; i < count; i++)
         {
             // Debug.Log("生成beast_" + i);
-            Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea);
+            Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea, spawnedPositions);
             GameObject beastInstance = Instantiate(BeastPrefab, randomPosition, Quaternion.identity);
             if (beastInstance != null)
             {
@@ -87,7 +80,8 @@ public class BeastSpawner : MonoBehaviour
                 SpriteRenderer spriteRenderer = beastInstance.GetComponent<SpriteRenderer>();
                 spriteRenderer.sprite = beast.image;
 
-                // Debug.Log("Beast成功生成并初始化 at position " + beastInstance.transform.position);
+                spawnedPositions.Add(randomPosition);
+                Debug.Log($"Beast {i} successfully generated and initialized at position {beastInstance.transform.position}");
             }
             else
             {
@@ -96,29 +90,71 @@ public class BeastSpawner : MonoBehaviour
         }
     }
 
-    private Vector2 GetRandomPositionWithinPolygonCollider(PolygonCollider2D collider)
+    private Vector2 GetRandomPositionWithinPolygonCollider(PolygonCollider2D collider, List<Vector2> existingPositions)
     {
-        // 获取 collider 的边界
-        Bounds bounds = collider.bounds;
         Vector2 randomPoint;
+        Bounds bounds = CalculatePolygonColliderBounds(collider);
 
-        // 生成随机点直到找到一个在 PolygonCollider2D 内的点
+        // 最大尝试次数以防止无限循环
+        int maxAttempts = 1000;
+        int attempts = 0;
+
         do
         {
-            float randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
-            float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
-            randomPoint = new Vector2(randomX, randomY);
-        } while (!PointInPolygon(collider, randomPoint));
+            randomPoint = GenerateRandomPointWithinBounds(bounds);
+            attempts++;
+            if (attempts > maxAttempts)
+            {
+                Debug.LogError("Failed to find a valid point within the polygon after maximum attempts.");
+                break;
+            }
+        } while (!PointInPolygon(collider, randomPoint) || IsTooCloseToExistingPoints(randomPoint, existingPositions));
 
+        Debug.Log($"Found random point {randomPoint} within polygon after {attempts} attempts.");
         return randomPoint;
     }
+
+    private Bounds CalculatePolygonColliderBounds(PolygonCollider2D collider)
+    {
+        Vector2[] points = collider.points;
+        Vector2 min = points[0];
+        Vector2 max = points[0];
+
+        for (int i = 1; i < points.Length; i++)
+        {
+            Vector2 transformedPoint = collider.transform.TransformPoint(points[i]);
+            min = Vector2.Min(min, transformedPoint);
+            max = Vector2.Max(max, transformedPoint);
+        }
+
+        Bounds bounds = new Bounds();
+        bounds.SetMinMax(min, max);
+        return bounds;
+    }
+
+    private Vector2 GenerateRandomPointWithinBounds(Bounds bounds)
+    {
+        // 使用collider的bounds来生成随机点
+        float randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
+        float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
+        Debug.Log("min x" + bounds.min.x + "max x"+ bounds.max.x);
+        Debug.Log("min y" + bounds.min.y + "max y"+ bounds.max.y);
+        return new Vector2(randomX, randomY);
+    }
+
 
     private bool PointInPolygon(PolygonCollider2D collider, Vector2 point)
     {
         int numPoints = collider.GetTotalPointCount();
         int j = numPoints - 1;
         bool inside = false;
-        Vector2[] points = collider.points;
+        Vector2[] points = new Vector2[numPoints];
+
+        // 将本地坐标转换为世界坐标
+        for (int i = 0; i < numPoints; i++)
+        {
+            points[i] = collider.transform.TransformPoint(collider.points[i]);
+        }
 
         for (int i = 0; i < numPoints; j = i++)
         {
@@ -129,6 +165,18 @@ public class BeastSpawner : MonoBehaviour
             }
         }
         return inside;
+    }
+
+    private bool IsTooCloseToExistingPoints(Vector2 point, List<Vector2> existingPoints)
+    {
+        foreach (var existingPoint in existingPoints)
+        {
+            if (Vector2.Distance(point, existingPoint) < minSpawnDistance)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 
