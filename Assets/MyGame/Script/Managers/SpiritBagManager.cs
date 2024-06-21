@@ -20,7 +20,7 @@ public class SpiritBagManager : MonoBehaviour
     public TextMeshProUGUI beastMaxSpeed;
 
     public Slider hpSlider; 
-    public Slider manaSlider; 
+    public Slider apSlider; 
     public Slider intimacySlider; 
 
     public FusionManager fusionManager; // 引用 FusionManager
@@ -36,16 +36,19 @@ public class SpiritBagManager : MonoBehaviour
     private List<GameObject> slots = new List<GameObject>();
     private int selectedBeastIndex = -1; // 记录当前选中的宠物索引
     public DropdownHandler dropdownHandler; 
-    // public static List<SpiritualBeast> sequenceList = new List<SpiritualBeast> { null, null, null, null, null, null };
     public event Action<SpiritualBeast> BeastSelected; // 添加事件
-    // public event Action<SpiritualBeast> UpdateDropdownEvent;
-
+    
+    public TextMeshProUGUI hpSliderText;  // 新增，用于显示最大血量/当前血量
+    public TextMeshProUGUI apSliderText;  // 新增，用于显示最大AP/当前AP
 
     void Start()
     {
         // 初始化面板状态
         detailPanel.SetActive(false);
         spiritBagPanel.SetActive(false);
+        hpSlider.interactable = false;
+        apSlider.interactable = false;
+        intimacySlider.interactable = false;
 
     }
 
@@ -77,17 +80,28 @@ public class SpiritBagManager : MonoBehaviour
         beastMaxMR.text = "MR: " + beast.maxMr.ToString();
         beastMaxSpeed.text = "Speed: " + beast.maxSpeed.ToString();
 
-        hpSlider.maxValue = beast.maxHp;
-        hpSlider.value = beast.currentHp;
+        // hpSlider.maxValue = beast.maxHp;
+        // hpSlider.value = beast.currentHp;
 
-        manaSlider.maxValue = beast.maxAp;
-        manaSlider.value = beast.currentAp;
+        // manaSlider.maxValue = beast.maxAp;
+        // manaSlider.value = beast.currentAp;
 
         intimacySlider.maxValue = 100;
         intimacySlider.value = beast.intimacy;
-
+        UpdateSlider(hpSlider, hpSliderText, beast.maxHp, beast.currentHp);
+        UpdateSlider(apSlider, apSliderText, beast.maxAp, beast.currentAp);
+   
 
     }
+
+    private void UpdateSlider(Slider slider, TextMeshProUGUI sliderText, float maxValue, float currentValue)
+    {
+        slider.maxValue = maxValue;
+        slider.value = currentValue;
+        sliderText.text = $"{maxValue} / {currentValue}";
+    
+    }
+
 
 
     public void AddBeast(SpiritualBeast beast)

@@ -20,9 +20,16 @@ public class BattleSceneUI : MonoBehaviour
     public TextMeshProUGUI apSliderText;  // 新增，用于显示最大AP/当前AP
 
     public TextMeshProUGUI nameText;
+    public TextMeshProUGUI levelText;
 
     public GameObject enemyInfoPanel;
 
+
+    void Start()
+    {
+        hpSlider.interactable = false;
+        apSlider.interactable = false;
+    }
 
     public void UpdateBeastInfo(SpiritualBeast beast, bool isEnemy)
     {
@@ -38,6 +45,7 @@ public class BattleSceneUI : MonoBehaviour
 
         beastImage.sprite = beast.image;
         UpdateText(nameText, beast.name);
+        UpdateText(levelText, $"Level {beast.level}");
 
         if (isEnemy && beast.type == "SpiritualBeast")
         {
