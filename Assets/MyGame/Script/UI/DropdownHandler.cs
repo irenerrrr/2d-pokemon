@@ -52,12 +52,47 @@ public class DropdownHandler : MonoBehaviour
 
         if (currSequence != pickedValue)
         {
-            Check(currSequence, pickedValue, selectedBeast);
+            if (pickedValue == -1) 
+            {
+                SortList(selectedBeast);
+            } 
+            else 
+            {
+                Check(currSequence, pickedValue, selectedBeast);
+            }
+           
             spiritBagManager.UpdateBeastInfo(selectedBeast);
             UpdateDropdownDisplay(selectedBeast);
         }
     }
 
+    private void SortList(SpiritualBeast selectedBeast)
+    {
+        bool found = false;
+        for (int i = 0; i < sequenceList.Count - 1; i++) 
+        {
+            if (sequenceList[i] == selectedBeast) 
+            {
+                found = true;
+            }
+            if (found && i < sequenceList.Count - 1) 
+            {
+                sequenceList[i] = sequenceList[i + 1];
+                if (sequenceList[i] != null) 
+                {
+                    sequenceList[i].battleSequence -= 1;
+                }
+            }
+        }
+
+        // 设置最后一个位置为空
+        if (found && sequenceList.Count > 1)
+        {
+            sequenceList[sequenceList.Count - 1] = null;
+        }
+
+        selectedBeast.battleSequence = -1;
+    }
 
     
     public void UpdateDropdownDisplay(SpiritualBeast selectedBeast)
