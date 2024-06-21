@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class SpiritBagManager : MonoBehaviour
 {
@@ -31,18 +32,20 @@ public class SpiritBagManager : MonoBehaviour
     public GameObject spiritBagPanel; // Bag Detail 面板
     public GameObject fusionPanel; 
 
-    private List<SpiritualBeast> beasts = new List<SpiritualBeast>();
+    public List<SpiritualBeast> beasts = new List<SpiritualBeast>();
     private List<GameObject> slots = new List<GameObject>();
     private int selectedBeastIndex = -1; // 记录当前选中的宠物索引
+    public DropdownHandler dropdownHandler; 
+    // public static List<SpiritualBeast> sequenceList = new List<SpiritualBeast> { null, null, null, null, null, null };
+    public event Action<SpiritualBeast> BeastSelected; // 添加事件
+    // public event Action<SpiritualBeast> UpdateDropdownEvent;
 
-   
 
     void Start()
     {
         // 初始化面板状态
         detailPanel.SetActive(false);
         spiritBagPanel.SetActive(false);
-
 
     }
 
@@ -56,49 +59,9 @@ public class SpiritBagManager : MonoBehaviour
     }
 
 
-    public void AddBeast(SpiritualBeast beast)
-    {
-        beasts.Add(beast);
-        CreateSlot(beast);
-    }
 
 
-    public void CreateSlot(SpiritualBeast beast)
-    {
-        // Instantiate the slot
-        GameObject newSlot = Instantiate(slotPrefab, slotContainer);
-        slots.Add(newSlot);
 
-        newSlot.transform.Find("Image").GetComponent<Image>().sprite = beast.image;
-        newSlot.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = beast.name;
-        newSlot.transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Level: " + beast.level;
-        newSlot.transform.Find("Gender").GetComponent<TextMeshProUGUI>().text = beast.gender;
-
-        // Add button click event
-        int index = beasts.Count - 1; // 获取当前宠物的索引
-        newSlot.GetComponent<Button>().onClick.AddListener(() => OnSlotClick(index));
-
-    }
-
-    public void OnSlotClick(int index)
-    {
-
-        selectedBeastIndex = index; // 记录当前选中的宠物索引
-        SpiritualBeast beast = beasts[index];
-
-        if (fusionPanel.activeSelf)
-        {
-            fusionManager.UpdateFusionPanel(beast);
-        }
-        else
-        {
-            // 更新详细信息面板
-            detailPanel.SetActive(true);
-            UpdateBeastInfo(beast); 
-            
-        }
-    }
-    
     public void UpdateBeastInfo(SpiritualBeast beast)
     {
         beastImage.sprite = beast.image;
@@ -122,7 +85,66 @@ public class SpiritBagManager : MonoBehaviour
 
         intimacySlider.maxValue = 100;
         intimacySlider.value = beast.intimacy;
+
+
     }
+
+
+    public void AddBeast(SpiritualBeast beast)
+    {
+        beasts.Add(beast);
+        CreateSlot(beast);
+        // SortBeasts();
+        // RefreshUI();
+    }
+
+    public void CreateSlot(SpiritualBeast beast)
+    {
+        // Instantiate the slot
+        GameObject newSlot = Instantiate(slotPrefab, slotContainer);
+        slots.Add(newSlot);
+
+        newSlot.transform.Find("Image").GetComponent<Image>().sprite = beast.image;
+        newSlot.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = beast.name;
+        newSlot.transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Level: " + beast.level;
+        newSlot.transform.Find("Gender").GetComponent<TextMeshProUGUI>().text = beast.gender;
+
+        // Add button click event
+        int index = beasts.Count - 1; // 获取当前宠物的索引
+        newSlot.GetComponent<Button>().onClick.AddListener(() => OnSlotClick(index));
+
+    }
+
+    public void OnSlotClick(int index)
+    {
+        selectedBeastIndex = index; // 记录当前选中的宠物索引
+        SpiritualBeast beast = beasts[index];
+
+        if (fusionPanel.activeSelf)
+        {
+            fusionManager.UpdateFusionPanel(beast);
+        }
+        else
+        {
+            // 更新详细信息面板
+            detailPanel.SetActive(true);
+            UpdateBeastInfo(beast); 
+        }
+
+        // 触发事件
+        BeastSelected?.Invoke(beast);
+        // UpdateDropdownEvent?.Invoke(beast); 
+    }
+
+    public SpiritualBeast GetSelectedBeast()
+    {
+        if (selectedBeastIndex >= 0 && selectedBeastIndex < beasts.Count) // 使用 Count 而不是 Length
+        {
+            return beasts[selectedBeastIndex];
+        }
+        return null;
+    }
+
 
     public void RemoveSelectedBeast()
     {
@@ -140,6 +162,7 @@ public class SpiritBagManager : MonoBehaviour
 
             // 隐藏详细信息面板
             detailPanel.SetActive(false);
+            // SortBeasts();
             RefreshUI();
         }
     }
@@ -156,6 +179,7 @@ public class SpiritBagManager : MonoBehaviour
             selectedBeastIndex = -1;
 
             detailPanel.SetActive(false);
+            // SortBeasts();
             RefreshUI();
         }
         else
@@ -189,6 +213,7 @@ public class SpiritBagManager : MonoBehaviour
     {
         return beasts.IndexOf(beast);
     }
+
     // 获取最新的 currentBeast_1 引用
     public SpiritualBeast GetBeastAt(int index)
     {
@@ -198,7 +223,6 @@ public class SpiritBagManager : MonoBehaviour
         }
         return null;
     }
-
 
         
 }

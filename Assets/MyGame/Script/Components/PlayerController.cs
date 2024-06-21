@@ -26,9 +26,6 @@ public class PlayerController : MonoBehaviour
     public static bool isInBattle = false;
     private PersistenceController persistenceController;
 
-    public static bool isReturningFromBattle = false;
-    private BeastSpawner beastSpawner;
-
  
     private void Awake()
     {
@@ -43,8 +40,6 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        persistenceController = FindObjectOfType<PersistenceController>();
     }
     
     private void InitializeComponents()
@@ -93,7 +88,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("[LoadPreviousScene] Previous scene name is invalid.");
         }
-        
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -103,8 +97,6 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(DelayedSetPosition());
             transform.position = playerPosition;
             persistenceController.RestoreBeastsToScene();
-            isReturningFromBattle = false;
-            beastSpawner = FindObjectOfType<BeastSpawner>();
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }
@@ -113,10 +105,7 @@ public class PlayerController : MonoBehaviour
         yield return null; // 等待一帧，确保所有对象已初始化
         transform.position = playerPosition;
         Debug.Log($"[OnSceneLoaded] Player position restored to {playerPosition}");
-
         persistenceController.RestoreBeastsToScene();
-        isReturningFromBattle = false;
-        beastSpawner = FindObjectOfType<BeastSpawner>();
     }
 
     //handle teleport scene
@@ -132,7 +121,6 @@ public class PlayerController : MonoBehaviour
         else if (collision.CompareTag("Wild"))
         {
             // 切换到城镇场景
-            // SaveCurrentSceneInfo();
             if (persistenceController != null)
             {
                 // 清理地图上的所有Beast对象
@@ -156,13 +144,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("已经在战斗中，不能传送");
                 return;
             }
-            beastSpawner = FindObjectOfType<BeastSpawner>();
-            // if (beastSpawner != null)
-            // {
-            //     beastSpawner.EnableSpawning(false);
-            //     Debug.Log("beastSpawner.enabled");
-            // }
-                    
+  
             BeastComponent beastComponent = collision.GetComponentInParent<BeastComponent>();
             if (beastComponent != null)
             {
@@ -187,20 +169,16 @@ public class PlayerController : MonoBehaviour
                 persistenceController.MoveBeastsToDontDestroyOnLoad(persistenceController.SpawnedBeasts);
 
                 isInBattle = true;
-                isReturningFromBattle = true;
-
+      
                 SceneManager.LoadScene("BattleScene");
                 Debug.Log("切换到BattleScene");
+            } else {
+                Debug.LogError("未找到BeastComponent");
             }
-            else
-            {
-                Debug.Log("未找到BeastComponent");
-            }
+            
+            
         }
-           
     }
-
-
 
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -216,23 +194,11 @@ public class PlayerController : MonoBehaviour
 
     public void EndBattle()
     {
-        DecreaseIntimacyForParticipatedBeasts();
+        // DecreaseIntimacyForParticipatedBeasts();
         LoadPreviousScene();
         isInBattle = false;
         Debug.Log($"返回到场景 {staticPreviousSceneName}"); // 使用静态变量
     }
 
-    private void DecreaseIntimacyForParticipatedBeasts()
-    {
-        foreach (var beastComponent in FindObjectsOfType<BeastComponent>())
-        {
-            if (beastComponent.participatedInBattle)
-            {
-                beastComponent.beast.DecreaseIntimacy(3);
-                beastComponent.participatedInBattle = false; // 重置参战标记
-                Debug.Log(beastComponent.beast.name + "的亲密度减少了3");
-            }
-        }
-    }
 
 }

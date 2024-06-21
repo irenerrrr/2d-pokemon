@@ -81,7 +81,7 @@ public class BeastSpawner : MonoBehaviour
                 spriteRenderer.sprite = beast.image;
 
                 spawnedPositions.Add(randomPosition);
-                Debug.Log($"Beast {i} successfully generated and initialized at position {beastInstance.transform.position}");
+                // Debug.Log($"Beast {i} successfully generated and initialized at position {beastInstance.transform.position}");
             }
             else
             {
@@ -110,7 +110,7 @@ public class BeastSpawner : MonoBehaviour
             }
         } while (!PointInPolygon(collider, randomPoint) || IsTooCloseToExistingPoints(randomPoint, existingPositions));
 
-        Debug.Log($"Found random point {randomPoint} within polygon after {attempts} attempts.");
+        // Debug.Log($"Found random point {randomPoint} within polygon after {attempts} attempts.");
         return randomPoint;
     }
 
@@ -137,8 +137,8 @@ public class BeastSpawner : MonoBehaviour
         // 使用collider的bounds来生成随机点
         float randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
         float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
-        Debug.Log("min x" + bounds.min.x + "max x"+ bounds.max.x);
-        Debug.Log("min y" + bounds.min.y + "max y"+ bounds.max.y);
+        // Debug.Log("min x" + bounds.min.x + "max x"+ bounds.max.x);
+        // Debug.Log("min y" + bounds.min.y + "max y"+ bounds.max.y);
         return new Vector2(randomX, randomY);
     }
 

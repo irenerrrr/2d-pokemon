@@ -47,7 +47,6 @@ public class PersistenceController : MonoBehaviour
             Destroy(this.gameObject); // 如果已经有一个持久化实例，销毁新的实例
             Debug.Log("Destroying duplicate PersistenceController instance");
         }
-        
     }
 
 
@@ -70,17 +69,6 @@ public class PersistenceController : MonoBehaviour
         }
     }
 
-    // public void ClearPersistedObjects()
-    // {
-    //     GameObject[] allBeasts = GameObject.FindGameObjectsWithTag("Beast");
-    //     foreach (GameObject beast in allBeasts)
-    //     {
-    //         Destroy(beast);
-    //     }
-    //     Debug.Log("清理了所有Beast对象");
-    // }
-
-
 
     public void ClearPersistedObjects()
     {
@@ -93,17 +81,6 @@ public class PersistenceController : MonoBehaviour
         Debug.Log("清理了所有Beast对象");
     }
 
-    // public void ClearMap()
-    // {
-    //     BeastComponent[] allBeasts = FindObjectsOfType<BeastComponent>();
-    //     foreach (BeastComponent beast in allBeasts)
-    //     {
-    //         beast.MarkForDestruction();
-    //         Destroy(beast.gameObject);
-    //     }
-    //     Debug.Log("清理了所有Beast对象");
-    // }
-    
 
     public void MoveBeastsToDontDestroyOnLoad(Dictionary<string, SpiritualBeast> spawnedBeasts)
     {
@@ -128,13 +105,11 @@ public class PersistenceController : MonoBehaviour
             if (beastObject != null)
             {
                 AddBeastToPersist(beastObject);
-                // Debug.Log("保存 Beast: " + beast.name + " at position " + beastObject.transform.position);
             }
         }
 
         Debug.Log("保存结束: " + beastsToPersist.Count + " 个对象");
     }
-
 
     public void RestoreBeastsToScene()
     {
@@ -147,7 +122,6 @@ public class PersistenceController : MonoBehaviour
 
                 // 将对象重新附加到场景的根对象，移除DontDestroyOnLoad属性
                 obj.transform.SetParent(null);
-                // Debug.Log("恢复: " + obj.name + " at position " + obj.transform.position);
             }
         }
         Debug.Log("恢复结束: " + beastsToPersist.Count + " 个对象");

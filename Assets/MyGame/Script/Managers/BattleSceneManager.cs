@@ -37,6 +37,8 @@ public class BattleSceneManager : MonoBehaviour
             Debug.Log("Enemy Beast HP: " + enemyBeast.currentHp);
             Debug.Log("Player Beast Speed: " + playerBeast.currentSpeed);
             Debug.Log("Enemy Beast Speed: " + enemyBeast.currentSpeed);
+            
+            playerBeast.participatedInBattle = true;
 
             while (playerBeast.currentHp > 0 && enemyBeast.currentHp > 0)
             {
@@ -145,19 +147,26 @@ public class BattleSceneManager : MonoBehaviour
     {
         if (BeastComponent.playerFirstBeast.currentHp <= 0)
         {
-            // Player lost the battle, handle player loss
             Debug.Log("Player lost the battle.");
         }
         else if (BeastComponent.encounteredBeast.currentHp <= 0)
         {
-            // Enemy lost the battle, handle enemy loss
             Debug.Log("Enemy lost the battle.");
 
         }
         Debug.Log("调用 PlayerController 的 EndBattle 方法.");
+        DecreaseIntimacyForParticipatedBeasts();
         PlayerController.Instance.EndBattle();
     }
 
-
+    private void DecreaseIntimacyForParticipatedBeasts()
+    {
+        if (BeastComponent.playerFirstBeast != null && BeastComponent.playerFirstBeast.participatedInBattle)
+        {
+            BeastComponent.playerFirstBeast.DecreaseIntimacy(3);
+            BeastComponent.playerFirstBeast.participatedInBattle = false; // 重置参战标记
+            Debug.Log(BeastComponent.playerFirstBeast.name + "的亲密度减少了3");
+        }
+    }
 
 }

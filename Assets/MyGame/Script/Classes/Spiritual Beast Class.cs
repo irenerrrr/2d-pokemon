@@ -24,7 +24,11 @@ public class SpiritualBeast
     public int currentAp;
     public int currentMr;
     public int currentSpeed;
-    public string tag; // 添加tag属性
+
+    public int exp;
+    public int expToNextLevel = 100;
+    public int battleSequence = -1;
+    public bool participatedInBattle = false; 
     
     [System.NonSerialized]
     public GameObject beastGameObject; // 存储 GameObject 引用
@@ -71,9 +75,29 @@ public class SpiritualBeast
     public void DecreaseIntimacy(int amount)
     {
         intimacy -= amount;
-        Debug.Log(name + "的亲密度减少了 " + amount);
+        if (intimacy < 0)
+        {
+            intimacy = 0;
+        }
         // 可以在这里添加其他的逻辑，比如亲密度下降到一定程度可以触发其他效果
     }
+
+    // public void AddExperience(int experience, int playerLevel)
+    // {
+    //     exp += experience;
+    //     TryLevelUp(playerLevel);
+    // }
+
+    // private void TryLevelUp(int playerLevel)
+    // {
+    //     while (exp >= expToNextLevel && level < playerLevel)
+    //     {
+    //         exp -= expToNextLevel;
+    //         level++;
+    //         expToNextLevel = (int)(expToNextLevel * 1.2f);
+    //         Debug.Log($"Beast {name} Level Up! New level: {level}, Experience to next level: {expToNextLevel}");
+    //     }
+    // }
 
 }
 

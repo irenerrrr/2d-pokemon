@@ -11,46 +11,42 @@ public class BeastManager : MonoBehaviour
 
     private List<GameObject> beasts = new List<GameObject>();
 
-
+    private static bool first = true;
 
 
     void Start()
     {
         // 确保 spiritbagManager 和 beastGenerator 已初始化
         spiritbagManager = FindObjectOfType<SpiritBagManager>();
-        if (spiritbagManager == null)
+        if (first)
         {
-            Debug.LogError("SpiritBagManager is not assigned in the Inspector.");
-            return;
+            initial();
+            first = false;
         }
-
-        if (beastGenerator == null)
-        {
-            Debug.LogError("BeastGenerator is not assigned in the Inspector.");
-            return;
-        }
-
-        // 检查是否是第一次启动游戏
-        SpiritualBeast initialBeast = beastGenerator.GenerateBeast();
-        if (initialBeast != null)
-        {
-        
-            SpiritualBeast newBeast = beastGenerator.GenerateBeast();
-      
-            newBeast.name = "special";
-            newBeast.currentHp = 500;
-            newBeast.currentAp = 500;
-            newBeast.tag = "CapturedBeast"; 
-            spiritbagManager.AddBeast(newBeast);
-              
-       
-        }
-        else
-        {
-            Debug.LogError("Failed to generate initial beast.");
-        }
-     
     }
+    
+    private void initial() 
+    {
+        for (int i = 0; i < 7; i++) 
+        {
+            SpiritualBeast newBeast = beastGenerator.GenerateBeast();
+            if (newBeast != null)
+            {
+                newBeast.name = "special";
+                newBeast.currentHp = 500;
+                newBeast.maxHp = 500;
+                newBeast.currentAp = 500;
+                newBeast.maxAp = 500;
+                spiritbagManager.AddBeast(newBeast);
+            }
+            else
+            {
+                Debug.LogError("Failed to generate initial beast.");
+                break;
+            }
+        }
+    }
+
 
 
     public void CaptureBeast(string name, int level, string gender, string type, Sprite image, int intimacy,
@@ -58,7 +54,6 @@ public class BeastManager : MonoBehaviour
     {
         SpiritualBeast newBeast = new SpiritualBeast(name, level, gender, type, 
         image, intimacy, maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed);
-        newBeast.tag = "CapturedBeast";
         spiritbagManager.AddBeast(newBeast);
         Debug.Log("Captured new beast: " + newBeast.name);
     }
