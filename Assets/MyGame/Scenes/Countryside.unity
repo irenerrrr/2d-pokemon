@@ -8162,6 +8162,7 @@ MonoBehaviour:
   BeastPrefab: {fileID: 6824993616537670497, guid: ccf768f6523a1964c82e182489b72b35,
     type: 3}
   spawnCount: 12
+  minSpawnDistance: 1
 --- !u!1 &1605583196
 GameObject:
   m_ObjectHideFlags: 0
