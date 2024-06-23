@@ -9,14 +9,13 @@ public class BeastManager : MonoBehaviour
 
     public static BeastManager Instance { get; private set; }
 
-    private List<GameObject> beasts = new List<GameObject>();
-
+    public static List<SpiritualBeast> beasts = new List<SpiritualBeast>();
+    public static List<SpiritualBeast> sequenceList = new List<SpiritualBeast> { null, null, null, null, null, null };
+    
     private static bool first = true;
-
 
     void Start()
     {
-        // 确保 spiritbagManager 和 beastGenerator 已初始化
         spiritbagManager = FindObjectOfType<SpiritBagManager>();
         if (first)
         {
@@ -32,37 +31,31 @@ public class BeastManager : MonoBehaviour
             SpiritualBeast newBeast = beastGenerator.GenerateBeast();
             if (newBeast != null)
             {
-                newBeast.name = "special";
-                newBeast.currentHp = 500;
-                newBeast.maxHp = 500;
-                newBeast.currentAp = 500;
-                newBeast.maxAp = 500;
-                spiritbagManager.AddBeast(newBeast);
+                newBeast.name = "special_" + i;
+                newBeast.currentHp = 10;
+                newBeast.maxHp = 10;
+                newBeast.currentAp = 200;
+                newBeast.maxAp = 200;
+                CaptureBeast(newBeast);
+                
             }
-            else
-            {
-                Debug.LogError("Failed to generate initial beast.");
-                break;
-            }
+
         }
     }
 
-
-
-    public void CaptureBeast(string name, int level, string gender, string type, Sprite image, int intimacy,
-    int maxHp, int maxAttack, int maxArmor, int maxAp, int maxMr, int maxSpeed)
+    public void CaptureBeast(SpiritualBeast beast) 
     {
-        SpiritualBeast newBeast = new SpiritualBeast(name, level, gender, type, 
-        image, intimacy, maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed);
-        spiritbagManager.AddBeast(newBeast);
-        Debug.Log("Captured new beast: " + newBeast.name);
+        beasts.Add(beast);
+        spiritbagManager.CreateSlot(beast);
     }
 
-    public void ReleaseBeast()
-    {
-        spiritbagManager.RemoveSelectedBeast();
-        Debug.Log("Released selected beast");
-    }
+
+
+    // public void ReleaseBeast()
+    // {
+    //     spiritbagManager.RemoveSelectedBeast();
+    //     Debug.Log("Released selected beast");
+    // }
 
 
 }

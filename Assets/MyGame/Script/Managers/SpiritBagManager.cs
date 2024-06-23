@@ -26,7 +26,8 @@ public class SpiritBagManager : MonoBehaviour
     public GameObject spiritBagPanel; // Bag Detail 面板
     public GameObject fusionPanel; 
 
-    public static List<SpiritualBeast> beasts = new List<SpiritualBeast>();
+    // public static List<SpiritualBeast> beasts = new List<SpiritualBeast>();
+    private List<SpiritualBeast> beasts;
     private List<GameObject> slots = new List<GameObject>();
     private int selectedBeastIndex = -1; // 记录当前选中的宠物索引
     public BattleSequenceManager battleSequenceManager; 
@@ -44,6 +45,7 @@ public class SpiritBagManager : MonoBehaviour
         apSlider.interactable = false;
         intimacySlider.interactable = false;
         levelSlider.interactable = false;
+        beasts = BeastManager.beasts;
 
     }
 
@@ -55,7 +57,6 @@ public class SpiritBagManager : MonoBehaviour
         }
         return null;
     }
-
 
 
     public void UpdateBeastInfo(SpiritualBeast beast)
@@ -94,15 +95,6 @@ public class SpiritBagManager : MonoBehaviour
     }
 
 
-
-    public void AddBeast(SpiritualBeast beast)
-    {
-        beasts.Add(beast);
-        CreateSlot(beast);
-        // SortBeasts();
-        // RefreshUI();
-    }
-
     public void CreateSlot(SpiritualBeast beast)
     {
         // Instantiate the slot
@@ -138,7 +130,7 @@ public class SpiritBagManager : MonoBehaviour
 
         // 触发事件
         BeastSelected?.Invoke(beast);
-        // UpdateDropdownEvent?.Invoke(beast); 
+
     }
 
     public SpiritualBeast GetSelectedBeast()
@@ -149,7 +141,6 @@ public class SpiritBagManager : MonoBehaviour
         }
         return null;
     }
-
 
     public void RemoveSelectedBeast()
     {
@@ -167,7 +158,6 @@ public class SpiritBagManager : MonoBehaviour
 
             // 隐藏详细信息面板
             detailPanel.SetActive(false);
-            // SortBeasts();
             RefreshUI();
         }
     }
@@ -184,12 +174,7 @@ public class SpiritBagManager : MonoBehaviour
             selectedBeastIndex = -1;
 
             detailPanel.SetActive(false);
-            // SortBeasts();
             RefreshUI();
-        }
-        else
-        {
-            Debug.LogError("Index is out of range, cannot remove beast");
         }
     }
 

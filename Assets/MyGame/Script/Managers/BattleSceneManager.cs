@@ -35,12 +35,10 @@ public class BattleSceneManager : MonoBehaviour
         if (BeastComponent.encounteredBeast != null)
         {
             SpiritualBeast enemyBeast = BeastComponent.encounteredBeast;
-            
             SpiritualBeast playerBeast = GetNextValidPlayerBeast(ref battleCount);
 
             while (playerBeast != null && enemyBeast.currentHp > 0 && battleCount <= MaxBattleCount)
             {
-
                 playerBeast.participatedInBattle = true;
                 SpiritualBeast firstMove;
                 SpiritualBeast secondMove;
@@ -66,73 +64,70 @@ public class BattleSceneManager : MonoBehaviour
                     {
                         if (firstMove == playerBeast)
                         {
-                            enemyBeast.currentHp -= 200;
-                            playerBeast.currentAp -= 10;
-                            Debug.Log("enemyBeast.currHP: " + enemyBeast.currentHp);
-                            Debug.Log("playerBeast.currentAp: " + playerBeast.currentAp);
+                            enemyBeast.currentHp -= 300;
                         }
                         else
                         {
-                            playerBeast.currentHp -= 50;
-                            enemyBeast.currentAp -= 10;
-                            Debug.Log("enemyBeast.currentAp: " + enemyBeast.currentAp);
-                            Debug.Log("playerBeast.currentHp: " + playerBeast.currentHp);
+                            playerBeast.currentHp -= 10;
                         }
+                        firstMove.currentAp -= 10;
                     }
-                    
+
                     UpdateBattlePanels();
                     yield return new WaitForSeconds(3); // 等待 3 秒
 
                     if (enemyBeast.currentHp <= 0 || playerBeast.currentHp <= 0)
                     {
-                        Debug.Log("One of the beasts is dead. Battle stops.");
                         break; // 停止战斗
                     }
 
-                    // Second move attack
+                    // Swap first and second move
+                    SpiritualBeast temp = firstMove;
+                    firstMove = secondMove;
+                    secondMove = temp;
+
+                    // Second move attack (which is now the first move due to the swap)
                     yield return new WaitForSeconds(3); // 等待 3 秒
-                    if (secondMove.currentAp >= 10)
+                    if (firstMove.currentAp >= 10)
                     {
-                        if (secondMove == playerBeast)
+                        if (firstMove == playerBeast)
                         {
-                            enemyBeast.currentHp -= 200;
-                            playerBeast.currentAp -= 10;
-                            Debug.Log("enemyBeast.currHP: " + enemyBeast.currentHp);
-                            Debug.Log("playerBeast.currentAp: " + playerBeast.currentAp);
+                            enemyBeast.currentHp -= 300;
                         }
                         else
                         {
-                            playerBeast.currentHp -= 50;
-                            enemyBeast.currentAp -= 10;
-                            Debug.Log("enemyBeast.currentAp: " + enemyBeast.currentAp);
-                            Debug.Log("playerBeast.currentHp: " + playerBeast.currentHp);
+                            playerBeast.currentHp -= 10;
                         }
+                        firstMove.currentAp -= 10;
                     }
-                    
+
                     UpdateBattlePanels();
                     yield return new WaitForSeconds(3); // 等待 3 秒
 
                     if (enemyBeast.currentHp <= 0 || playerBeast.currentHp <= 0)
                     {
-                        Debug.Log("One of the beasts is dead. Battle stops.");
                         break; // 停止战斗
                     }
+
+                    // Swap back
+                    temp = firstMove;
+                    firstMove = secondMove;
+                    secondMove = temp;
                 }
 
                 if (enemyBeast.currentHp <= 0)
                 {
-                    Debug.Log("Enemy beast defeated.");
-                    break;
+                    CheckBattleStatus();
                 }
                 else if (playerBeast.currentHp <= 0)
                 {
-                    Debug.Log("Player beast defeated. Switching to the next one.");
                     playerBeast = GetNextValidPlayerBeast(ref battleCount);
                 }
             }
 
             if (playerBeast == null || battleCount > MaxBattleCount)
             {
+                CheckBattleStatus();
                 Debug.Log("All player beasts are dead. Battle over.");
             }
         }
@@ -140,10 +135,12 @@ public class BattleSceneManager : MonoBehaviour
         yield return null;
     }
 
+
     private SpiritualBeast GetNextValidPlayerBeast(ref int battleCount)
     {
+        Debug.Log("next" + battleCount);
         battleCount++;
-        foreach (var beast in BattleSequenceManager.sequenceList)
+        foreach (var beast in BeastManager.sequenceList)
         {
             if (beast != null && beast.currentHp > 0)
             {
@@ -151,7 +148,7 @@ public class BattleSceneManager : MonoBehaviour
             }
         }
 
-        foreach (var beast in SpiritBagManager.beasts)
+        foreach (var beast in BeastManager.beasts)
         {
             if (beast != null && beast.currentHp > 0)
             {
@@ -163,10 +160,10 @@ public class BattleSceneManager : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        CheckBattleStatus();
-    }
+    // private void Update()
+    // {
+    //     CheckBattleStatus();
+    // }
 
     private void CheckBattleStatus()
     {
