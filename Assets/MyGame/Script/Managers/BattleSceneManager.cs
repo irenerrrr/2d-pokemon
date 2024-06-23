@@ -193,23 +193,23 @@ public class BattleSceneManager : MonoBehaviour
     }
 
 
-
     private void EndBattle()
     {
+        
         if (BeastComponent.encounteredBeast.currentHp <= 0)
         {
-            Debug.Log("Player lost the battle.");
+            Debug.Log("Enemy lost the battle.");
             addExp();
             PlayerController.Instance.EndBattle(true);
         }
         else
         {
-            Debug.Log("Enemy lost the battle.");
+            Debug.Log("Player lost the battle.");
             PlayerController.Instance.EndBattle(false);
         }
-        Debug.Log("调用 PlayerController 的 EndBattle 方法.");
         DecreaseIntimacyForParticipatedBeasts();
-        //PlayerController.Instance.EndBattle();
+        Debug.Log("调用 PlayerController 的 EndBattle 方法.");
+        participatedBeasts.Clear(); // 清空参与战斗的宠物列表
     }
 
     private void DecreaseIntimacyForParticipatedBeasts()
@@ -228,12 +228,14 @@ public class BattleSceneManager : MonoBehaviour
             }
            
         }
-        participatedBeasts.Clear(); // 清空参与战斗的宠物列表
     }
 
     private void addExp()
     {
-
+        foreach (var beast in participatedBeasts)
+        {
+            beast.GainExp(1000);
+        }
     }
 
 }

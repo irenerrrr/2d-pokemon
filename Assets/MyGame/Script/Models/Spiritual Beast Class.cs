@@ -11,8 +11,9 @@ public class SpiritualBeast
     public Sprite image;
 
     public int intimacy;
-    public int maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed;
+    public int Hp, Attack, Armor, Ap, Mr, Speed;
     public int currentHp, currentAttack, currentArmor, currentAp, currentMr, currentSpeed;
+    public int maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed;
 
     public int exp;
     public int expToNextLevel;
@@ -29,7 +30,7 @@ public class SpiritualBeast
     }
 
     public SpiritualBeast(string name, int level, string gender, string type, Sprite image, int intimacy,
-    int maxHp, int maxAttack, int maxArmor, int maxAp, int maxMr, int maxSpeed)
+    int Hp, int Attack, int Armor, int Ap, int Mr, int Speed)
     {
         this.name = name;
         this.level = level;
@@ -38,27 +39,37 @@ public class SpiritualBeast
         this.image = image;
 
         this.intimacy = intimacy;
-        this.maxHp = maxHp;
-        this.maxAttack = maxAttack;
-        this.maxArmor = maxArmor;
-        this.maxAp = maxAp;
-        this.maxMr = maxMr;
-        this.maxSpeed = maxSpeed;
+        this.Hp = Hp;
+        this.Attack = Attack;
+        this.Armor = Armor;
+        this.Ap = Ap;
+        this.Mr = Mr;
+        this.Speed = Speed;
 
-        this.currentHp = CalculateCurrent(maxHp, level);
-        this.currentAttack = CalculateCurrent(maxAttack, level);
-        this.currentArmor = CalculateCurrent(maxArmor, level);
-        this.currentAp = CalculateCurrent(maxAp, level);
-        this.currentMr = CalculateCurrent(maxMr, level);
-        this.currentSpeed = CalculateCurrent(maxSpeed, level);
-        
+        InitializeStats(Hp, Attack, Armor, Ap, Mr, Speed);
         CalculateExpToNextLevel(); 
 
     }
-
-    private int CalculateCurrent(int maxValue, int level)
+    private void InitializeStats(int Hp, int Attack, int Armor, int Ap, int Mr, int Speed)
     {
-        return Mathf.RoundToInt((maxValue + level) * 1.3f);
+        this.maxHp = CalculateCurrent(Hp, level);
+        this.maxAttack = CalculateCurrent(Attack, level);
+        this.maxArmor = CalculateCurrent(Armor, level);
+        this.maxAp = CalculateCurrent(Ap, level);
+        this.maxMr = CalculateCurrent(Mr, level);
+        this.maxSpeed = CalculateCurrent(Speed, level);
+
+        this.currentHp = CalculateCurrent(Hp, level);
+        this.currentAttack = CalculateCurrent(Attack, level);
+        this.currentArmor = CalculateCurrent(Armor, level);
+        this.currentAp = CalculateCurrent(Ap, level);
+        this.currentMr = CalculateCurrent(Mr, level);
+        this.currentSpeed = CalculateCurrent(Speed, level);
+    }
+
+    private int CalculateCurrent(int Value, int level)
+    {
+        return Mathf.RoundToInt((Value + level) * 1.3f);
     }
 
     public void TakeDamage(int damage)
@@ -104,6 +115,7 @@ public class SpiritualBeast
         {
             exp -= expToNextLevel;
             level++;
+            InitializeStats(Hp, Attack, Armor, Ap, Mr, Speed);
             CalculateExpToNextLevel(); // 更新到下一级所需经验
             Debug.Log($"Level up! New level: {level}. EXP needed for next level: {expToNextLevel}.");
         }

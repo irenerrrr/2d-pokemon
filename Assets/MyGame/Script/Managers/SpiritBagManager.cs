@@ -13,7 +13,7 @@ public class SpiritBagManager : MonoBehaviour
     public Image beastImage;
     public TextMeshProUGUI beastIntimacy;
 
-    public TextMeshProUGUI beastMaxHP, beastMaxAttack, beastMaxArmor, beastMaxAP, beastMaxMR, beastMaxSpeed;
+    public TextMeshProUGUI beastHP, beastAttack, beastArmor, beastAP, beastMR, beastSpeed;
 
     public Slider hpSlider, apSlider, intimacySlider, levelSlider; 
 
@@ -67,12 +67,12 @@ public class SpiritBagManager : MonoBehaviour
         beastGender.text = beast.gender;
         
         beastIntimacy.text = "Intimacy: " + beast.intimacy.ToString();
-        beastMaxHP.text = "Max HP: " + beast.maxHp.ToString();
-        beastMaxAttack.text = "Attack: " + beast.maxAttack.ToString();
-        beastMaxArmor.text = "Armor: " + beast.maxArmor.ToString();
-        beastMaxAP.text = "Max Mana/AP: " + beast.maxAp.ToString();
-        beastMaxMR.text = "MR: " + beast.maxMr.ToString();
-        beastMaxSpeed.text = "Speed: " + beast.maxSpeed.ToString();
+        beastHP.text = "Max HP: " + beast.Hp.ToString();
+        beastAttack.text = "Attack: " + beast.Attack.ToString();
+        beastArmor.text = "Armor: " + beast.Armor.ToString();
+        beastAP.text = "Max Mana/AP: " + beast.Ap.ToString();
+        beastMR.text = "MR: " + beast.Mr.ToString();
+        beastSpeed.text = "Speed: " + beast.Speed.ToString();
 
         intimacySlider.maxValue = 100;
         intimacySlider.value = beast.intimacy;
@@ -82,7 +82,7 @@ public class SpiritBagManager : MonoBehaviour
         // 更新等级滑块和文本
         levelSlider.maxValue = beast.expToNextLevel; 
         levelSlider.value = beast.exp;  // 假设当前经验可以直接用
-        levelSliderText.text = $"{beast.expToNextLevel} / {beast.exp}"; // 格式化显示经验文本
+        levelSliderText.text = $"{beast.exp} / {beast.expToNextLevel}"; // 格式化显示经验文本
 
     }
 
@@ -90,7 +90,7 @@ public class SpiritBagManager : MonoBehaviour
     {
         slider.maxValue = maxValue;
         slider.value = currentValue;
-        sliderText.text = $"{maxValue} / {currentValue}";
+        sliderText.text = $"{currentValue} / {maxValue}";
     
     }
 

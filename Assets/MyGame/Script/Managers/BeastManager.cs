@@ -32,8 +32,8 @@ public class BeastManager : MonoBehaviour
             if (newBeast != null)
             {
                 newBeast.name = "special_" + i;
-                newBeast.currentHp = 10;
-                newBeast.maxHp = 10;
+                newBeast.currentHp = 200;
+                newBeast.maxHp = 200;
                 newBeast.currentAp = 200;
                 newBeast.maxAp = 200;
                 CaptureBeast(newBeast);

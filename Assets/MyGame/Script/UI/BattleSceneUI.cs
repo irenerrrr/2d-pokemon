@@ -71,7 +71,7 @@ public class BattleSceneUI : MonoBehaviour
     {
         slider.maxValue = maxValue;
         slider.value = currentValue;
-        sliderText.text = $"{maxValue} / {currentValue}";
+        sliderText.text = $"{currentValue} / {maxValue}";
     
     }
 

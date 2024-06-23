@@ -490,7 +490,7 @@ MonoBehaviour:
   apSlider: {fileID: 1855266990}
   hpSliderText: {fileID: 476845283}
   apSliderText: {fileID: 1051619993}
-  nameText: {fileID: 492124243}
+  nameText: {fileID: 321996862}
   levelText: {fileID: 492124243}
   enemyInfoPanel: {fileID: 0}
 --- !u!1 &264166823
@@ -927,7 +927,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e999ca05355f7ae46840ec582ed2d5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  participatedInBattle: 0
 --- !u!1 &407640981
 GameObject:
   m_ObjectHideFlags: 0
@@ -5129,7 +5128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e999ca05355f7ae46840ec582ed2d5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  participatedInBattle: 0
 --- !u!1 &1832384112
 GameObject:
   m_ObjectHideFlags: 0
@@ -5439,6 +5437,8 @@ MonoBehaviour:
   playerBeast: {fileID: 245449582}
   enemyBeast: {fileID: 1558129725}
   beastManager: {fileID: 0}
+  battleSequenceManager: {fileID: 0}
+  spiritBagManager: {fileID: 0}
 --- !u!1 &2065422539
 GameObject:
   m_ObjectHideFlags: 0

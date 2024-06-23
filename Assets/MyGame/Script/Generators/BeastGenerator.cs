@@ -32,15 +32,15 @@ public class BeastGenerator : MonoBehaviour
         string gender = Random.Range(0, 2) == 0 ? "Male" : "Female";
 
         // 生成所有属性
-        int maxHp = GenerateStat();
-        int maxAttack = GenerateStat();
-        int maxArmor = GenerateStat();
-        int maxAp = GenerateStat();
-        int maxMr = GenerateStat();
-        int maxSpeed = GenerateStat();
+        int Hp = GenerateStat();
+        int Attack = GenerateStat();
+        int Armor = GenerateStat();
+        int Ap = GenerateStat();
+        int Mr = GenerateStat();
+        int Speed = GenerateStat();
 
         // 检查是否有任何属性值在 300-350 之间
-        bool isSpiritual = maxHp > 299 || maxAttack > 299 || maxArmor > 299 || maxAp > 299 || maxMr > 299 || maxSpeed > 299;
+        bool isSpiritual = Hp > 299 || Attack > 299 || Armor > 299 || Ap > 299 || Mr > 299 || Speed > 299;
         string type = isSpiritual ? "SpiritualBeast" : "NormalBeast";
         Sprite image = possibleImages[Random.Range(0, possibleImages.Length)];
         if (type == "NormalBeast")
@@ -52,7 +52,8 @@ public class BeastGenerator : MonoBehaviour
             name = "Spiritual " + image.name;
         }
 
-        SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 100, maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed);
+        SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 100, 
+        Hp, Attack, Armor, Ap, Mr, Speed);
         // DebugBeast(beast); // 输出生成的beast的数据
         return beast;
     }

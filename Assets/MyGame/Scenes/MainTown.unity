@@ -7162,7 +7162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2704254, g: 0.4218365, b: 0.9716981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -51528,12 +51528,12 @@ MonoBehaviour:
   beastGender: {fileID: 8548568132602595784}
   beastImage: {fileID: 7153021812869936062}
   beastIntimacy: {fileID: 991516474}
-  beastMaxHP: {fileID: 2214353370058824619}
-  beastMaxAttack: {fileID: 5431794450830983683}
-  beastMaxArmor: {fileID: 5956869031154811904}
-  beastMaxAP: {fileID: 1490684382857112263}
-  beastMaxMR: {fileID: 3944087725530129971}
-  beastMaxSpeed: {fileID: 195305640961417618}
+  beastHP: {fileID: 2214353370058824619}
+  beastAttack: {fileID: 5431794450830983683}
+  beastArmor: {fileID: 5956869031154811904}
+  beastAP: {fileID: 1490684382857112263}
+  beastMR: {fileID: 3944087725530129971}
+  beastSpeed: {fileID: 195305640961417618}
   hpSlider: {fileID: 1634507987}
   apSlider: {fileID: 1913752080}
   intimacySlider: {fileID: 178228183}
