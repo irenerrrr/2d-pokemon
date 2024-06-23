@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance; 
     public static bool isInBattle = false;
     private PersistenceController persistenceController;
-
+    private bool isWon;
  
     private void Awake()
     {
@@ -153,17 +153,7 @@ public class PlayerController : MonoBehaviour
                 BeastComponent.encounteredBeast = beastComponent.beast;
                 beastComponent.beast.beastGameObject = beastComponent.gameObject; // 确保正确设置
                 Debug.Log("encounteredBeast: " + BeastComponent.encounteredBeast.name);
-                
-                // if (spiritBagManager != null && spiritBagManager.GetFirstBeast() != null)
-                // {
-                //     BeastComponent.playerFirstBeast = spiritBagManager.GetFirstBeast();
-                //     Debug.Log("playerFirstBeast: " + BeastComponent.playerFirstBeast.name);
-                // }
-                // else
-                // {
-                //     Debug.Log("spiritBagManager或GetFirstBeast()返回空");
-                // }
-
+    
                 SaveCurrentSceneInfo();
 
                 persistenceController.MoveBeastsToDontDestroyOnLoad(persistenceController.SpawnedBeasts);
@@ -172,10 +162,7 @@ public class PlayerController : MonoBehaviour
       
                 SceneManager.LoadScene("BattleScene");
                 Debug.Log("切换到BattleScene");
-            } else {
-                Debug.LogError("未找到BeastComponent");
-            }
-            
+            }     
             
         }
     }
@@ -192,13 +179,39 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void EndBattle()
+    public void EndBattle(bool isWon)
     {
-        // DecreaseIntimacyForParticipatedBeasts();
-        LoadPreviousScene();
+        if (isWon) 
+        {
+            LoadPreviousScene();
+            isInBattle = false;
+            Debug.Log($"返回到场景 {staticPreviousSceneName}"); // 使用静态变量
+        } 
+        else 
+        {
+            Debug.Log("准备回复活点");
+            StartCoroutine(TeleportPlayerToRebirthLocation());
+        }
         isInBattle = false;
-        Debug.Log($"返回到场景 {staticPreviousSceneName}"); // 使用静态变量
+
     }
+
+    public IEnumerator TeleportPlayerToRebirthLocation()
+    {
+        SceneManager.LoadScene(0);
+        yield return null;  // 确保加载开始
+        yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 0);
+        Debug.Log("Main Scene Loaded.");
+
+        GameObject teleportTarget = GameObject.FindGameObjectWithTag("Rebirth");
+   
+        GameObject player = GameObject.FindWithTag("Player");
+        persistenceController.ClearPersistedObjects();
+        player.transform.position = teleportTarget.transform.position;
+    
+   
+    }
+
 
 
 }

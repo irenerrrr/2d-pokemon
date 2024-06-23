@@ -8,7 +8,6 @@ public class BeastComponent : MonoBehaviour
 
     public static SpiritualBeast encounteredBeast;
     public static SpiritualBeast playerFirstBeast;
-    public bool participatedInBattle = false; 
 
     private BeastController beastController; // 假设 BeastMovement 是控制移动的脚本
     private bool isBeingDestroyed = false;

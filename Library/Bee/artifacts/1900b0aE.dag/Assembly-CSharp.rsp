@@ -384,6 +384,7 @@
 "Assets/MyGame/Script/CountrysideManager.cs"
 "Assets/MyGame/Script/DynamicBackground.cs"
 "Assets/MyGame/Script/Generators/BeastGenerator.cs"
+"Assets/MyGame/Script/LanguageManager.cs"
 "Assets/MyGame/Script/Managers/BattleSceneManager.cs"
 "Assets/MyGame/Script/Managers/BattleSequenceManager.cs"
 "Assets/MyGame/Script/Managers/BeastManager.cs"

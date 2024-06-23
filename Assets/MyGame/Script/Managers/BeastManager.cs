@@ -26,7 +26,7 @@ public class BeastManager : MonoBehaviour
     
     private void initial() 
     {
-        for (int i = 0; i < 7; i++) 
+        for (int i = 0; i < 5; i++) 
         {
             SpiritualBeast newBeast = beastGenerator.GenerateBeast();
             if (newBeast != null)

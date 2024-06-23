@@ -39,7 +39,8 @@ public class BattleSceneManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("spiritBagManager或GetFirstBeast()返回空");
+            Debug.Log("No beast can fight");
+            EndBattle();
         }
     }
 
@@ -143,9 +144,13 @@ public class BattleSceneManager : MonoBehaviour
                 else if (playerBeast.currentHp <= 0)
                 {
                     playerBeast = GetNextValidPlayerBeast(ref battleCount);
-                    BeastComponent.playerFirstBeast = playerBeast; // 更新 BeastComponent.playerFirstBeast
-                    if (playerBeast != null)
+                    if (playerBeast == null)
                     {
+                        EndBattle(); // 如果没有有效的 Beast，结束战斗
+                    }
+                    else
+                    {
+                        BeastComponent.playerFirstBeast = playerBeast; // 更新 BeastComponent.playerFirstBeast
                         UpdateBattlePanels(); // 刷新 UI 面板
                     }
                 }
@@ -168,7 +173,7 @@ public class BattleSceneManager : MonoBehaviour
         battleCount++;
         foreach (var beast in BeastManager.sequenceList)
         {
-            if (beast != null && beast.currentHp > 0)
+            if (beast != null && beast.currentHp > 0 && beast.intimacy >= 3)
             {
                 participatedBeasts.Add(beast);
                 return beast;
@@ -177,7 +182,7 @@ public class BattleSceneManager : MonoBehaviour
 
         foreach (var beast in BeastManager.beasts)
         {
-            if (beast != null && beast.currentHp > 0)
+            if (beast != null && beast.currentHp > 0 && beast.intimacy >= 3) 
             {
                 participatedBeasts.Add(beast);
                 return beast;
@@ -191,27 +196,36 @@ public class BattleSceneManager : MonoBehaviour
 
     private void EndBattle()
     {
-        if (BeastComponent.playerFirstBeast.currentHp <= 0)
+        if (BeastComponent.encounteredBeast.currentHp <= 0)
         {
             Debug.Log("Player lost the battle.");
+            addExp();
+            PlayerController.Instance.EndBattle(true);
         }
-        else if (BeastComponent.encounteredBeast.currentHp <= 0)
+        else
         {
             Debug.Log("Enemy lost the battle.");
-
+            PlayerController.Instance.EndBattle(false);
         }
         Debug.Log("调用 PlayerController 的 EndBattle 方法.");
-        addExp();
         DecreaseIntimacyForParticipatedBeasts();
-        PlayerController.Instance.EndBattle();
+        //PlayerController.Instance.EndBattle();
     }
 
     private void DecreaseIntimacyForParticipatedBeasts()
     {
         foreach (var beast in participatedBeasts)
         {
-            beast.DecreaseIntimacy(3);
-            Debug.Log(beast.name + "的亲密度减少了3");
+            if (beast.currentHp <= 0) 
+            {
+                beast.DecreaseIntimacy(20);
+                Debug.Log(beast.name + "的亲密度减少了20");
+            }
+            else
+            {
+                beast.DecreaseIntimacy(3);
+                Debug.Log(beast.name + "的亲密度减少了3");
+            }
            
         }
         participatedBeasts.Clear(); // 清空参与战斗的宠物列表

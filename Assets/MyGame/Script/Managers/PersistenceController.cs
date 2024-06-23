@@ -45,7 +45,7 @@ public class PersistenceController : MonoBehaviour
         else if (instance != this)
         {
             Destroy(this.gameObject); // 如果已经有一个持久化实例，销毁新的实例
-            Debug.Log("Destroying duplicate PersistenceController instance");
+            // Debug.Log("Destroying duplicate PersistenceController instance");
         }
     }
 
@@ -56,7 +56,7 @@ public class PersistenceController : MonoBehaviour
         {
             beastsToPersist.Add(obj);
             DontDestroyOnLoad(obj);
-            Debug.Log("Added Beast to DontDestroyOnLoad: " + obj.name);
+            // Debug.Log("Added Beast to DontDestroyOnLoad: " + obj.name);
         }
     }
 
@@ -65,7 +65,7 @@ public class PersistenceController : MonoBehaviour
         if (beastsToPersist.Contains(obj))
         {
             beastsToPersist.Remove(obj);
-            Debug.Log("Removed Beast from DontDestroyOnLoad: " + obj.name);
+            // Debug.Log("Removed Beast from DontDestroyOnLoad: " + obj.name);
         }
     }
 
@@ -78,7 +78,7 @@ public class PersistenceController : MonoBehaviour
             beast.MarkForDestruction();
             Destroy(beast.gameObject);
         }
-        Debug.Log("清理了所有Beast对象");
+        // Debug.Log("清理了所有Beast对象");
     }
 
 
@@ -86,8 +86,7 @@ public class PersistenceController : MonoBehaviour
     {
         // 获取场景中所有的BeastComponent对象
         BeastComponent[] allBeasts = FindObjectsOfType<BeastComponent>();
-
-        Debug.Log("开始保存，发现场景中有 " + allBeasts.Length + " 个Beast");
+        // Debug.Log("开始保存，发现场景中有 " + allBeasts.Length + " 个Beast");
 
         foreach (BeastComponent beastComponent in allBeasts)
         {
@@ -97,7 +96,7 @@ public class PersistenceController : MonoBehaviour
             // 检查是否是已经遭遇的beast，不保存它
             if (beast == BeastComponent.encounteredBeast)
             {
-                Debug.Log("不保存已打败的敌人: " + beast.name);
+                // Debug.Log("不保存已打败的敌人: " + beast.name);
                 Destroy(beastObject);
                 continue;
             }
@@ -108,7 +107,7 @@ public class PersistenceController : MonoBehaviour
             }
         }
 
-        Debug.Log("保存结束: " + beastsToPersist.Count + " 个对象");
+        // Debug.Log("保存结束: " + beastsToPersist.Count + " 个对象");
     }
 
     public void RestoreBeastsToScene()
@@ -124,7 +123,7 @@ public class PersistenceController : MonoBehaviour
                 obj.transform.SetParent(null);
             }
         }
-        Debug.Log("恢复结束: " + beastsToPersist.Count + " 个对象");
+        // Debug.Log("恢复结束: " + beastsToPersist.Count + " 个对象");
         beastsToPersist.Clear();
        
     }

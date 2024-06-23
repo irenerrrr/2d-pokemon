@@ -8,6 +8,7 @@ TagManager:
   - Town
   - Fusion
   - Beast
+  - Rebirth
   layers:
   - Default
   - TransparentFX
