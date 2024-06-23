@@ -10,7 +10,12 @@ public class BattleSceneManager : MonoBehaviour
     public BattleSceneUI enemyBeast;
 
     public BeastManager beastManager;
- 
+    public BattleSequenceManager battleSequenceManager;
+    public SpiritBagManager spiritBagManager;
+
+    private const int MaxBattleCount = 5; 
+    private int battleCount = 0;
+
 
     private void Start()
     {
@@ -27,107 +32,136 @@ public class BattleSceneManager : MonoBehaviour
     private IEnumerator TestBattle()
     {
         Debug.Log("start fight");
-        if (BeastComponent.playerFirstBeast != null && BeastComponent.encounteredBeast != null)
+        if (BeastComponent.encounteredBeast != null)
         {
-
-            SpiritualBeast playerBeast = BeastComponent.playerFirstBeast;
             SpiritualBeast enemyBeast = BeastComponent.encounteredBeast;
-
-            Debug.Log("Player Beast HP: " + playerBeast.currentHp);
-            Debug.Log("Enemy Beast HP: " + enemyBeast.currentHp);
-            Debug.Log("Player Beast Speed: " + playerBeast.currentSpeed);
-            Debug.Log("Enemy Beast Speed: " + enemyBeast.currentSpeed);
             
-            playerBeast.participatedInBattle = true;
+            SpiritualBeast playerBeast = GetNextValidPlayerBeast(ref battleCount);
 
-            while (playerBeast.currentHp > 0 && enemyBeast.currentHp > 0)
+            while (playerBeast != null && enemyBeast.currentHp > 0 && battleCount <= MaxBattleCount)
             {
-                
-                Debug.Log("fighting");
+
+                playerBeast.participatedInBattle = true;
+                SpiritualBeast firstMove;
+                SpiritualBeast secondMove;
+
                 if (playerBeast.currentSpeed >= enemyBeast.currentSpeed)
                 {
-                    yield return new WaitForSeconds(3); // 等待 1 秒
-                    // 玩家宠物先攻击敌人
-                    if (playerBeast.currentAp >= 10)
-                    {
-                        enemyBeast.currentHp -=200;
-                        playerBeast.currentAp -= 10;
-                        Debug.Log("enemyBeast.currHP" + enemyBeast.currentHp);
-                        Debug.Log("playerBeast.currentAp" + playerBeast.currentAp);
-                    }
-                    
-                    UpdateBattlePanels();
-                    yield return new WaitForSeconds(3); // 等待 1 秒
-
-                    if (enemyBeast.currentHp <= 0)
-                    {
-                        Debug.Log("Enemy beast is dead. Battle stops.");
-                        yield break; // 停止战斗
-                    }
-
-                    // 敌人攻击玩家宠物
-                    if (enemyBeast.currentAp >= 10)
-                    {
-                        playerBeast.currentHp -=50;
-                        enemyBeast.currentAp -= 10;
-                        Debug.Log("enemyBeast.currentAp" + enemyBeast.currentAp);
-                        Debug.Log("playerBeast.currentHp" + playerBeast.currentHp);
-                    }
-                    
-                    UpdateBattlePanels();
-                    yield return new WaitForSeconds(3); // 等待 1 秒
-
-
-                    if (playerBeast.currentHp <= 0)
-                    {
-                        Debug.Log("Player's beast is dead. Battle stops.");
-                        yield break; // 停止战斗
-                    }
+                    firstMove = playerBeast;
+                    secondMove = enemyBeast;
                 }
                 else
                 {
-                    yield return new WaitForSeconds(3); // 等待 1 秒
-                    // 敌人先攻击玩家宠物
-                    if (enemyBeast.currentAp >= 10)
+                    firstMove = enemyBeast;
+                    secondMove = playerBeast;
+                }
+
+                while (playerBeast.currentHp > 0 && enemyBeast.currentHp > 0)
+                {
+                    Debug.Log("fighting");
+
+                    // First move attack
+                    yield return new WaitForSeconds(3); // 等待 3 秒
+                    if (firstMove.currentAp >= 10)
                     {
-                        playerBeast.currentHp -=10;
-                        enemyBeast.currentAp -= 10;
-                        Debug.Log("enemyBeast.currentAp" + enemyBeast.currentAp);
-                        Debug.Log("playerBeast.currentHp" + playerBeast.currentHp);
+                        if (firstMove == playerBeast)
+                        {
+                            enemyBeast.currentHp -= 200;
+                            playerBeast.currentAp -= 10;
+                            Debug.Log("enemyBeast.currHP: " + enemyBeast.currentHp);
+                            Debug.Log("playerBeast.currentAp: " + playerBeast.currentAp);
+                        }
+                        else
+                        {
+                            playerBeast.currentHp -= 50;
+                            enemyBeast.currentAp -= 10;
+                            Debug.Log("enemyBeast.currentAp: " + enemyBeast.currentAp);
+                            Debug.Log("playerBeast.currentHp: " + playerBeast.currentHp);
+                        }
                     }
                     
                     UpdateBattlePanels();
-                    yield return new WaitForSeconds(3); // 等待 1 秒
+                    yield return new WaitForSeconds(3); // 等待 3 秒
 
-                    if (playerBeast.currentHp <= 0)
+                    if (enemyBeast.currentHp <= 0 || playerBeast.currentHp <= 0)
                     {
-                        Debug.Log("Player's beast is dead. Battle stops.");
-                        yield break; // 停止战斗
+                        Debug.Log("One of the beasts is dead. Battle stops.");
+                        break; // 停止战斗
                     }
 
-                    // 玩家宠物攻击敌人
-                    if (playerBeast.currentAp >= 10)
+                    // Second move attack
+                    yield return new WaitForSeconds(3); // 等待 3 秒
+                    if (secondMove.currentAp >= 10)
                     {
-                        enemyBeast.currentHp -=200;
-                        playerBeast.currentAp -= 10;
-                        Debug.Log("enemyBeast.currHP" + enemyBeast.currentHp);
-                        Debug.Log("playerBeast.currentAp" + playerBeast.currentAp);
+                        if (secondMove == playerBeast)
+                        {
+                            enemyBeast.currentHp -= 200;
+                            playerBeast.currentAp -= 10;
+                            Debug.Log("enemyBeast.currHP: " + enemyBeast.currentHp);
+                            Debug.Log("playerBeast.currentAp: " + playerBeast.currentAp);
+                        }
+                        else
+                        {
+                            playerBeast.currentHp -= 50;
+                            enemyBeast.currentAp -= 10;
+                            Debug.Log("enemyBeast.currentAp: " + enemyBeast.currentAp);
+                            Debug.Log("playerBeast.currentHp: " + playerBeast.currentHp);
+                        }
                     }
                     
                     UpdateBattlePanels();
-                    yield return new WaitForSeconds(3); // 等待 1 秒
+                    yield return new WaitForSeconds(3); // 等待 3 秒
 
-                    if (enemyBeast.currentHp <= 0)
+                    if (enemyBeast.currentHp <= 0 || playerBeast.currentHp <= 0)
                     {
-                        Debug.Log("Enemy beast is dead. Battle stops.");
-                        yield break; // 停止战斗
+                        Debug.Log("One of the beasts is dead. Battle stops.");
+                        break; // 停止战斗
                     }
                 }
+
+                if (enemyBeast.currentHp <= 0)
+                {
+                    Debug.Log("Enemy beast defeated.");
+                    break;
+                }
+                else if (playerBeast.currentHp <= 0)
+                {
+                    Debug.Log("Player beast defeated. Switching to the next one.");
+                    playerBeast = GetNextValidPlayerBeast(ref battleCount);
+                }
             }
-            
+
+            if (playerBeast == null || battleCount > MaxBattleCount)
+            {
+                Debug.Log("All player beasts are dead. Battle over.");
+            }
         }
+
         yield return null;
     }
+
+    private SpiritualBeast GetNextValidPlayerBeast(ref int battleCount)
+    {
+        battleCount++;
+        foreach (var beast in BattleSequenceManager.sequenceList)
+        {
+            if (beast != null && beast.currentHp > 0)
+            {
+                return beast;
+            }
+        }
+
+        foreach (var beast in SpiritBagManager.beasts)
+        {
+            if (beast != null && beast.currentHp > 0)
+            {
+                return beast;
+            }
+        }
+
+        return null; // 如果没有有效的beast
+    }
+
 
     private void Update()
     {
@@ -155,6 +189,7 @@ public class BattleSceneManager : MonoBehaviour
 
         }
         Debug.Log("调用 PlayerController 的 EndBattle 方法.");
+        addExp();
         DecreaseIntimacyForParticipatedBeasts();
         PlayerController.Instance.EndBattle();
     }
@@ -167,6 +202,11 @@ public class BattleSceneManager : MonoBehaviour
             BeastComponent.playerFirstBeast.participatedInBattle = false; // 重置参战标记
             Debug.Log(BeastComponent.playerFirstBeast.name + "的亲密度减少了3");
         }
+    }
+
+    private void addExp()
+    {
+
     }
 
 }

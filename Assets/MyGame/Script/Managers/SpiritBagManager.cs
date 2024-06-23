@@ -12,16 +12,10 @@ public class SpiritBagManager : MonoBehaviour
     public TextMeshProUGUI beastGender;
     public Image beastImage;
     public TextMeshProUGUI beastIntimacy;
-    public TextMeshProUGUI beastMaxHP;
-    public TextMeshProUGUI beastMaxAttack;
-    public TextMeshProUGUI beastMaxArmor;
-    public TextMeshProUGUI beastMaxAP;
-    public TextMeshProUGUI beastMaxMR;
-    public TextMeshProUGUI beastMaxSpeed;
 
-    public Slider hpSlider; 
-    public Slider apSlider; 
-    public Slider intimacySlider; 
+    public TextMeshProUGUI beastMaxHP, beastMaxAttack, beastMaxArmor, beastMaxAP, beastMaxMR, beastMaxSpeed;
+
+    public Slider hpSlider, apSlider, intimacySlider, levelSlider; 
 
     public FusionManager fusionManager; // 引用 FusionManager
 
@@ -32,14 +26,14 @@ public class SpiritBagManager : MonoBehaviour
     public GameObject spiritBagPanel; // Bag Detail 面板
     public GameObject fusionPanel; 
 
-    public List<SpiritualBeast> beasts = new List<SpiritualBeast>();
+    public static List<SpiritualBeast> beasts = new List<SpiritualBeast>();
     private List<GameObject> slots = new List<GameObject>();
     private int selectedBeastIndex = -1; // 记录当前选中的宠物索引
-    public DropdownHandler dropdownHandler; 
+    public BattleSequenceManager battleSequenceManager; 
     public event Action<SpiritualBeast> BeastSelected; // 添加事件
     
-    public TextMeshProUGUI hpSliderText;  // 新增，用于显示最大血量/当前血量
-    public TextMeshProUGUI apSliderText;  // 新增，用于显示最大AP/当前AP
+    public TextMeshProUGUI hpSliderText, apSliderText, levelSliderText;  // 用于显示最大血量/当前血量, 显示最大AP/当前AP
+
 
     void Start()
     {
@@ -49,6 +43,7 @@ public class SpiritBagManager : MonoBehaviour
         hpSlider.interactable = false;
         apSlider.interactable = false;
         intimacySlider.interactable = false;
+        levelSlider.interactable = false;
 
     }
 
@@ -63,13 +58,11 @@ public class SpiritBagManager : MonoBehaviour
 
 
 
-
-
     public void UpdateBeastInfo(SpiritualBeast beast)
     {
         beastImage.sprite = beast.image;
         beastName.text = beast.name;
-        beastLevel.text = "Level: " + beast.level;
+        beastLevel.text = "Level " + beast.level;
         beastGender.text = beast.gender;
         
         beastIntimacy.text = "Intimacy: " + beast.intimacy.ToString();
@@ -80,17 +73,15 @@ public class SpiritBagManager : MonoBehaviour
         beastMaxMR.text = "MR: " + beast.maxMr.ToString();
         beastMaxSpeed.text = "Speed: " + beast.maxSpeed.ToString();
 
-        // hpSlider.maxValue = beast.maxHp;
-        // hpSlider.value = beast.currentHp;
-
-        // manaSlider.maxValue = beast.maxAp;
-        // manaSlider.value = beast.currentAp;
-
         intimacySlider.maxValue = 100;
         intimacySlider.value = beast.intimacy;
         UpdateSlider(hpSlider, hpSliderText, beast.maxHp, beast.currentHp);
         UpdateSlider(apSlider, apSliderText, beast.maxAp, beast.currentAp);
-   
+
+        // 更新等级滑块和文本
+        levelSlider.maxValue = beast.expToNextLevel; 
+        levelSlider.value = beast.exp;  // 假设当前经验可以直接用
+        levelSliderText.text = $"{beast.expToNextLevel} / {beast.exp}"; // 格式化显示经验文本
 
     }
 

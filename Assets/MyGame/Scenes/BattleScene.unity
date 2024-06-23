@@ -4157,7 +4157,7 @@ MonoBehaviour:
   hpSliderText: {fileID: 2065422541}
   apSliderText: {fileID: 1090959321}
   nameText: {fileID: 1316971427}
-  levelText: {fileID: 0}
+  levelText: {fileID: 1754230015}
   enemyInfoPanel: {fileID: 518326734}
 --- !u!1 &1591073835
 GameObject:
