@@ -154,15 +154,15 @@ public class PlayerController : MonoBehaviour
                 beastComponent.beast.beastGameObject = beastComponent.gameObject; // 确保正确设置
                 Debug.Log("encounteredBeast: " + BeastComponent.encounteredBeast.name);
                 
-                if (spiritBagManager != null && spiritBagManager.GetFirstBeast() != null)
-                {
-                    BeastComponent.playerFirstBeast = spiritBagManager.GetFirstBeast();
-                    Debug.Log("playerFirstBeast: " + BeastComponent.playerFirstBeast.name);
-                }
-                else
-                {
-                    Debug.Log("spiritBagManager或GetFirstBeast()返回空");
-                }
+                // if (spiritBagManager != null && spiritBagManager.GetFirstBeast() != null)
+                // {
+                //     BeastComponent.playerFirstBeast = spiritBagManager.GetFirstBeast();
+                //     Debug.Log("playerFirstBeast: " + BeastComponent.playerFirstBeast.name);
+                // }
+                // else
+                // {
+                //     Debug.Log("spiritBagManager或GetFirstBeast()返回空");
+                // }
 
                 SaveCurrentSceneInfo();
 

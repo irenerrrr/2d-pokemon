@@ -16,17 +16,38 @@ public class BattleSceneManager : MonoBehaviour
     private const int MaxBattleCount = 5; 
     private int battleCount = 0;
 
+    private List<SpiritualBeast> participatedBeasts = new List<SpiritualBeast>();
+
 
     private void Start()
     {
-        UpdateBattlePanels();
-        StartCoroutine(TestBattle());
+        InitializeBattle(); // 初始化战斗
+    }
+
+    private void InitializeBattle()
+    {
+        // 只在这里设置 encounteredBeast
+        enemyBeast.UpdateBeastInfo(BeastComponent.encounteredBeast, true);
+
+        // 在这里决定玩家的出战宠物
+        BeastComponent.playerFirstBeast = GetNextValidPlayerBeast(ref battleCount);
+        if (BeastComponent.playerFirstBeast != null)
+        {
+            playerBeast.UpdateBeastInfo(BeastComponent.playerFirstBeast, false);
+            Debug.Log("playerFirstBeast: " + BeastComponent.playerFirstBeast.name);
+            StartCoroutine(TestBattle());
+        }
+        else
+        {
+            Debug.Log("spiritBagManager或GetFirstBeast()返回空");
+        }
     }
 
     private void UpdateBattlePanels()
     {
+        // 更新敌人和玩家宠物的信息
         enemyBeast.UpdateBeastInfo(BeastComponent.encounteredBeast, true);
-        playerBeast.UpdateBeastInfo(BeastComponent.playerFirstBeast, false);
+        playerBeast.UpdateBeastInfo(BeastComponent.playerFirstBeast, false); // 使用 BeastComponent.playerFirstBeast
     }
 
     private IEnumerator TestBattle()
@@ -35,11 +56,11 @@ public class BattleSceneManager : MonoBehaviour
         if (BeastComponent.encounteredBeast != null)
         {
             SpiritualBeast enemyBeast = BeastComponent.encounteredBeast;
-            SpiritualBeast playerBeast = GetNextValidPlayerBeast(ref battleCount);
+            SpiritualBeast playerBeast = BeastComponent.playerFirstBeast;
 
             while (playerBeast != null && enemyBeast.currentHp > 0 && battleCount <= MaxBattleCount)
             {
-                playerBeast.participatedInBattle = true;
+          
                 SpiritualBeast firstMove;
                 SpiritualBeast secondMove;
 
@@ -117,17 +138,22 @@ public class BattleSceneManager : MonoBehaviour
 
                 if (enemyBeast.currentHp <= 0)
                 {
-                    CheckBattleStatus();
+                    EndBattle();
                 }
                 else if (playerBeast.currentHp <= 0)
                 {
                     playerBeast = GetNextValidPlayerBeast(ref battleCount);
+                    BeastComponent.playerFirstBeast = playerBeast; // 更新 BeastComponent.playerFirstBeast
+                    if (playerBeast != null)
+                    {
+                        UpdateBattlePanels(); // 刷新 UI 面板
+                    }
                 }
             }
 
             if (playerBeast == null || battleCount > MaxBattleCount)
             {
-                CheckBattleStatus();
+                EndBattle();
                 Debug.Log("All player beasts are dead. Battle over.");
             }
         }
@@ -144,6 +170,7 @@ public class BattleSceneManager : MonoBehaviour
         {
             if (beast != null && beast.currentHp > 0)
             {
+                participatedBeasts.Add(beast);
                 return beast;
             }
         }
@@ -152,6 +179,7 @@ public class BattleSceneManager : MonoBehaviour
         {
             if (beast != null && beast.currentHp > 0)
             {
+                participatedBeasts.Add(beast);
                 return beast;
             }
         }
@@ -159,19 +187,6 @@ public class BattleSceneManager : MonoBehaviour
         return null; // 如果没有有效的beast
     }
 
-
-    // private void Update()
-    // {
-    //     CheckBattleStatus();
-    // }
-
-    private void CheckBattleStatus()
-    {
-        if (BeastComponent.playerFirstBeast.currentHp <= 0 || BeastComponent.encounteredBeast.currentHp <= 0)
-        {
-            EndBattle();
-        }
-    }
 
 
     private void EndBattle()
@@ -193,12 +208,13 @@ public class BattleSceneManager : MonoBehaviour
 
     private void DecreaseIntimacyForParticipatedBeasts()
     {
-        if (BeastComponent.playerFirstBeast != null && BeastComponent.playerFirstBeast.participatedInBattle)
+        foreach (var beast in participatedBeasts)
         {
-            BeastComponent.playerFirstBeast.DecreaseIntimacy(3);
-            BeastComponent.playerFirstBeast.participatedInBattle = false; // 重置参战标记
-            Debug.Log(BeastComponent.playerFirstBeast.name + "的亲密度减少了3");
+            beast.DecreaseIntimacy(3);
+            Debug.Log(beast.name + "的亲密度减少了3");
+           
         }
+        participatedBeasts.Clear(); // 清空参与战斗的宠物列表
     }
 
     private void addExp()
