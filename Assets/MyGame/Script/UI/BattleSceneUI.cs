@@ -50,12 +50,12 @@ public class BattleSceneUI : MonoBehaviour
         if (isEnemy && beast.type == "SpiritualBeast")
         {
             enemyInfoPanel.SetActive(true);
-            UpdateText(hpText, $"HP {beast.maxHp}");
-            UpdateText(apText, $"AP {beast.maxAp}");
-            UpdateText(attackText, $"Attack {beast.maxAttack}");
-            UpdateText(armorText, $"Armor {beast.maxArmor}");
-            UpdateText(mrText, $"MR {beast.maxMr}");
-            UpdateText(speedText, $"Speed {beast.maxSpeed}");
+            UpdateText(hpText, $"HP {beast.Hp}");
+            UpdateText(apText, $"AP {beast.Ap}");
+            UpdateText(attackText, $"Attack {beast.Attack}");
+            UpdateText(armorText, $"Armor {beast.Armor}");
+            UpdateText(mrText, $"MR {beast.Mr}");
+            UpdateText(speedText, $"Speed {beast.Speed}");
         }
         else
         {
@@ -85,4 +85,6 @@ public class BattleSceneUI : MonoBehaviour
             textComponent.gameObject.SetActive(true);
         }
     }
+
+
 }

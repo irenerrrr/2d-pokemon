@@ -10,7 +10,7 @@ public class BeastManager : MonoBehaviour
     public static BeastManager Instance { get; private set; }
 
     public static List<SpiritualBeast> beasts = new List<SpiritualBeast>();
-    public static List<SpiritualBeast> sequenceList = new List<SpiritualBeast> { null, null, null, null, null, null };
+    public static List<SpiritualBeast> sequenceList = new List<SpiritualBeast> {null, null, null, null, null };
     
     private static bool first = true;
 
@@ -32,8 +32,8 @@ public class BeastManager : MonoBehaviour
             if (newBeast != null)
             {
                 newBeast.name = "special_" + i;
-                newBeast.currentHp = 200;
-                newBeast.maxHp = 200;
+                newBeast.currentHp = 10;
+                newBeast.maxHp = 10;
                 newBeast.currentAp = 200;
                 newBeast.maxAp = 200;
                 CaptureBeast(newBeast);

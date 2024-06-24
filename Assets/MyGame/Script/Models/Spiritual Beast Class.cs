@@ -16,7 +16,7 @@ public class SpiritualBeast
     public int maxHp, maxAttack, maxArmor, maxAp, maxMr, maxSpeed;
 
     public int exp;
-    public int expToNextLevel;
+    public int expToNextLevel { get; private set; }
 
     public int battleSequence = -1;
     public bool participatedInBattle = false; 
@@ -91,7 +91,7 @@ public class SpiritualBeast
         // 可以在这里添加其他的逻辑，比如亲密度下降到一定程度可以触发其他效果
     }
 
-    private void CalculateExpToNextLevel()
+    public void CalculateExpToNextLevel()
     {
 
         if (level == 1)
@@ -102,7 +102,7 @@ public class SpiritualBeast
         {
             expToNextLevel = (int)(125 * (level * 3));
         }
-        Debug.Log($"Level {level}: Total experience required for next level (accumulative): {expToNextLevel}.");
+        //Debug.Log($"Level {level}: Total experience required for next level (accumulative): {expToNextLevel}.");
     }
 
 
@@ -115,7 +115,14 @@ public class SpiritualBeast
         {
             exp -= expToNextLevel;
             level++;
+
+            bool wasDead = currentHp == 0;
             InitializeStats(Hp, Attack, Armor, Ap, Mr, Speed);
+            if (wasDead)
+            {
+                currentHp = 0; // 如果在升级前已经死亡，则保持死亡状态
+            }
+
             CalculateExpToNextLevel(); // 更新到下一级所需经验
             Debug.Log($"Level up! New level: {level}. EXP needed for next level: {expToNextLevel}.");
         }
