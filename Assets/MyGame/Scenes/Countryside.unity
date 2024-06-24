@@ -8139,9 +8139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibleImages:
-  - {fileID: 21300000, guid: 41d84c27e4b9a684980d7938cf09d846, type: 3}
-  - {fileID: 21300000, guid: 1b2c8b9bf7b4dde4ba86d42e06cb02ce, type: 3}
-  - {fileID: 21300000, guid: 79006f35b3b4a234b953eae30ceb30a8, type: 3}
+  - {fileID: 21300000, guid: 2ea0bfe54b5c820419d86200a6fff008, type: 3}
+  - {fileID: 21300000, guid: 2ea0bfe54b5c820419d86200a6fff008, type: 3}
   beastPrefab: {fileID: 6824993616537670497, guid: ccf768f6523a1964c82e182489b72b35,
     type: 3}
   k: 0

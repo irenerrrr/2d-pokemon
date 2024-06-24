@@ -397,6 +397,7 @@
 "Assets/MyGame/Script/SceneController.cs"
 "Assets/MyGame/Script/UI/BattleSceneUI.cs"
 "Assets/MyGame/Script/UI/BeastSpawner.cs"
+"Assets/MyGame/Script/UI/ShowHidePanel.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"

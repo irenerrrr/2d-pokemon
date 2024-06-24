@@ -259,21 +259,24 @@ public class BattleSceneManager : MonoBehaviour
     {
         int battleCount = BeastManager.sequenceList.Count(beast => beast != null);
         int participatedCount = participatedBeasts.Count;
+
+        //如果开战前的出战列表里一个没死，对比实际出战数多还是出战列表里的beast多
         if (normal.Count == battleCount)
         {
             targetList = participatedCount > battleCount ? participatedBeasts : BeastManager.sequenceList;
             count = Mathf.Max(participatedCount, battleCount); // 选择较大的数量
         }
+        //如果开战前出战列表里已经有嗝屁了，但是出战列表的数量还是比实际出战多
         else if (battleCount > normal.Count && normal.Count >= participatedCount)
         {
             targetList = normal;
             count = normal.Count;
         }
+        //开战前出战列表已经有嗝屁了，而且出战列表的数量没实际出战多
         else 
         {
-            count = participatedBeasts.Count;
-            Debug.Log(participatedBeasts.Count + "participatedCount");
             targetList = participatedBeasts;
+            count = participatedBeasts.Count;
         }
 
 

@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     public GameObject beastBagButton;
     public GameObject spiritPanel;
     public GameObject spiritDetail;
+    public GameObject ButtonsPanel;
+    public GameObject inductor;
     
     public SpiritBagManager spiritbagManager;
 
@@ -22,14 +24,15 @@ public class UIManager : MonoBehaviour
     {
         GameObject canvas = GameObject.Find("UI/Canvas");
         spiritBagCanvas = canvas.transform.Find("SpiritBagCanvas").gameObject;
-        beastBagButton = canvas.transform.Find("SpiritBagButton").gameObject;
+        inductor = canvas.transform.Find("inductor").gameObject;
+        ButtonsPanel = inductor.transform.Find("ButtonsPanel").gameObject;
+       
         spiritPanel = spiritBagCanvas.transform.Find("SpiritInfoPanel").gameObject;
         spiritDetail = spiritBagCanvas.transform.Find("SpiritDetailPanel").gameObject;
 
 
         
         // 初始时隐藏面板
-        beastBagButton.SetActive(true);
         spiritPanel.SetActive(false);
         spiritDetail.SetActive(false);
 
