@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
         ButtonsPanel = inductor.transform.Find("ButtonsPanel").gameObject;
        
         spiritPanel = spiritBagCanvas.transform.Find("SpiritInfoPanel").gameObject;
-        spiritDetail = spiritBagCanvas.transform.Find("SpiritDetailPanel").gameObject;
+        spiritDetail = spiritBagCanvas.transform.Find("InfoPanel").gameObject;
 
 
         

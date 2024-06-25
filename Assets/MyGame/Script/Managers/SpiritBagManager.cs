@@ -9,14 +9,15 @@ public class SpiritBagManager : MonoBehaviour
 {
     public TextMeshProUGUI beastName;
     public TextMeshProUGUI beastLevel;
-    public TextMeshProUGUI beastGender;
+    // public TextMeshProUGUI beastGender;
     public Image beastImage;
-    public TextMeshProUGUI beastIntimacy;
-
+    // public TextMeshProUGUI beastIntimacy;
+    public TextMeshProUGUI beastmaxAttack, beastmaxArmor, beastmaxMR, beastmaxSpeed;
     public TextMeshProUGUI beastHP, beastAttack, beastArmor, beastAP, beastMR, beastSpeed;
 
-    public Slider hpSlider, apSlider, intimacySlider, levelSlider; 
-
+    public Slider currhpSlider, currapSlider, levelSlider; //当前
+    public Slider hpSlider, attackSlider, armorSlider, apSlider, mrSlider, speedSlider;//资质
+// intimacySlider, 
     public FusionManager fusionManager; // 引用 FusionManager
 
     public GameObject slotPrefab; // Slot 模板的 Prefab
@@ -34,19 +35,62 @@ public class SpiritBagManager : MonoBehaviour
     public event Action<SpiritualBeast> BeastSelected; // 添加事件
     
     public TextMeshProUGUI hpSliderText, apSliderText, levelSliderText;  // 用于显示最大血量/当前血量, 显示最大AP/当前AP
-
-
+   
+    public GameObject Stat1;
+    public GameObject Stat2;
     void Start()
     {
         // 初始化面板状态
         detailPanel.SetActive(false);
         spiritBagPanel.SetActive(false);
-        hpSlider.interactable = false;
-        apSlider.interactable = false;
-        intimacySlider.interactable = false;
+        currhpSlider.interactable = false;
+        currapSlider.interactable = false;
+        // intimacySlider.interactable = false;
         levelSlider.interactable = false;
+
+        hpSlider.interactable = false;
+        attackSlider.interactable = false;
+        armorSlider.interactable = false;
+        apSlider.interactable = false;
+        mrSlider.interactable = false;
+        speedSlider.interactable = false;
+
         beasts = BeastManager.beasts;
 
+        Stat1.SetActive(true);
+        Stat2.SetActive(false);
+
+        if (beasts.Count > 0)
+        {
+            selectedBeastIndex = 0;
+            UpdateCurrentBeastPanel();  // 更新面板信息
+        }
+    }
+
+    public void SwitchPanels()
+    {
+        // 检查Panel1的显示状态，然后切换
+        bool isStat1Active = Stat1.activeSelf;
+        Stat1.SetActive(!isStat1Active);
+        Stat2.SetActive(isStat1Active);
+        UpdateCurrentBeastPanel();
+    }
+
+    private void UpdateCurrentBeastPanel()
+    {
+        if (selectedBeastIndex >= 0 && selectedBeastIndex < beasts.Count)
+        {
+            SpiritualBeast selectedBeast = beasts[selectedBeastIndex];
+            UpdateBasicPanel(selectedBeast);
+            if (Stat1.activeSelf)
+            {
+                UpdateBStat1Panel(selectedBeast);
+            }
+            else if (Stat2.activeSelf)
+            {
+                UpdateBStat2Panel(selectedBeast);
+            }
+        }
     }
 
     public SpiritualBeast GetFirstBeast()
@@ -59,25 +103,17 @@ public class SpiritBagManager : MonoBehaviour
     }
 
 
-    public void UpdateBeastInfo(SpiritualBeast beast)
+    public void UpdateBasicPanel(SpiritualBeast beast)
     {
         beastImage.sprite = beast.image;
         beastName.text = beast.name;
         beastLevel.text = "Level " + beast.level;
-        beastGender.text = beast.gender;
-        
-        beastIntimacy.text = "Intimacy: " + beast.intimacy.ToString();
-        beastHP.text = "Max HP: " + beast.Hp.ToString();
-        beastAttack.text = "Attack: " + beast.Attack.ToString();
-        beastArmor.text = "Armor: " + beast.Armor.ToString();
-        beastAP.text = "Max Mana/AP: " + beast.Ap.ToString();
-        beastMR.text = "MR: " + beast.Mr.ToString();
-        beastSpeed.text = "Speed: " + beast.Speed.ToString();
+        // beastGender.text = beast.gender;
+        // beastIntimacy.text = "Intimacy: " + beast.intimacy.ToString();
 
-        intimacySlider.maxValue = 100;
-        intimacySlider.value = beast.intimacy;
-        UpdateSlider(hpSlider, hpSliderText, beast.maxHp, beast.currentHp);
-        UpdateSlider(apSlider, apSliderText, beast.maxAp, beast.currentAp);
+        // intimacySlider.maxValue = 100;
+        // intimacySlider.value = beast.intimacy;
+
 
         // 更新等级滑块和文本
         levelSlider.maxValue = beast.expToNextLevel; 
@@ -86,12 +122,45 @@ public class SpiritBagManager : MonoBehaviour
 
     }
 
-    private void UpdateSlider(Slider slider, TextMeshProUGUI sliderText, float maxValue, float currentValue)
+    public void UpdateBStat1Panel(SpiritualBeast beast)
+    {
+        beastmaxAttack.text = "Attack: " + beast.maxAttack.ToString();
+        beastmaxArmor.text = "Armor: " + beast.maxArmor.ToString();
+        beastmaxMR.text = "MR: " + beast.maxMr.ToString();
+        beastmaxSpeed.text = "Speed: " + beast.maxSpeed.ToString();
+
+        UpdateSlider(currhpSlider, hpSliderText, beast.maxHp, beast.currentHp);
+        UpdateSlider(currapSlider, apSliderText, beast.maxAp, beast.currentAp);
+    }
+
+    public void UpdateBStat2Panel(SpiritualBeast beast)
+    {
+
+        beastHP.text = "HP: " + beast.Hp.ToString();
+        beastAttack.text = "Attack: " + beast.Attack.ToString();
+        beastArmor.text = "Armor: " + beast.Armor.ToString();
+        beastAP.text = "AP: " + beast.Ap.ToString();
+        beastMR.text = "MR: " + beast.Mr.ToString();
+        beastSpeed.text = "Speed: " + beast.Speed.ToString();
+
+        var statLimits = BeastGenerator.GetStatLimits(beast.image.name);
+        UpdateSlider(hpSlider, null, statLimits["Hp"], beast.Hp, false);
+        UpdateSlider(attackSlider, null, statLimits["Attack"], beast.Attack, false);
+        UpdateSlider(armorSlider, null, statLimits["Armor"], beast.Armor, false);
+        UpdateSlider(apSlider, null, statLimits["Ap"], beast.Ap, false);
+        UpdateSlider(mrSlider, null, statLimits["Mr"], beast.Mr, false);
+        UpdateSlider(speedSlider, null, statLimits["Speed"], beast.Speed, false);
+
+    }
+
+    private void UpdateSlider(Slider slider, TextMeshProUGUI sliderText, float maxValue, float currentValue, bool updateText = true)
     {
         slider.maxValue = maxValue;
         slider.value = currentValue;
-        sliderText.text = $"{currentValue} / {maxValue}";
-    
+        if (updateText)
+        {
+            sliderText.text = $"{currentValue} / {maxValue}";
+        }
     }
 
 
@@ -102,9 +171,6 @@ public class SpiritBagManager : MonoBehaviour
         slots.Add(newSlot);
 
         newSlot.transform.Find("Image").GetComponent<Image>().sprite = beast.image;
-        newSlot.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = beast.name;
-        newSlot.transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Level: " + beast.level;
-        newSlot.transform.Find("Gender").GetComponent<TextMeshProUGUI>().text = beast.gender;
 
         // Add button click event
         int index = beasts.Count - 1; // 获取当前宠物的索引
@@ -125,12 +191,21 @@ public class SpiritBagManager : MonoBehaviour
         {
             // 更新详细信息面板
             detailPanel.SetActive(true);
-            UpdateBeastInfo(beast); 
+            UpdateCurrentBeastPanel();     
         }
 
         // 触发事件
         BeastSelected?.Invoke(beast);
+        
+    }
 
+    //强制刷新raderchartvalue
+    public void TriggerBeastSelected()
+    {
+        if (beasts != null && beasts.Count > 0)
+        {
+            OnSlotClick(selectedBeastIndex);
+        }
     }
 
     public SpiritualBeast GetSelectedBeast()
@@ -187,9 +262,6 @@ public class SpiritBagManager : MonoBehaviour
             var slot = slots[i];
 
             slot.transform.Find("Image").GetComponent<Image>().sprite = beast.image;
-            slot.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = beast.name;
-            slot.transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Level: " + beast.level;
-            slot.transform.Find("Gender").GetComponent<TextMeshProUGUI>().text = beast.gender;
 
             // 更新点击事件
             var button = slot.GetComponent<Button>();

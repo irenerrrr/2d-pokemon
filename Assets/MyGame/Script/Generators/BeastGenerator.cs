@@ -8,6 +8,7 @@ public class BeastGenerator : MonoBehaviour
 // 定义 BeastGenerator 类
 
     public Sprite[] possibleImages; 
+
     public GameObject beastPrefab; // 新增Prefab引用
     private BeastManager beastManager;
     public int k = 0;
@@ -27,22 +28,26 @@ public class BeastGenerator : MonoBehaviour
     }
     public SpiritualBeast GenerateBeast()
     {
+        Sprite image = possibleImages[Random.Range(0, possibleImages.Length)];
+        Dictionary<string, int> statLimits = GetStatLimits(image.name);
+
         string name = "";
         int level = Random.Range(1, 10);
         string gender = Random.Range(0, 2) == 0 ? "Male" : "Female";
 
         // 生成所有属性
-        int Hp = GenerateStat();
-        int Attack = GenerateStat();
-        int Armor = GenerateStat();
-        int Ap = GenerateStat();
-        int Mr = GenerateStat();
-        int Speed = GenerateStat();
+        int Hp = GenerateStatWithLimits(statLimits["Hp"]);
+        int Attack = GenerateStatWithLimits(statLimits["Attack"]);
+        int Armor = GenerateStatWithLimits(statLimits["Armor"]);
+        int Ap = GenerateStatWithLimits(statLimits["Ap"]);
+        int Mr = GenerateStatWithLimits(statLimits["Mr"]);
+        int Speed = GenerateStatWithLimits(statLimits["Speed"]);
 
-        // 检查是否有任何属性值在 300-350 之间
-        bool isSpiritual = Hp > 299 || Attack > 299 || Armor > 299 || Ap > 299 || Mr > 299 || Speed > 299;
+
+        bool isSpiritual = Random.value < 0.1; // 10% 概率
         string type = isSpiritual ? "SpiritualBeast" : "NormalBeast";
-        Sprite image = possibleImages[Random.Range(0, possibleImages.Length)];
+        string ethnicity = image.name;
+    
         if (type == "NormalBeast")
         {
             name = image.name;
@@ -52,47 +57,66 @@ public class BeastGenerator : MonoBehaviour
             name = "Spiritual " + image.name;
         }
 
-        SpiritualBeast beast = new SpiritualBeast(name, level, gender, type, image, 100, 
+        SpiritualBeast beast = new SpiritualBeast(name, ethnicity, level, gender, type, image, 100, 
         Hp, Attack, Armor, Ap, Mr, Speed);
         // DebugBeast(beast); // 输出生成的beast的数据
         return beast;
     }
 
 
-    private int GenerateStat()
+    private int GenerateStatWithLimits(int limit)
     {
         float rand = Random.value; // 生成一个0.0到1.0之间的随机浮点数
-
-        if (rand < 0.15f)
+        if (rand < 0.40f)
         {
-            return Random.Range(0, 101); // 0-100
+            // 生成 0 到 30% 上限的值
+            return Random.Range(5, Mathf.FloorToInt(limit * 0.3f) + 1);
         }
-        else if (rand < 0.60f) // 0.15 + 0.45
+        else if (rand < 0.80f)
         {
-            return Random.Range(100, 201); // 100-200
+            // 生成 30% 到 60% 上限的值
+            return Random.Range(Mathf.FloorToInt(limit * 0.3f), Mathf.FloorToInt(limit * 0.6f) + 1);
         }
-        else if (rand < 0.90f) // 0.15 + 0.45 + 0.30
+        else if (rand < 0.94f)
         {
-            return Random.Range(200, 301); // 200-300
+            // 生成 60% 到 90% 上限的值
+            return Random.Range(Mathf.FloorToInt(limit * 0.6f), Mathf.FloorToInt(limit * 0.9f) + 1);
         }
         else
         {
-            return Random.Range(300, 351); // 300-350
+            // 生成 90% 到 100% 上限的值
+            return Random.Range(Mathf.FloorToInt(limit * 0.9f), limit + 1);
         }
     }
 
-//     private void DebugBeast(SpiritualBeast beast)
-//     {
-//         Debug.Log("Generated Beast: " +
-//                 "\nType: " + beast.type 
-//                 // "\nMax HP: " + beast.maxHp +
-//                 // "\nMax Attack: " + beast.maxAttack +
-//                 // "\nMax Armor: " + beast.maxArmor +
-//                 // "\nMax AP: " + beast.maxAp +
-//                 // "\nMax MR: " + beast.maxMr +
-//                 // "\nMax Speed: " + beast.maxSpeed
-//                 );
-//     }
+    //属性字典
+    public static Dictionary<string, int> GetStatLimits(string imageName)
+    {
+        if (imageName == "A1") //飞鱼
+        {
+            return new Dictionary<string, int>()
+            {
+                {"Hp", 422},
+                {"Ap", 417},
+                {"Attack", 186},
+                {"Armor", 178},
+                {"Mr", 376},
+                {"Speed", 521}
+            };
+        }
+
+        // 默认属性上限
+        return new Dictionary<string, int>()
+        {
+            {"Hp", 350},
+            {"Ap", 350},
+            {"Attack", 350},
+            {"Armor", 350},
+            {"Mr", 350},
+            {"Speed", 350}
+        };
+    }
+
 }
 
 

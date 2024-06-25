@@ -20,7 +20,7 @@ public class SpiritualBeast
 
     public int battleSequence = -1;
     public bool participatedInBattle = false; 
-    
+    public string ethnicity;
     [System.NonSerialized]
     public GameObject beastGameObject; // 存储 GameObject 引用
 
@@ -29,10 +29,11 @@ public class SpiritualBeast
     {
     }
 
-    public SpiritualBeast(string name, int level, string gender, string type, Sprite image, int intimacy,
+    public SpiritualBeast(string name, string ethnicity, int level, string gender, string type, Sprite image, int intimacy,
     int Hp, int Attack, int Armor, int Ap, int Mr, int Speed)
     {
         this.name = name;
+        this.ethnicity = ethnicity;
         this.level = level;
         this.gender = gender;
         this.type = type;
@@ -45,6 +46,7 @@ public class SpiritualBeast
         this.Ap = Ap;
         this.Mr = Mr;
         this.Speed = Speed;
+        
 
         InitializeStats(Hp, Attack, Armor, Ap, Mr, Speed);
         CalculateExpToNextLevel(); 

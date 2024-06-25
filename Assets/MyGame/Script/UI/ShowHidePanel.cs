@@ -22,13 +22,13 @@ public class ShowHidePanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData) 
     {
-        Debug.Log("Mouse entered");
+        //Debug.Log("Mouse entered");
         panel.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("Mouse exited");
+        //Debug.Log("Mouse exited");
         panel.SetActive(false);
     }
  

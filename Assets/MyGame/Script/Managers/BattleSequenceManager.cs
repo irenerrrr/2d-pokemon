@@ -56,7 +56,7 @@ public class BattleSequenceManager : MonoBehaviour
                 Check(currSequence, pickedValue, selectedBeast);
             }
            
-            spiritBagManager.UpdateBeastInfo(selectedBeast);
+            spiritBagManager.UpdateBStat1Panel(selectedBeast);
             UpdateDropdownDisplay(selectedBeast);
         }
     }
