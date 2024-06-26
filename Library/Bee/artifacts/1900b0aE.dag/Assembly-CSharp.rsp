@@ -399,6 +399,7 @@
 "Assets/MyGame/Script/UI/BeastSpawner.cs"
 "Assets/MyGame/Script/UI/RadarChart.cs"
 "Assets/MyGame/Script/UI/ShowHidePanel.cs"
+"Assets/MyGame/Script/UI/SortBeastDropdown.cs"
 "Assets/MyGame/Script/UI/UpdateRadarChartValues.cs"
 "Assets/RadarChart/Scripts/RadarPolygon.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
