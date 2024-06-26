@@ -20,6 +20,7 @@ public class SpiritualBeast
 
     public int battleSequence = -1;
     public bool participatedInBattle = false; 
+    public bool isLock = false;
     public string ethnicity;
     [System.NonSerialized]
     public GameObject beastGameObject; // 存储 GameObject 引用

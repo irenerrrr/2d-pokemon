@@ -182,10 +182,10 @@ public class PlayerController : MonoBehaviour
     public void EndBattle(bool isWon)
     {
         isInBattle = false;
+     
         if (isWon) 
         {
             LoadPreviousScene();
-          
             Debug.Log($"返回到场景 {staticPreviousSceneName}"); // 使用静态变量
         } 
         else 
@@ -193,6 +193,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("准备回复活点");
             StartCoroutine(TeleportPlayerToRebirthLocation());
         }
+        
 
     }
 

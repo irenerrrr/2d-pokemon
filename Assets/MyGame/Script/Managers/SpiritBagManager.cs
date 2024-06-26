@@ -9,15 +9,26 @@ public class SpiritBagManager : MonoBehaviour
 {
     public TextMeshProUGUI beastName;
     public TextMeshProUGUI beastLevel;
-    // public TextMeshProUGUI beastGender;
+
     public Image beastImage;
-    // public TextMeshProUGUI beastIntimacy;
+    public TextMeshProUGUI beastIntimacy;
     public TextMeshProUGUI beastmaxAttack, beastmaxArmor, beastmaxMR, beastmaxSpeed;
     public TextMeshProUGUI beastHP, beastAttack, beastArmor, beastAP, beastMR, beastSpeed;
 
     public Slider currhpSlider, currapSlider, levelSlider; //当前
     public Slider hpSlider, attackSlider, armorSlider, apSlider, mrSlider, speedSlider;//资质
-// intimacySlider, 
+
+    public Image drumstickImage;
+
+    public Image genderImage; // 添加性别图像的引用
+    public Sprite maleSprite; // 男性图像
+    public Sprite femaleSprite; // 女性图像
+
+    public Image lockImage;
+    public Sprite lockSprite; // 男性图像
+    public Sprite unlockSprite; // 女性图像
+    public Button lockButton; 
+
     public FusionManager fusionManager; // 引用 FusionManager
 
     public GameObject slotPrefab; // Slot 模板的 Prefab
@@ -27,7 +38,6 @@ public class SpiritBagManager : MonoBehaviour
     public GameObject spiritBagPanel; // Bag Detail 面板
     public GameObject fusionPanel; 
 
-    // public static List<SpiritualBeast> beasts = new List<SpiritualBeast>();
     private List<SpiritualBeast> beasts;
     private List<GameObject> slots = new List<GameObject>();
     private int selectedBeastIndex = -1; // 记录当前选中的宠物索引
@@ -114,12 +124,43 @@ public class SpiritBagManager : MonoBehaviour
         // intimacySlider.maxValue = 100;
         // intimacySlider.value = beast.intimacy;
 
-
         // 更新等级滑块和文本
         levelSlider.maxValue = beast.expToNextLevel; 
         levelSlider.value = beast.exp;  // 假设当前经验可以直接用
         levelSliderText.text = $"{beast.exp} / {beast.expToNextLevel}"; // 格式化显示经验文本
+        UpdateDrumstickFill(beast.intimacy);
+        beastIntimacy.text = beast.intimacy.ToString();
 
+        if (beast.gender == "Male")
+        {
+            genderImage.sprite = maleSprite;
+        }
+        else if (beast.gender == "Female")
+        {
+            genderImage.sprite = femaleSprite;
+        }
+
+        if (beast.isLock == true)
+        {
+            lockImage.sprite = lockSprite;
+        }
+        else if (beast.isLock == false)
+        {
+            lockImage.sprite = unlockSprite;
+        }
+    }
+
+    public void ToggleLock()
+    {
+        SpiritualBeast beast = beasts[selectedBeastIndex];
+        beast.isLock = !beast.isLock;
+        UpdateBasicPanel(beast);
+    }
+
+    private void UpdateDrumstickFill(int intimacy)
+    {
+        float fillAmount = Mathf.Clamp01(intimacy / 100f); // 将亲密度转换为0到1的值
+        drumstickImage.fillAmount = fillAmount;
     }
 
     public void UpdateBStat1Panel(SpiritualBeast beast)
@@ -207,6 +248,7 @@ public class SpiritBagManager : MonoBehaviour
             OnSlotClick(selectedBeastIndex);
         }
     }
+
 
     public SpiritualBeast GetSelectedBeast()
     {

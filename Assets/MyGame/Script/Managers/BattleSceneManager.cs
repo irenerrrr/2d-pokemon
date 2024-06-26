@@ -26,7 +26,10 @@ public class BattleSceneManager : MonoBehaviour
     {
         CheckBeastStatusInSequenceList();
         InitializeBattle(); // 初始化战斗
+        spiritBagManager = FindObjectOfType<SpiritBagManager>();
+      
     }
+
 
     private void InitializeBattle()
     {
@@ -199,11 +202,11 @@ public class BattleSceneManager : MonoBehaviour
         return null; // 如果没有更多的beast，返回null
     }
 
-
+ 
 
     private void EndBattle()
     {
-        
+
         if (BeastComponent.encounteredBeast.currentHp <= 0)
         {
             Debug.Log("Enemy lost the battle.");
@@ -219,6 +222,7 @@ public class BattleSceneManager : MonoBehaviour
         Debug.Log("调用 PlayerController 的 EndBattle 方法.");
         participatedBeasts.Clear(); // 清空参与战斗的宠物列表
     }
+
 
     private void DecreaseIntimacyForParticipatedBeasts()
     {
