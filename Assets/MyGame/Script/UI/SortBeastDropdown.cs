@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.UI;
 
 public class SortBeastDropdown : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class SortBeastDropdown : MonoBehaviour
     void Start()
     {
         beasts = BeastManager.beasts;
- 
         
     }
 
@@ -32,16 +32,17 @@ public class SortBeastDropdown : MonoBehaviour
                 SortByLevelAscending();
                 break;
             case 2:
-                // Implement Ethnicity sorting
+                SortByEthnicity();
                 break;
             case 3:
-                // Implement BattleSeq sorting
+                SortByBattleSeq();
                 break;
         }
 
         // Refresh the display after sorting
         dropdown.RefreshShownValue();
         spiritBagManager.RefreshUI();
+
     }
 
     private void SortByLevelAscending()
@@ -53,6 +54,18 @@ public class SortBeastDropdown : MonoBehaviour
     {
         beasts.Sort((a, b) => b.level.CompareTo(a.level));
     }
+
+    private void SortByEthnicity()
+    {
+        beasts.Sort((a, b) => a.ethnicity.CompareTo(b.ethnicity));
+    }
+
+    private void SortByBattleSeq()
+    {
+        beasts.Sort((a, b) => a.battleSequence.CompareTo(b.battleSequence));
+    }
+
+   
 
 
 }

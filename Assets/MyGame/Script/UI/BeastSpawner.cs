@@ -67,7 +67,7 @@ public class BeastSpawner : MonoBehaviour
         List<Vector2> spawnedPositions = new List<Vector2>();
         for (int i = 0; i < count; i++)
         {
-            // Debug.Log("生成beast_" + i);
+            Debug.Log("生成beast_" + i);
             Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea, spawnedPositions);
             GameObject beastInstance = Instantiate(BeastPrefab, randomPosition, Quaternion.identity);
             if (beastInstance != null)
@@ -81,7 +81,7 @@ public class BeastSpawner : MonoBehaviour
                 spriteRenderer.sprite = beast.image;
 
                 spawnedPositions.Add(randomPosition);
-                // Debug.Log($"Beast {i} successfully generated and initialized at position {beastInstance.transform.position}");
+                Debug.Log($"Beast {i} successfully generated and initialized at position {beastInstance.transform.position}");
             }
             else
             {

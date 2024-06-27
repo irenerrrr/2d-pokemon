@@ -45,7 +45,9 @@ namespace UnityEngine.UI.Extensions
             float armor = statLimits.ContainsKey("Armor") ? statLimits["Armor"] / maxLimit : 0f;
             float mr = statLimits.ContainsKey("Mr") ? statLimits["Mr"] / maxLimit : 0f;
             float speed = statLimits.ContainsKey("Speed") ? statLimits["Speed"] / maxLimit : 0f;
-            return new float[] { hp, ap, attack, armor, mr, speed };
+
+        
+            return new float[] { ap, hp, attack, armor, speed, mr};
         }
 
         private float[] Currpic(Dictionary<string, int> statLimits, SpiritualBeast beast)
@@ -57,7 +59,8 @@ namespace UnityEngine.UI.Extensions
             float armor = statLimits.ContainsKey("Armor") ? (float)beast.Armor / maxLimit : 0f;
             float mr = statLimits.ContainsKey("Mr") ? (float)beast.Mr / maxLimit : 0f;
             float speed = statLimits.ContainsKey("Speed") ? (float)beast.Speed / maxLimit : 0f;
-            return new float[] { hp, ap, attack, armor, mr, speed };
+            return new float[] { ap, hp, attack, armor, speed, mr};
+
         }
     }
 }

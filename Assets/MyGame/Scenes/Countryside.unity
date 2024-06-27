@@ -6958,7 +6958,7 @@ PrefabInstance:
     - target: {fileID: 5039576511898811622, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.67
+      value: 18.1
       objectReference: {fileID: 0}
     - target: {fileID: 5039576511898811622, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
         type: 3}
@@ -7035,7 +7035,7 @@ Transform:
   m_GameObject: {fileID: 731193922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.16, y: -7.42, z: 0}
+  m_LocalPosition: {x: -9.97, y: -6.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8140,8 +8140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleImages:
   - {fileID: 21300000, guid: 2ea0bfe54b5c820419d86200a6fff008, type: 3}
-  - {fileID: 21300000, guid: 2ea0bfe54b5c820419d86200a6fff008, type: 3}
-  beastPrefab: {fileID: 6824993616537670497, guid: ccf768f6523a1964c82e182489b72b35,
+  beastPrefab: {fileID: 6727235502979424279, guid: 2809dd7029174ef40a67893ffbe34b17,
     type: 3}
   k: 0
 --- !u!114 &1476098114
@@ -8158,7 +8157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnArea: {fileID: 913083817400622182, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
     type: 3}
-  BeastPrefab: {fileID: 6824993616537670497, guid: ccf768f6523a1964c82e182489b72b35,
+  BeastPrefab: {fileID: 6727235502979424279, guid: 2809dd7029174ef40a67893ffbe34b17,
     type: 3}
   spawnCount: 12
   minSpawnDistance: 1

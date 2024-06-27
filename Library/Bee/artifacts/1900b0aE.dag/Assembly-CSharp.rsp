@@ -397,7 +397,6 @@
 "Assets/MyGame/Script/SceneController.cs"
 "Assets/MyGame/Script/UI/BattleSceneUI.cs"
 "Assets/MyGame/Script/UI/BeastSpawner.cs"
-"Assets/MyGame/Script/UI/RadarChart.cs"
 "Assets/MyGame/Script/UI/ShowHidePanel.cs"
 "Assets/MyGame/Script/UI/SortBeastDropdown.cs"
 "Assets/MyGame/Script/UI/UpdateRadarChartValues.cs"
