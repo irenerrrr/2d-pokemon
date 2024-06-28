@@ -12,6 +12,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private LayoutElement layoutElement;
     private bool isDragging = false;
     private GameObject placeholder = null;
+    private float updateInterval = 0.1f; // 更新间隔时间，单位：秒
+    private float timeSinceLastUpdate = 0f;
 
     void Awake()
     {
@@ -44,6 +46,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // 在原始位置放置占位符
         placeholder.GetComponent<RectTransform>().sizeDelta = GetComponent<RectTransform>().sizeDelta;
         placeholder.GetComponent<RectTransform>().localScale = Vector3.one; // 确保缩放一致
+     
 
     }
 
@@ -53,36 +56,43 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         transform.position = eventData.position;
 
+        // 更新间隔检查
+        timeSinceLastUpdate += Time.deltaTime;
+        if (timeSinceLastUpdate < updateInterval) return;
+        timeSinceLastUpdate = 0f; // 重置计时器
+
         // 获取指针下的对象
         RectTransform parentRect = startParent.GetComponent<RectTransform>();
         int currentPlaceholderIndex = placeholder.transform.GetSiblingIndex();
         int newSiblingIndex = currentPlaceholderIndex;
+        bool positionUpdated = false;
 
         for (int i = 0; i < parentRect.childCount; i++)
         {
-            RectTransform child = parentRect.GetChild(i).GetComponent<RectTransform>();
-            
+            var child = parentRect.GetChild(i).GetComponent<RectTransform>();
+
             if (child == transform || child == placeholder.transform) continue;
 
             if (RectTransformUtility.RectangleContainsScreenPoint(child, eventData.position, eventData.pressEventCamera))
             {
                 newSiblingIndex = child.GetSiblingIndex();
-                if (newSiblingIndex > currentPlaceholderIndex)
-                {
-                    newSiblingIndex--;
-                }
-                Debug.Log($"Detected position at child {i}: {child.name}, Moving placeholder to index {newSiblingIndex}");
+                if (newSiblingIndex > currentPlaceholderIndex) newSiblingIndex--;
+                positionUpdated = true;
                 break;
             }
         }
 
-        if (newSiblingIndex != currentPlaceholderIndex)
+        // 处理拖动到父容器末尾的情况
+        if (!positionUpdated && eventData.position.y > parentRect.rect.yMax)
         {
-            Debug.Log($"Moving placeholder from index {currentPlaceholderIndex} to {newSiblingIndex}"); // 添加调试日志
-            placeholder.transform.SetSiblingIndex(newSiblingIndex);
+            newSiblingIndex = parentRect.childCount;
+            positionUpdated = true;
         }
 
-   
+        if (positionUpdated && newSiblingIndex != currentPlaceholderIndex)
+        {
+            placeholder.transform.SetSiblingIndex(newSiblingIndex);
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
