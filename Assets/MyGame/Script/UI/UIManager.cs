@@ -14,10 +14,12 @@ public class UIManager : MonoBehaviour
     public GameObject spiritDetail;
     public GameObject ButtonsPanel;
     public GameObject inductor;
+
+    public Button battleSequenceButton;
+    public GameObject battleSequencePanel;
     
     public SpiritBagManager spiritbagManager;
 
-    
   
 
     private void Awake()
@@ -35,6 +37,8 @@ public class UIManager : MonoBehaviour
         // 初始时隐藏面板
         spiritPanel.SetActive(false);
         spiritDetail.SetActive(false);
+
+        battleSequencePanel.SetActive(false);
 
 
     }
@@ -58,17 +62,24 @@ public class UIManager : MonoBehaviour
 
         bool isSpiritPanelActive = spiritPanel.activeSelf;
         bool isSpiritDetailActive = spiritDetail.activeSelf;
+        bool isbattleSequencePanelActive = battleSequencePanel.activeSelf;
 
-        if (!isSpiritPanelActive && !isSpiritDetailActive)
+        if (!isSpiritDetailActive)
         {
             // 如果两个面板都没有显示，显示 spiritPanel
             spiritPanel.SetActive(true);
+            spiritDetail.SetActive(true);
+            battleSequencePanel.SetActive(false);
+
+            spiritbagManager.selectedBeastIndex = 0;
+            spiritbagManager.UpdateCurrentBeastPanel();
         }
         else
         {
             // 否则，关闭所有面板
             spiritPanel.SetActive(false);
             spiritDetail.SetActive(false);
+            battleSequencePanel.SetActive(false);
         }
     }
 
@@ -86,4 +97,28 @@ public class UIManager : MonoBehaviour
         spiritPanel.SetActive(false);
         spiritDetail.SetActive(false);
     }
+
+    public void ToggleBattleSequencePanel()
+    {
+        bool isbattleSequencePanelActive = battleSequencePanel.activeSelf;
+
+
+        // 如果 spiritDetail 是打开状态，则关闭它
+        if (!isbattleSequencePanelActive)
+        {
+            spiritPanel.SetActive(true);
+            battleSequencePanel.SetActive(true);
+            spiritDetail.SetActive(false);
+            
+        }
+
+        else
+        {
+            // 否则，关闭所有面板
+            spiritPanel.SetActive(false);
+            spiritDetail.SetActive(false);
+            battleSequencePanel.SetActive(false);
+        }
+    }
+
 }

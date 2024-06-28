@@ -6963,7 +6963,7 @@ PrefabInstance:
     - target: {fileID: 5039576511898811622, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 2.68
       objectReference: {fileID: 0}
     - target: {fileID: 5039576511898811622, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
         type: 3}
@@ -7010,6 +7010,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50, type: 3}
+--- !u!60 &713884150 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 913083817400622182, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
+    type: 3}
+  m_PrefabInstance: {fileID: 713884149}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &731193922
 GameObject:
   m_ObjectHideFlags: 0
@@ -8155,8 +8161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2897ecf864cfcd242bef0e4d389db1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnArea: {fileID: 913083817400622182, guid: 0cb6e25b6df16d34ca5b3e30b9d10a50,
-    type: 3}
+  spawnArea: {fileID: 713884150}
   BeastPrefab: {fileID: 6727235502979424279, guid: 2809dd7029174ef40a67893ffbe34b17,
     type: 3}
   spawnCount: 12

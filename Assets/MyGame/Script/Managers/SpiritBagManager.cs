@@ -37,10 +37,11 @@ public class SpiritBagManager : MonoBehaviour
     public GameObject detailPanel; // 左半边详细信息面板
     public GameObject spiritBagPanel; // Bag Detail 面板
     public GameObject fusionPanel; 
+    public GameObject battleSequencePanel;
 
     private List<SpiritualBeast> beasts;
     private List<GameObject> slots = new List<GameObject>();
-    private int selectedBeastIndex = -1; // 记录当前选中的宠物索引
+    public int selectedBeastIndex = -1; // 记录当前选中的宠物索引
     public BattleSequenceManager battleSequenceManager; 
     public event Action<SpiritualBeast> BeastSelected; // 添加事件
     
@@ -86,7 +87,7 @@ public class SpiritBagManager : MonoBehaviour
         UpdateCurrentBeastPanel();
     }
 
-    private void UpdateCurrentBeastPanel()
+    public void UpdateCurrentBeastPanel()
     {
         if (selectedBeastIndex >= 0 && selectedBeastIndex < beasts.Count)
         {
@@ -118,11 +119,6 @@ public class SpiritBagManager : MonoBehaviour
         beastImage.sprite = beast.image;
         beastName.text = beast.name;
         beastLevel.text = "Level " + beast.level;
-        // beastGender.text = beast.gender;
-        // beastIntimacy.text = "Intimacy: " + beast.intimacy.ToString();
-
-        // intimacySlider.maxValue = 100;
-        // intimacySlider.value = beast.intimacy;
 
         // 更新等级滑块和文本
         levelSlider.maxValue = beast.expToNextLevel; 
@@ -228,7 +224,11 @@ public class SpiritBagManager : MonoBehaviour
         {
             fusionManager.UpdateFusionPanel(beast);
         }
-        else
+        else if (battleSequencePanel.activeSelf)
+        {
+
+        }
+        else if (detailPanel.activeSelf)
         {
             // 更新详细信息面板
             detailPanel.SetActive(true);
