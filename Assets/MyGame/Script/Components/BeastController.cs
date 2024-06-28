@@ -85,7 +85,7 @@ public class BeastController : MonoBehaviour
 
             if (isWalking)
             {
-                animator.SetBool("isWalk", true);
+                //animator.SetBool("isWalk", true);
                 direction = GetRandomDirection(); // 获取新的随机方向
 
                 // 随机行走时间
@@ -94,8 +94,8 @@ public class BeastController : MonoBehaviour
             }
             else
             {
-                animator.SetBool("isWalk", false);
-
+                //animator.SetBool("isWalk", false);
+                direction = Vector3.zero;
                 // 随机站立时间
                 float idleTime = Random.Range(minIdleTime, maxIdleTime);
                 yield return new WaitForSeconds(idleTime);
