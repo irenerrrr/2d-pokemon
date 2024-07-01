@@ -153,7 +153,7 @@ public class SpiritBagManager : MonoBehaviour
         UpdateBasicPanel(beast);
     }
 
-    private void UpdateDrumstickFill(int intimacy)
+    public void UpdateDrumstickFill(int intimacy)
     {
         float fillAmount = Mathf.Clamp01(intimacy / 100f); // 将亲密度转换为0到1的值
         drumstickImage.fillAmount = fillAmount;
@@ -190,7 +190,7 @@ public class SpiritBagManager : MonoBehaviour
 
     }
 
-    private void UpdateSlider(Slider slider, TextMeshProUGUI sliderText, float maxValue, float currentValue, bool updateText = true)
+    public void UpdateSlider(Slider slider, TextMeshProUGUI sliderText, float maxValue, float currentValue, bool updateText = true)
     {
         slider.maxValue = maxValue;
         slider.value = currentValue;
@@ -226,7 +226,7 @@ public class SpiritBagManager : MonoBehaviour
         }
         else if (battleSequencePanel.activeSelf)
         {
-
+            battleSequenceManager.UpdateCurrentSlot(beast);
         }
         else if (detailPanel.activeSelf)
         {
@@ -239,6 +239,7 @@ public class SpiritBagManager : MonoBehaviour
         BeastSelected?.Invoke(beast);
         
     }
+    
 
     //强制刷新raderchartvalue
     public void TriggerBeastSelected()

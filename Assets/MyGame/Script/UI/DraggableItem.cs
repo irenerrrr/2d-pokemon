@@ -12,17 +12,26 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private LayoutElement layoutElement;
     private bool isDragging = false;
     private GameObject placeholder = null;
-    private float updateInterval = 0.1f; // 更新间隔时间，单位：秒
+    private float updateInterval = 0.05f; // 更新间隔时间，单位：秒
     private float timeSinceLastUpdate = 0f;
+    private int prevIndex;
+    private BattleSequenceManager battleSequenceManager;
 
+    void Start()
+    {
+        battleSequenceManager = FindObjectOfType<BattleSequenceManager>(); // 获取 BattleSequenceManager 的实例
+    }
     void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         layoutElement = GetComponent<LayoutElement>();
     }
 
+
+
     public void OnBeginDrag(PointerEventData eventData)
     {
+
         startPosition = transform.position;
         startParent = transform.parent;
         canvasGroup.blocksRaycasts = false;
@@ -107,14 +116,19 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         // 设置物体到占位符位置
         transform.SetParent(startParent);
-        transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         transform.position = startParent.GetChild(transform.GetSiblingIndex()).position;
+
+        int newIndex = placeholder.transform.GetSiblingIndex();
+        Debug.Log(newIndex);
+        transform.SetSiblingIndex(newIndex);
 
         // 删除占位符
         Destroy(placeholder);
 
         // 刷新布局
         LayoutRebuilder.ForceRebuildLayoutImmediate(startParent.GetComponent<RectTransform>());
-
+   
     }
+ 
+
 }

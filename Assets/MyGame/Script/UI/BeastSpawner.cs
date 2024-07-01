@@ -38,25 +38,25 @@ public class BeastSpawner : MonoBehaviour
         Debug.Log("当前场景: " + currentSceneName);
         if (PlayerController.isInBattle)
         {
-            Debug.Log("当前在BattleScene中,不执行Beast生成逻辑");
+            //Debug.Log("当前在BattleScene中,不执行Beast生成逻辑");
             return;
         }
         if (SceneManager.GetActiveScene().name != "Countryside")
         {
-            Debug.Log("当前不在Countryside Scene中, 不执行Beast生成逻辑");
+            //Debug.Log("当前不在Countryside Scene中, 不执行Beast生成逻辑");
             return;
         } 
-        Debug.Log("当前在Countryside Scene中, 执行Beast生成逻辑");
+        //Debug.Log("当前在Countryside Scene中, 执行Beast生成逻辑");
       
 
         // 检查场景中现有的Beast数量
         int currentBeastCount = FindObjectsOfType<BeastComponent>().Length;
-        Debug.Log("当前场景中的Beast数量: " + currentBeastCount);
+        //Debug.Log("当前场景中的Beast数量: " + currentBeastCount);
 
         // 如果场景中的 Beast 数量少于 5，则生成新的 Beast
         if (currentBeastCount <= 6)
         {
-            Debug.Log("生成新的Beast, 需要生成的数量: " + (spawnCount - currentBeastCount));
+            //Debug.Log("生成新的Beast, 需要生成的数量: " + (spawnCount - currentBeastCount));
             GenerateBeastsInArea(spawnCount - currentBeastCount);
         }
     }
@@ -67,7 +67,7 @@ public class BeastSpawner : MonoBehaviour
         List<Vector2> spawnedPositions = new List<Vector2>();
         for (int i = 0; i < count; i++)
         {
-            Debug.Log("生成beast_" + i);
+            //Debug.Log("生成beast_" + i);
             Vector2 randomPosition = GetRandomPositionWithinPolygonCollider(spawnArea, spawnedPositions);
             GameObject beastInstance = Instantiate(BeastPrefab, randomPosition, Quaternion.identity);
             if (beastInstance != null)
@@ -81,11 +81,11 @@ public class BeastSpawner : MonoBehaviour
                 spriteRenderer.sprite = beast.image;
 
                 spawnedPositions.Add(randomPosition);
-                Debug.Log($"Beast {i} successfully generated and initialized at position {beastInstance.transform.position}");
+                //Debug.Log($"Beast {i} successfully generated and initialized at position {beastInstance.transform.position}");
             }
             else
             {
-                Debug.LogError("生成Beast失败");
+                //Debug.LogError("生成Beast失败");
             }
         }
     }
@@ -105,7 +105,7 @@ public class BeastSpawner : MonoBehaviour
             attempts++;
             if (attempts > maxAttempts)
             {
-                Debug.LogError("Failed to find a valid point within the polygon after maximum attempts.");
+                //Debug.LogError("Failed to find a valid point within the polygon after maximum attempts.");
                 break;
             }
         } while (!PointInPolygon(collider, randomPoint) || IsTooCloseToExistingPoints(randomPoint, existingPositions));
