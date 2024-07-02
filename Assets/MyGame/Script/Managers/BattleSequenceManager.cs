@@ -92,7 +92,10 @@ public class BattleSequenceManager : MonoBehaviour
         Debug.Log("update");
         if (prevIndex < slots.Length)
         {
-            
+            if (sequenceList.Contains(beast)) // Corrected line here
+            {
+                return;
+            }
             Transform slot = slots[prevIndex].transform;
             Transform blankPanel = slot.Find("BlankPanel");
             Transform infoPanel = slot.Find("InfoPanel");
@@ -105,7 +108,6 @@ public class BattleSequenceManager : MonoBehaviour
             Debug.Log(sequenceList);
             // 更新infoPanel中的内容
             UpdateSlotInfo(infoPanel, beast);
-            //HighlightFirstEmptySlot();
 
             
         }
